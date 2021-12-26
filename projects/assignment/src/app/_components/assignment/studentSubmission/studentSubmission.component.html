@@ -1,0 +1,43 @@
+<section class="container-fluid flex-grow">
+  <div class="row">
+    <div class="col-sm-2 mt-5">
+      <a [routerLink]="['/assignment']"><button type="submit" class="btn btn-dark">Back</button></a>
+    </div>
+    <div class="col-sm-10 mt-5">
+      <h3 style="text-align:center">View Assignment</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card-body">
+      <div class="container">
+        <div class="alert alert-info">
+          <span class="badge badge-info">Assignment Details</span><br>
+          <div> Message:{{assignmentDetail.message}} </div>
+          <div>Deadline: {{assignmentDetail.deadLine}}</div>
+          <div> Student Submission:{{assignmentDetail.submission}}</div>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Assignment</th>
+            <th scope="col" style="text-align: center;">Uploaded On</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let eachassignment of assignment; let i=index;">
+            <th>{{i+1}}</th>
+            <td> {{eachassignment.name}}</td>
+            <td *ngIf="eachassignment.barcode.url != null" style="text-align:justify;"><a
+                href="{{eachassignment.barcode.url}}">{{eachassignment.barcode.fileKey}}</a></td>
+            <td *ngIf="eachassignment.barcode.url == null" style="text-align:justify;">No Attachment Found</td>
+            <td *ngIf="eachassignment.attendanceDate != null" style="text-align: center;">
+              {{eachassignment.attendanceDate}}</td>
+            <td *ngIf="eachassignment.attendanceDate == null" style="text-align: center;">---</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

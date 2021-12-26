@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+  integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4> Create New  Department </h4>
+   
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <form class="form" #createForm="ngForm">
+        <div class="form-group row">
+    
+          <label class="col-sm-4 text-right ">Degree Name<span class="text-danger">*</span>:</label>
+    
+          <div class="col-sm-6">
+            <input type="text" class="form-control" #degreeName="ngModel" placeholder="Degree Name"  name="degreeName"
+              [(ngModel)]="createDept.degreeName" ngModel required>
+              <span *ngIf="(createForm.submitted && degreeName.invalid) || (degreeName.invalid && degreeName.touched)" style="color: red;">
+                Name required
+              </span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 text-right">Department Name <span class="text-danger">*</span>:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" #departmentName="ngModel" placeholder="Department Name"  name="departmentName"
+            [(ngModel)]="createDept.departmentName" ngModel required >
+            <span *ngIf="(createForm.submitted && departmentName.invalid) || (departmentName.invalid && departmentName.touched)" style="color: red;">
+              Name required
+            </span>
+          </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 text-right" >Faculty of <span class="text-danger">*</span>:</label>
+            <div class="col-sm-6">
+              <ng-select 
+              #facultySelect
+              [searchable]="true" [clearable]="false"
+             groupBy="name" required  #faculty="ngModel" name="faculty" [(ngModel)]="facId" (change)="onselect(facId)"
+             placeholder="----------------------Select Faculty--------------------">
+             <!-- <ng-option value="" >----------------------Select Faculty--------------------</ng-option> -->
+             <ng-option [value]="eachFaculty.id" *ngFor="let eachFaculty of faculties">
+               {{eachFaculty.name}}
+             </ng-option>
+       </ng-select>
+       <span *ngIf="(createForm.submitted && faculty.invalid) || (faculty.invalid && faculty.touched)" style="color: red;">Faculty Required</span>
+
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 text-right">Department of <span class="text-danger">*</span>:</label>
+            <div class="col-sm-6">
+              <ng-select 
+              [searchable]="true" [clearable]="false"
+             groupBy="name" #department="ngModel" name="department" required [(ngModel)]="createDept.facultyDeptId" 
+             placeholder="----------------------Select Faculty--------------------">
+             <!-- <ng-option value="" >----------------------Select Faculty--------------------</ng-option> -->
+             <ng-option [value]="eachDepartment.id" *ngFor="let eachDepartment of facDept">
+               {{eachDepartment.name}}
+             </ng-option>
+       </ng-select>
+       <span *ngIf="(createForm.submitted && department.invalid) || (department.invalid && department.touched)" style="color: red;">Department Required</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 text-right">Total Semester <span class="text-danger">*</span>:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" #totalSemester="ngModel"  name="totalSemester"
+                [(ngModel)]="createDept.totalSemester"  ngModel required>
+                <span *ngIf="(createForm.submitted && totalSemester.invalid) || (totalSemester.invalid && totalSemester.touched)" style="color: red;">
+                 Required
+                </span>
+            </div>
+          </div>
+
+        <div class="form-group row">
+          <div class="col-md-7">
+            <button type="submit" class="btn btn-success float-right" style="margin-bottom: 30px;"
+              (click)="createDepartment(createForm.form.valid)">Submit</button>
+          </div>
+        </div>
+      </form>
+  </div>
+  </div>

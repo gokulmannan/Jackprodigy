@@ -1,0 +1,86 @@
+<h3>
+    All Application Forms</h3>
+<!-- </div> -->
+<hr class="hr">
+<div class="row text-right">
+    <div class="col-md-11">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        </mat-form-field>
+    </div>
+</div>
+<div class="row  mr-4">
+    <div class="col-md-12">
+        <table mat-table [dataSource]="allApplications" class="table table-bordered">
+
+
+            <ng-container matColumnDef="#">
+                <th mat-header-cell *matHeaderCellDef class="text-center table-font"> # </th>
+                <td mat-cell *matCellDef="let i= index">
+                    <div class="text-center mt-2">{{i +1}}</div>
+                </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="text-center table-font"> Application Form </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="text-center mt-2">{{(element.name != null)?element.name: "-"}}</div>
+                </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <!-- <ng-container matColumnDef="applicationNo">
+                <th mat-header-cell *matHeaderCellDef class="text-center table-font"> Application No. </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="text-center mt-2">{{(element.applicationNo != null)?element.applicationNo: "-"}}</div>
+                </td>
+            </ng-container> -->
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="applicationSubmittedOn">
+                <th mat-header-cell *matHeaderCellDef class="text-center table-font"> Application Submitted On </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="text-center mt-2">
+                        {{(element.applicationSubmittedOn != null)?element.applicationSubmittedOn: "Not Applied"}}</div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="applicationFees">
+                <th mat-header-cell *matHeaderCellDef class="text-center table-font"> Application Fees </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="text-center mt-2">{{element.fees | currency:"INR"}}</div>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="text-center table-font"> Action </th>
+                <td mat-cell *matCellDef="let element">
+                    <!-- <div *ngIf="element.appliedStatus == undefined" class="text-center mt-1">
+                        <button class="btn btn-primary" (click)="applynow(element)">Apply Now</button>
+                    </div> -->
+                    <div *ngIf="element.appliedStatus == undefined" class="text-center mt-1">
+                        <span class="badge badge-warning">Not Applied</span>
+                    </div>
+                    <div *ngIf="element.appliedStatus == 'APPLIED'" class="text-center mt-1">
+                        <span class="badge badge-success">Applied</span>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef> Edit </th>
+            <td mat-cell *matCellDef="let element" > <button class="btn btn-sm btn-primary" (click)="edit(element)">Edit</button> </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Delete </th>
+            <td mat-cell *matCellDef="let element"> <button class="btn btn-sm btn-danger" (click)="delete(element)">Delete</button> </td>
+          </ng-container>
+      -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+
+
+<!-- </div>
+</div> -->

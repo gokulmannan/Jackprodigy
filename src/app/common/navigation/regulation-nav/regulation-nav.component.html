@@ -1,0 +1,30 @@
+<app-department-nav (deptNav)="loadAccData($event)"></app-department-nav><br>
+<div class="form-group row" style="margin-top: -15px">
+    <label for="regs" class="col-sm-3 my-2 text-right">Regulation <span class="text-danger">*</span> :</label>
+    <div class="col-sm-6 mb-3">
+        <!-- <select class="custom-select" name="regs" (change)="onSelect(regulation)" [(ngModel)]="regulation" required #regs="ngModel" ngModel>
+            <option value="" selected>----------------- Select Regulation ----------------</option>
+            <option style="font-size: 18px" [ngValue]="regulation" *ngFor="let regulation of regulations">
+                {{regulation.year}}</option>
+        </select>
+        <small *ngIf="!regs.valid && regs.touched" class="text-danger">Regulation required.</small> -->
+
+
+        <ng-select 
+      
+        placeholder="--------------------------Select Regulation----------------------------"
+        [searchable]="true"  
+        [clearable] = "false"
+        [(ngModel)]="regulation"
+       (change)="onSelect(regulation)"  
+        
+        >
+        <ng-option [value]="regulation" *ngFor="let regulation of regulations">
+           
+            {{regulation.year}}
+        </ng-option>
+    </ng-select>
+    <!-- <small *ngIf="!regulation.valid && regulation.touched" class="text-danger">Regulation required.</small> --> 
+
+    </div>
+</div>

@@ -1,0 +1,113 @@
+<div class="col-md-12 card card-body bg-light text-dark">
+  <div class="row" >
+    <div class="col-md-12">
+        <button type="button" class="btn btn-dark" (click)="goBack()">Back</button>
+        </div>
+        </div>
+
+    <section class="container-fluid flex-grow">
+        <form class="form" #createForm="ngForm">
+                <h3><strong>{{naacs.title}}</strong></h3><br>
+            <strong>{{naacs.description}}</strong>
+            <div *ngFor="let eachField of naacs.fields | keyvalue : originalOrder let i= index">
+              <div  *ngIf="eachField.value.type == 'tableHeading'">
+                <br>
+                <strong>{{eachField.value.label}}</strong>
+              </div>
+              <div class="form-group row" *ngIf="eachField.value.type == 'text'">
+              <label class="col-sm-4 my-1 text-right">{{eachField.value.label}}<span *ngIf="eachField.value.required == 'true'" class="text-danger">*</span>:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control"  #nameCtrl="ngModel" name={{eachField.value.label}} placeholder="Enter Text"
+                  [(ngModel)]="formData[eachField.key]" [required]="eachField.value.required == 'true'" >
+                  <small *ngIf="eachField.value.helptext != undefined" [innerHTML]="testData[i+1]"  ></small>
+                  <span *ngIf="(createForm.submitted && nameCtrl.invalid) || (nameCtrl.invalid && nameCtrl.touched)" style="color: red;">
+                    required</span> 
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="eachField.value.type == 'textarea'">
+              <label class="col-sm-4 my-1 text-right">{{eachField.value.label}}<span *ngIf="eachField.value.required == 'true'" class="text-danger">*</span>:</label>
+              <div class="col-sm-6">
+                <textarea class="form-control" #nameCtrl="ngModel" placeholder="Enter Text" name={{eachField.value.label}} [(ngModel)]="formData[eachField.key]"
+                  ngModel [required]="eachField.value.required == 'true'"></textarea>
+                  <small *ngIf="eachField.value.helptext != undefined" [innerHTML]="testData[i+1]"></small>
+                  <span *ngIf="(createForm.submitted && nameCtrl.invalid) || (nameCtrl.invalid && nameCtrl.touched)" style="color: red;">
+                    required</span> 
+                  </div>
+            </div>
+            <div class="form-group row" *ngIf="eachField.value.type == 'textDate'">
+              <label class="col-sm-4 my-1 text-right">{{eachField.value.label}}<span *ngIf="eachField.value.required == 'true'" class="text-danger">*</span>:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control"  #nameCtrl="ngModel" name={{eachField.value.label}} placeholder="Enter Text"
+                  [(ngModel)]="formData[eachField.key]" [required]="eachField.value.required == 'true'" >
+                  <small *ngIf="eachField.value.helptext != undefined" [innerHTML]="testData[i+1]"  ></small>
+                  <span *ngIf="(createForm.submitted && nameCtrl.invalid) || (nameCtrl.invalid && nameCtrl.touched)" style="color: red;">
+                    required</span> 
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="eachField.value.type == 'number'">
+                <label class="col-sm-4 my-1 text-right">{{eachField.value.label}}<span *ngIf="eachField.value.required == 'true'" class="text-danger">*</span>:</label>
+                <div class="col-sm-6">
+                  <textarea class="form-control" #nameCtrl="ngModel"  name={{eachField.value.label}} [(ngModel)]="formData[eachField.key]" [required]="eachField.value.required == 'true'"
+                    ></textarea>
+                    <small *ngIf="eachField.value.helptext != undefined" [innerHTML]="testData[i+1]"></small>
+                    <span *ngIf="(createForm.submitted && nameCtrl.invalid) || (nameCtrl.invalid && nameCtrl.touched)" style="color: red;">
+                      required</span>                 </div>
+              </div>
+              <div class="form-group row" *ngIf="eachField.value.type == 'select'">
+                <label for="departmentselect" class="col-sm-4 text-right">{{eachField.value.label}}<span *ngIf="eachField.value.required == 'true'" class="text-danger">*</span></label>
+                <div class="col-sm-6">
+                    <select  class="custom-select" name={{eachField.value.label}} #nameCtrl="ngModel" [(ngModel)]="formData[eachField.key]"  [required]="eachField.value.required == 'true'">
+                        <!-- <option [ngValue]="" > ---------------------- Select {{eachField.value.label}} -------------------- </option> -->
+                        <option [ngValue]="each" *ngFor="let each of eachField.value.options ">{{each}}</option>
+                    </select>
+                    <small *ngIf="eachField.value.helptext != undefined" [innerHTML]="testData[i+1]"></small>
+                    <span *ngIf="(createForm.submitted && nameCtrl.invalid) || (nameCtrl.invalid && nameCtrl.touched)" style="color: red;">
+                      required</span> 
+                </div>
+              </div>
+            <div class="form-group row" *ngIf="eachField.value.type == 'file'">
+              <div class="col-md-4 mb-2 text-right">
+                <label for="twelfthMarkSheet">{{eachField.value.label}}<span *ngIf="eachField.value.required == 'true'" style="color: red;">*</span>:</label>
+            </div>
+                <div class="col-md-2" *ngIf="eachField.value.fileKey == undefined">
+                <input #fileInput type="file" id="file{{i}}">
+                <span><br></span>
+                <button  class="btn btn-success" (click)="uploadFiles(fileInput.files,eachField.key)">Upload</button>
+                <span class="badge badge-warning">Valid extentions  {{eachField.value.regex}}</span>
+              </div>
+              <div *ngIf="eachField.value.fileKey != undefined">
+                    {{eachField.value.fileKey}}
+              </div>
+              <div>
+                <button *ngIf="eachField.value.fileKey != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile(eachField.key)">Change</button>
+            </div>
+          </div>
+
+            <div class="form-group row" *ngIf="eachField.value.type == 'date'">
+              <label class="col-sm-4 my-1 text-right">{{eachField.value.label}}<span *ngIf="eachField.value.required == 'true'" class="text-danger">*</span>:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control"  #nameCtrl="ngModel" name={{eachField.value.label}} placeholder="Select Date"
+                  [(ngModel)]="formData[eachField.key]" [required]="eachField.value.required == 'true'" bsDatepicker >
+                  <small *ngIf="eachField.value.helptext != undefined" [innerHTML]="testData[i+1]"></small>
+                  <span *ngIf="(createForm.submitted && nameCtrl.invalid) || (nameCtrl.invalid && nameCtrl.touched)" style="color: red;">
+                    required</span> 
+                </div>
+        
+            </div>
+          <!-- <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="d2" [(ngModel)]="save.deadLine"
+              ngbDatepicker #d2="ngbDatepicker" required>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary fa fa-calendar " (click)="d2.toggle()" type="button"
+                aria-required="true" #date></button>
+
+            </div>
+          </div> -->
+              </div>
+            <div class="form-group-row">
+                <div class="col-sm-8 text-right">
+                  <button type="submit" class="btn btn-success" (click)="create(createForm.form.valid)">Submit</button></div>
+              </div>
+            </form>
+        </section>
+        </div>

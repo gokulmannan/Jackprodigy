@@ -1,0 +1,85 @@
+<br>
+<div class="row justify-content-center">
+  <h4>Course Material</h4>
+</div>
+<div class="card-body">
+  <div class="container">
+    <div class="alert alert-info my-2">
+      <span class="badge badge-info">
+        Note
+      </span>
+      <ul>
+        <li> Supported image format (should be less than 1MB) *.jpg, *.jpeg, *.png </li>
+        <li>Supported documents (should be less than 10MB) *.pdf, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx,
+          *.odt, *.ods, *.odp, *.txt</li>
+        <li>Supported compressed format (should be less than 10MB) *.zip, *.rar, *.7z</li>
+      </ul>
+    </div>
+    <div class="row justify-content-end m-2">
+      <button class="btn btn-primary" data-toggle="modal" (click)="createCourseMaterial()">New</button>
+    </div>
+
+    <div *ngIf="coursematerial.length>0">
+      <div class="card mb-3 " *ngFor="let item of coursematerial  | groupBy: 'subjectName'">
+        <div class="card-header bg-primary text-white">
+          <p>{{item.key }}</p>
+        </div>
+        <div class="card-body ">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Material</th>
+                <th>Subject</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let eachCourseMaterial of item.value">
+                <td style="width: 60%">
+                  <label class="text-right">
+                    <span>
+                      <a data-toggle="modal"  class="la la-trash"
+                        (click)="viewDetails(eachCourseMaterial)">{{eachCourseMaterial.title}}</a>
+                    </span>
+                  </label>
+                  <br>
+                  <label for="" class="text-right">
+                    <small>Attachment</small>&nbsp;
+                  </label>
+                  <span>
+                    <a href="{{eachCourseMaterial.file.url}}">{{eachCourseMaterial.file.fileKey | titlecase}}</a>
+                    ({{eachCourseMaterial.courseMaterialType}})
+                  </span>
+                  <br>
+                  <small class="text-muted">-{{eachCourseMaterial.createdByStaff | titlecase}}</small>
+                </td>
+                <td class="align-middle" style="width: 30%">
+                  <span>{{eachCourseMaterial.subjectName}}</span>
+                  <br>
+                </td>
+                <td class="align-middle" style="width: 5%">
+                  <a data-toggle="modal"  class="la la-trash" (click)="editMaterial(eachCourseMaterial)"><i
+                      class="fa fa-edit"></i></a>
+                  <br>
+                </td>
+                <td class="align-middle" style="width: 5%">
+                  <a data-toggle="modal"  class="la la-trash" (click)="deleteMaterial(eachCourseMaterial)"><i
+                      class="fa fa-trash"></i></a><br>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3" *ngIf="coursematerial.length == 0 ">
+        <div class="alert alert-warning">
+          <span class="badge badge-warning"> Sorry !</span> No data found.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

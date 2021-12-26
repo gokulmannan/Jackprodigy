@@ -1,0 +1,21 @@
+<div class="modal fade show" id="editBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  style="display: block; padding-right: 17px;">
+
+  <div class="modal-dialog" role="document">
+
+
+    <div class="modal-content" ngbAutofocus>
+      <div class="modal-header">
+        <h6 class="modal-title text-center">
+          Are you sure want to delete ? </h6>
+        <button class="close" aria-label="Close" (click)="activeModal.close()">
+          <span >&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-right">
+        <button class="btn btn-secondary btn-sm mr-1" (click)="activeModal.close()">Cancel</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteMaterial()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

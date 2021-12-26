@@ -1,0 +1,14 @@
+
+<app-department-nav (deptNav)="loadAccData($event)" ></app-department-nav>
+
+<div class="form-group row">
+  <label for="departmentselect" class="col-sm-3 text-right">AccYear*</label>
+  <div class="col-sm-6">
+      <select  class="custom-select" name="departmentselect" #t [(ngModel)]="accyear" (change)="onSelect(accyear)"  >
+          <option value="" selected="selected"> ---------------------- Select AccYear -------------------- </option>
+          <option [ngValue]="accyear" *ngFor="let accyear of accyears ">{{accyear.startYear }} - {{accyear.endYear}}</option>
+      </select>
+   
+  </div>
+
+</div>

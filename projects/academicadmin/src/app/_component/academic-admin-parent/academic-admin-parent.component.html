@@ -1,0 +1,30 @@
+<section class="container-fluid flex-grow">
+    <div class="row" >
+        <div class="col-md-10 order-md-1 pt-3">
+            <div class="bg-faded mb-3">
+                <div class="card bg-light">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 order-md-2 pt-4">
+            <div class="list-group">
+                <a routerLink="/academicadmin/home" class="list-group-item list-group-item-action" [routerLinkActiveOptions]="{exact:
+              true}" routerLinkActive="active-link"><i class="fa fa-home"></i>&nbsp;Fees Due Students</a>
+                <!-- <a routerLink="/academicadmin/moveStudents" class="list-group-item list-group-item-action" [routerLinkActiveOptions]="{exact:
+                  true}" routerLinkActive="active-link">&nbsp;<i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                  Move Students</a> -->
+
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row" *ngIf="currentUser.userType=='STUDENT'">
+        <div class="col-md-12 order-md-1 pt-3">
+            <div class="bg-faded mb-3">
+                <div class="card bg-light">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+            </div>
+        </div> -->
+    </section>

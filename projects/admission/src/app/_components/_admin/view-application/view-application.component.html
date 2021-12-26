@@ -1,0 +1,36 @@
+<div class="row mt-4" *ngIf="isView">
+
+    <div class="col-md-11">
+        <div>
+            <div class="shadow-sm p-5 mb-5 bg-white text-center">
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1" style="padding:2px;">
+                        <button class="btn btn-sm btn-primary btn-block" (click)="edit()">Edit</button>
+                    </div>
+                    <div class="col-md-1" style="padding:2px;">
+                        <button class="btn btn-sm btn-danger btn-block" (click)="delete()">Delete</button>
+                    </div>
+
+                </div>
+                <table class="table table-bordered mt-1">
+                    <tr>
+                        <th>Application Name</th>
+                        <td>{{application.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Application Fees</th>
+                        <td>{{application.fees}}</td>
+                    </tr>
+                    <tr>
+                        <th>Selectable Courses</th>
+                        <td *ngIf="application.courseName != undefined">{{application.courseName[0]}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-11" *ngIf="isView">
+
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="container mt-1">
+    <h3 ngbAutofocus>
+        <button type="button" class="close text-danger" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            x
+        </button> Campus
+    </h3>
+</div>
+<hr class="my-2">
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-8">
+        <form [formGroup]="newCampusForm" (ngSubmit)="createNewCampus()" #form="ngForm">
+            <div class="mb-6">
+
+                <mat-form-field style="width:400px !important">
+                    <mat-label>Campus Name</mat-label>
+                    <input matInput formControlName="name">
+                    <mat-error>Please enter Campus name.</mat-error>
+                </mat-form-field>
+            </div>
+            &nbsp;&nbsp;&nbsp;<button mat-button class="btn btn-primary mt-3">SUBMIT</button>
+
+        </form>
+    </div>
+</div>
+<br>
+<br>

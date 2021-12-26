@@ -1,0 +1,702 @@
+<div class="row" *ngIf="showForm">
+
+    <div class="col-md-12">
+        <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+            <mat-step [stepControl]="basicDetailsForm" [completed]="false" class="">
+                <div class="shadow-lg p-5 mb-5 rounded" style="background-color:#e1ede4;">
+                    <form [formGroup]="basicDetailsForm" style="color: #78909c;">
+                        <ng-template matStepLabel>Basic Details</ng-template>
+                        <!--Nationality-->
+                        <mat-form-field class="ml-4" style="width: 30%;">
+                            <mat-label>Nationality</mat-label>
+                            <mat-select formControlName="nationality" required>
+                                <mat-option *ngFor="let eachNationality of nationalityList" [value]="eachNationality">
+                                    {{eachNationality}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!--Have you studied from India?-->
+                        <mat-form-field class="ml-4" style="width: 30%;">
+                            <mat-label>Have you studied from India?</mat-label>
+                            <mat-select formControlName="studiedFromIndia" required>
+                                <mat-option *ngFor="let state of ['Yes', 'No']" [value]="state">{{state}}</mat-option>
+                            </mat-select>
+                            <!--Next-->
+                        </mat-form-field>
+                        <mat-form-field class="ml-4" style="width: 30%;">
+                            <mat-label>Prefered Campus</mat-label>
+                            <mat-select formControlName="campus" required>
+                                <mat-option *ngFor="let eachCampus of campus" [value]="eachCampus.id">
+                                    {{eachCampus.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <div class="row">
+                            <h3>Applications</h3>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9">
+                                <div *ngFor="let application of allApplications">
+                                    <input class="form-check-input" type="checkbox" [(ngModel)]="application.selected">&nbsp;<span class="mb-3">{{application.name}}</span></div>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <h5>Applications</h5>
+                        </div>
+                        <div *ngFor="let application of allApplications; let i=index">
+                            <mat-checkbox type="checkbox" [value]="application.id" (change)="onCheckboxChange($event)" [checked]="appliedApplications.indexOf(application.id) > -1" [disabled]="appliedApplications.indexOf(application.id) > -1">
+                                {{application.name}}<span *ngIf="appliedApplications.indexOf(application.id) > -1">(Applied)</span></mat-checkbox>
+                        </div>
+
+                        <p class="error" *ngIf="this.basicDetailsForm.controls['checkArray'].errors?.required">
+                            select atleast one application.
+                        </p>
+                        <br><br>
+                        <div style="width: 66%;">
+                            <button mat-button matStepperNext class="btn btn-primary ml-4 float-right" (click)="updatebasicDetailsForm()">Save & Continue</button>
+                        </div>
+                    </form>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="personalInformationForm" [completed]="false">
+                <div class="shadow-lg p-5 mb-5  rounded" style="background-color:#e1ede4;">
+                    <form [formGroup]="personalInformationForm">
+                        <ng-template matStepLabel>personal Details</ng-template>
+                        <!--title-->
+                        <!-- <mat-form-field class=" ml-4" style="width: 5%;">
+                            <mat-label>Title</mat-label>
+                            <mat-select formControlName="title">
+                                <mat-option *ngFor="let state of ['Mr', 'Ms']" [value]="state">{{state}}</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                        <!--firstName-->
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="First Name" formControlName="firstName" required>
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Middle Name" formControlName="middleName">
+                        </mat-form-field>
+                        <!--lastName-->
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Last Name" formControlName="lastName">
+                        </mat-form-field>
+                        <!--mobile-->
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Mobile Number" formControlName="mobile" required>
+                        </mat-form-field>
+                        <!--email-->
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput email placeholder="Email" formControlName="email" required>
+                        </mat-form-field>
+                        <!--alternateEmail-->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput email placeholder="Alternate Email ID" formControlName="alternateEmail">
+                        </mat-form-field> -->
+                        <!--dateOfBirth-->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dateOfBirth" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker touchUi #picker></mat-datepicker>
+                        </mat-form-field> -->
+
+                        <!--Gender-->
+                        <mat-form-field class="full-width ml-4">
+                            <mat-label>Gender</mat-label>
+                            <mat-select formControlName="gender" required>
+                                <mat-option>None</mat-option>
+                                <mat-option *ngFor="let gender of ['Male', 'Female', 'Transgender']" [value]="gender">
+                                    {{gender}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!--bloodGroup-->
+                        <mat-form-field class="full-width ml-4">
+                            <mat-label>Blood Group</mat-label>
+                            <mat-select formControlName="bloodGroup">
+                                <mat-option>Select Blood Group</mat-option>
+                                <mat-option *ngFor="let bloodGroup of bloodGroupList" [value]="bloodGroup">
+                                    {{bloodGroup}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!--community-->
+                        <mat-form-field class="full-width ml-4">
+                            <mat-label>Community</mat-label>
+                            <mat-select formControlName="community">
+                                <mat-option>None</mat-option>
+                                <mat-option *ngFor="let community of communityList" [value]="community">
+                                    {{community}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!--Religion-->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput religion placeholder="religion" formControlName="religion">
+                        </mat-form-field> -->
+                        <!--Mother Tongue-->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <mat-label>Mother Tongue</mat-label>
+                            <input matInput formControlName="motherTongue">
+                        </mat-form-field> -->
+                        <!--placeOfBirth-->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput formControlName="placeOfBirth" placeholder="Place of Birth">
+                        </mat-form-field> -->
+                        <!--sourceOfAdmission-->
+                        <mat-form-field class="full-width ml-4">
+                            <mat-label>Where do you see the admission advertisement</mat-label>
+                            <mat-select formControlName="sourceOfAdmission" required>
+                                <mat-option>Select Source</mat-option>
+                                <mat-option *ngFor="let source of sourceList" [value]="source">{{source}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!--differentlyAbled-->
+                        <mat-form-field class="full-width  ml-4">
+                            <mat-label>Are You Differently Abled ?</mat-label>
+                            <mat-select formControlName="differentlyAbled" required>
+                                <mat-option>Select Yes/No</mat-option>
+                                <mat-option *ngFor="let state of ['Yes', 'No']" [value]="state">{{state}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        &nbsp;&nbsp;&nbsp;
+                        <mat-label>Date of birth* :</mat-label>
+                        <mat-form-field class="ml-4" style="width: 10%">
+                            <mat-label>Day</mat-label>
+                            <mat-select formControlName="birthDay" required>
+                                <mat-option *ngFor="let day of days" [value]="day">
+                                    {{day}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="ml-4" style="width: 10%">
+                            <mat-label>Month</mat-label>
+                            <mat-select formControlName="birthMonth" required>
+                                <mat-option *ngFor="let month of months" [value]="month">
+                                    {{month}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="ml-4" style="width: 10%">
+                            <mat-label>Year</mat-label>
+                            <mat-select formControlName="birthYear" required>
+                                <mat-option *ngFor="let year of yearsList" [value]="year">
+                                    {{year}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!--Next-->
+                    </form>
+
+                    <div class="row mt-4" style="width: 98%;">
+                        <div class="col-md-1">
+                            <button mat-button matStepperPrevious class="btn btn-primary ml-4 float-right">Back</button>
+                        </div>
+                        <div class="col-md-11 float-right">
+                            <button mat-button matStepperNext class="btn btn-primary ml-4 float-right" (click)="updatePersonalInfoForm()">Save & Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-step>
+
+            <!-- parents and communication Details-->
+
+            <mat-step [stepControl]="parentsDetailsForm" [completed]=false>
+                <ng-template matStepLabel>Parent's and Communicaition Details</ng-template>
+                <div class="shadow-lg p-5 mb-5  " style="background-color:#e1ede4;">
+                    <form [formGroup]="parentsDetailsForm">
+                        <div class="row">
+                            <h5>Father's Details</h5>
+                        </div>
+                        <!-- fathersTitle -->
+                        <mat-form-field class=" ml-4" style="width: 10%;">
+                            <mat-label>Title</mat-label>
+                            <mat-select formControlName="fathersTitle" name="fathersTitle" required>
+                                <mat-option>None</mat-option>
+                                <mat-option *ngFor="let state of ['Mr', 'Dr', 'Late']" [value]="state">{{state}}
+                                </mat-option>
+                            </mat-select>
+
+                            <!-- fathersName -->
+                        </mat-form-field>
+                        <mat-form-field class=" ml-2" style="width: 24%;">
+                            <input matInput placeholder="Father's Name" formControlName="fathersName" name="asasas" required>
+                        </mat-form-field>
+                        <!-- fathersOccupation -->
+                        <mat-form-field class=" ml-4" style="width: 26%;">
+                            <input matInput placeholder="Father's Occupation" formControlName="fathersOccupation">
+                        </mat-form-field>
+                        <!-- fathersAnnualIncome -->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Father's Annual Income" formControlName="fathersAnnualIncome">
+                        </mat-form-field> -->
+                        <!-- fathersMobile -->
+                        <mat-form-field class=" ml-4" style="width: 26%;">
+                            <input matInput placeholder="Father's Mobile Number" formControlName="fathersMobile" required>
+                        </mat-form-field>
+                        <!-- fathersAlterMobile -->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Father's Alternate Mobile Number" formControlName="fathersAlterMobile">
+                        </mat-form-field> -->
+                        <!-- fathersEmail -->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput email placeholder="Father's Email Id" formControlName="fathersEmail">
+                        </mat-form-field> -->
+                        <div class="row">
+                            <h5>Mother's Details</h5>
+                        </div>
+                        <!-- mothersTitle -->
+                        <mat-form-field class=" ml-4" style="width: 10%;">
+                            <mat-label>Title</mat-label>
+                            <mat-select formControlName="mothersTitle" required>
+                                <mat-option>None</mat-option>
+                                <mat-option *ngFor="let mothersTitle of ['Mrs', 'Dr', 'Late']" [value]="mothersTitle">
+                                    {{mothersTitle}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- mothersName -->
+                        <mat-form-field class=" ml-2" style="width: 24%;">
+                            <input matInput placeholder="Mother's Name" formControlName="mothersName" required>
+                        </mat-form-field>
+                        <!-- mothersOccupation -->
+                        <mat-form-field class="ml-4" style="width: 26%;">
+                            <input matInput placeholder="Mother's Occupation" formControlName="mothersOccupation">
+                        </mat-form-field>
+                        <!-- mothersAnnualIncome -->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Mother's Annual Income" formControlName="mothersAnnualIncome">
+                        </mat-form-field> -->
+                        <!-- mothersMobile -->
+                        <mat-form-field class="ml-4" style="width: 26%;">
+                            <input matInput placeholder="Mother's Mobile Number" formControlName="mothersMobile" [required]="ismothersDetailsRequired">
+                        </mat-form-field>
+                        <!-- mohtersAlterMobile -->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Mother's Alternate Mobile Number" formControlName="mohtersAlterMobile">
+                        </mat-form-field> -->
+                        <!-- mothersEmail -->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput email placeholder="Mother's Email Id" formControlName="mothersEmail">
+                        </mat-form-field> -->
+
+                        <div class="row">
+                            <mat-checkbox formControlName="guardiansDetails">
+                                <h5 class="mt-2">Add Guardian's Details </h5>
+                            </mat-checkbox>
+                        </div>
+                        <div *ngIf="parentsDetailsForm.value.guardiansDetails">
+                            <!-- guardiansTitle -->
+                            <mat-form-field class=" ml-4" style="width: 10%;">
+                                <mat-label>Title</mat-label>
+                                <mat-select formControlName="guardiansTitle">
+                                    <mat-option>None</mat-option>
+                                    <mat-option *ngFor="let guardiansTitle of ['Mr', 'Ms', 'Mrs', 'Dr']" [value]="guardiansTitle">{{guardiansTitle}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- guardiansName -->
+                            <mat-form-field class=" ml-2" style="width: 24%;">
+                                <input matInput placeholder="Guardian's Name" formControlName="guardiansName">
+                            </mat-form-field>
+                            <!-- guardiansOccupation -->
+                            <mat-form-field class=" ml-4" style="width: 26%;">
+                                <input matInput placeholder="Guardian's Occupation" formControlName="guardiansOccupation">
+                            </mat-form-field>
+                            <!-- guardiansMobile -->
+                            <mat-form-field class=" ml-4" style="width: 26%;">
+                                <input matInput placeholder="Guardian's Mobile Number" formControlName="guardiansMobile">
+                            </mat-form-field>
+                            <!-- guardiansEmail -->
+                            <!-- <mat-form-field class="full-width ml-4">
+                                <input matInput email placeholder="Guardian's Email Id" formControlName="guardiansEmail">
+                            </mat-form-field> -->
+                        </div>
+                        <div class="row">
+                            <h5>Address for Communication</h5>
+                        </div>
+                        <!-- Communication  country-->
+                        <mat-form-field class=" ml-4" style="width: 34%;">
+                            <mat-label>Country</mat-label>
+                            <mat-select formControlName="country" required>
+                                <mat-option>Select Country</mat-option>
+                                <mat-option *ngFor="let country of countriesList.country" [value]="country.country">
+                                    {{country.country}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- Communication state -->
+                        <mat-form-field *ngIf="!showStateDropDown" class=" ml-4" style="width: 26%;">
+                            <input matInput state placeholder="state" formControlName="state" required>
+                        </mat-form-field>
+                        <mat-form-field *ngIf="showStateDropDown" class=" ml-4" style="width: 26%;">
+                            <mat-label>State</mat-label>
+                            <mat-select formControlName="state" required>
+                                <mat-option>Select State</mat-option>
+                                <mat-option *ngFor="let state of states" [value]="state">
+                                    {{state}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- Communication District -->
+                        <mat-form-field class=" ml-4" style="width: 26%;">
+                            <input matInput district placeholder="district/city" formControlName="district">
+                        </mat-form-field>
+                        <!-- Communication city -->
+                        <!-- <mat-form-field class=" ml-4" style="width: 22%;">
+                            <mat-label>City</mat-label>
+                            <input matInput formControlName="city">
+                        </mat-form-field> -->
+                        <!-- Communication addressLine1 -->
+                        <mat-form-field class=" ml-4" style="width: 34%;">
+                            <input matInput placeholder="Address Line 1" formControlName="addressLine1" required>
+                            <mat-hint>House No./Street</mat-hint>
+                        </mat-form-field>
+                        <!-- Communication addressLine2 -->
+                        <mat-form-field class=" ml-4" style="width: 26%;">
+                            <input matInput placeholder="Address Line 2" formControlName="addressLine2">
+                            <mat-hint>Locality/Vill./Town</mat-hint>
+                        </mat-form-field>
+                        <!-- Communication pinCode -->
+                        <mat-form-field class=" ml-4" style="width: 26%;">
+                            <input matInput placeholder="Pincode " formControlName="pincode" required>
+                        </mat-form-field>
+                        <!-- Next -->
+                    </form>
+                    <div class="row mt-4" style="width: 98%;">
+                        <div class="col-md-1">
+                            <button mat-button matStepperPrevious class="btn btn-primary ml-4 float-right">Back</button>
+                        </div>
+                        <div class="col-md-11 float-right">
+                            <button mat-button matStepperNext class="btn btn-primary ml-4 float-right" (click)="updateparentsDetailsForm()">Save & Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="academicDetailsForm" [completed]=false>
+                <ng-template matStepLabel>Academic Details</ng-template>
+                <div class="shadow-lg p-5 mb-5  " style="background-color:#e1ede4;">
+                    <form [formGroup]="academicDetailsForm">
+                        <div class="row">
+                            <h5>Academic Details</h5>
+                        </div>
+                        <div class="row mt-4">
+                            <h5>SSLC Details</h5>
+                        </div>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Institute Name" formControlName="sslcInstituteName">
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <mat-label>Board</mat-label>
+                            <mat-select formControlName="sslcBoard">
+                                <mat-option>Select Board</mat-option>
+                                <mat-option *ngFor="let board of boardList" [value]="board">{{board}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <mat-label>Marking Scheme</mat-label>
+                            <mat-select formControlName="sslcMarkingScheme">
+                                <mat-option>Select Marking Scheme</mat-option>
+                                <mat-option *ngFor="let markingScheme of markingSchemeList" [value]="markingScheme">
+                                    {{markingScheme}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Obtained Percentage/CGPA" formControlName="sslcMarkObtained">
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Year of Passing" formControlName="sslcYearOfPassing">
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Roll No. / Registration No. " formControlName="sslcRegistrationNo">
+                        </mat-form-field>
+                        <div class="row mt-4">
+                            <h5>HSC Details</h5>
+                        </div>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Institute Name" formControlName="hscInstituteName">
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <mat-label>Board</mat-label>
+                            <mat-select formControlName="hscBoard">
+                                <mat-option>Select Board</mat-option>
+                                <mat-option *ngFor="let board of boardList" [value]="board">{{board}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <mat-label>Marking Scheme</mat-label>
+                            <mat-select formControlName="hscMarkingScheme">
+                                <mat-option>Select Marking Scheme</mat-option>
+                                <mat-option *ngFor="let markingScheme of markingSchemeList" [value]="markingScheme">
+                                    {{markingScheme}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Obtained Percentage/CGPA" formControlName="hscMarkObtained">
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Year of Passing" formControlName="hscYearOfPassing">
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Roll No. / Registration No. " formControlName="hscRegistrationNo">
+                        </mat-form-field>
+                        <div class="row mt-4">
+                            <h5>Other Details</h5>
+                        </div>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Institute Name" formControlName="othersInstituteName">
+                        </mat-form-field>
+                        <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Year" formControlName="othersYearOfPassing">
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field class="ml-4" style="width: 63%;">
+                            <mat-label>Description in detail</mat-label>
+                            <textarea matInput placeholder="Description in detail" formControlName="othersDescription"></textarea>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="diplomaUniversity" formControlName="diplomaUniversity">
+                        </mat-form-field> -->
+                        <!-- <mat-form-field class="ml-4" style="width: 14%;">
+                            <mat-label>Mode of Study</mat-label>
+                            <mat-select formControlName="diplomaModeOfStudy">
+                                <mat-option>Select Mode of Study</mat-option>
+                                <mat-option *ngFor="let modeOfStudy of ['FULL-TIME','PART-TIME']" [value]="modeOfStudy">
+                                    {{modeOfStudy}}</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                        <!-- <mat-form-field class="ml-4" style="width: 14%;">
+                            <mat-label>Marking Scheme</mat-label>
+                            <mat-select formControlName="diplomaMarkingScheme">
+                                <mat-option>Select Marking Scheme</mat-option>
+                                <mat-option *ngFor="let markingScheme of markingSchemeList" [value]="markingScheme">
+                                    {{markingScheme}}</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Obtained Percentage/CGPA" formControlName="diplomaMarkObtained">
+                        </mat-form-field> -->
+
+                        <!-- <mat-form-field class="full-width ml-4">
+                            <input matInput placeholder="Roll No. / Registration No. " formControlName="diplomaRegistrationNo">
+                        </mat-form-field> -->
+                    </form>
+                    <div class="row mt-4" style="width: 98%;">
+                        <div class="col-md-1">
+                            <button mat-button matStepperPrevious class="btn btn-primary ml-4 float-right">Back</button>
+                        </div>
+                        <div class="col-md-11 float-right">
+                            <button mat-button matStepperNext class="btn btn-primary ml-4 float-right" (click)="updateAcademicDetailsForm()">Save & Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-step>
+            <mat-step [completed]=false>
+                <ng-template matStepLabel>Upload & Declaration</ng-template>
+
+                <div class="shadow-lg p-5 mb-5" style="background-color:#e1ede4;">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <h5>Upload Documents</h5>
+                        </div>
+                    </div>
+                    <!-- -------------------------------sslc attachment------------------------------------------ -->
+                    <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="tenthMarkSheet">Tenth Mark Sheet :</label>
+                        </div>
+                        <div *ngIf="attachments.sslc.url == null" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="tenthMarkSheet" (change)="onFileChange($event.target.files, 'tenthMarkSheet')">
+                                <label class="custom-file-label" for="tenthMarkSheet">{{tenthMarkSheetLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.sslc.url != null"><a href="{{attachments.sslc.url}}">{{attachments.sslc.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.sslc.url  != null" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('tenthMarkSheetRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.sslc.url == null && attachments.sslc.versionId == null && tenthMarkSheet != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.sslc.url == null && attachments.sslc.versionId != null && tenthMarkSheet != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div>
+                    <!-- -------------------------------hsc attachment------------------------------------------ -->
+                    <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="twelfthMarkSheet">Twelfth Mark Sheet :</label>
+                        </div>
+                        <div *ngIf="attachments.hsc.url == null" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="twelfthMarkSheet" (change)="onFileChange($event.target.files, 'twelfthMarkSheet')">
+                                <label class="custom-file-label" for="twelfthMarkSheet">{{twelfthMarkSheetLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.hsc.url != null"><a href="{{attachments.hsc.url}}">{{attachments.hsc.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.hsc.url!= undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('twelfthMarkSheetRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.hsc.url == null && attachments.hsc.versionId == null && twelfthMarkSheet != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.hsc.url == null && attachments.hsc.versionId != null && twelfthMarkSheet != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div>
+                    <!-- -------------------------------others attachment------------------------------------------ -->
+                    <!-- <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="diplomaMarkSheet">Others Attachment :</label>
+                        </div>
+                        <div *ngIf="attachments.diploma.url== undefined" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="diplomaMarkSheet" (change)="onFileChange($event.target.files, 'diplomaMarkSheet')">
+                                <label class="custom-file-label" for="diplomaMarkSheet">{{diplomaMarkSheetLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.diploma.url != undefined"><a href="{{attachments.diploma.url}}">{{attachments.diploma.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.diploma.url != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('diplomaMarkSheetRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.diploma.url == undefined && attachments.diploma.versionId == undefined && diplomaMarkSheet != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.diploma.url == undefined && attachments.diploma.versionId != undefined && diplomaMarkSheet != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div> -->
+                    <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="othersMarkSheet">Others Attachment :</label>
+                        </div>
+                        <div *ngIf="attachments.others.url== undefined" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="othersMarkSheet" (change)="onFileChange($event.target.files, 'othersMarkSheet')">
+                                <label class="custom-file-label" for="othersMarkSheet">{{othersMarkSheetLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.others.url != undefined"><a href="{{attachments.others.url}}">{{attachments.others.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.others.url != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('othersMarkSheetRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.others.url == undefined && attachments.others.versionId == undefined && othersMarkSheet != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.others.url == undefined && attachments.others.versionId != undefined && othersMarkSheet != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div>
+                    <!-- -------------------------------community attachment------------------------------------------ -->
+                    <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="communityCertificate">Community Certificate :</label>
+                        </div>
+                        <div *ngIf="attachments.community.url == null" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="communityCertificate" (change)="onFileChange($event.target.files, 'communityCertificate')">
+                                <label class="custom-file-label" for="communityCertificate">{{communityCertificateLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.community.url != null"><a href="{{attachments.community.url}}">{{attachments.community.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.community.url != null" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('communityCertificateRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.community.url == null && attachments.community.versionId == null && communityCertificate != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.community.url == null && attachments.community.versionId != null && communityCertificate != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div>
+                    <!-- -------------------------------tc attachment------------------------------------------ -->
+                    <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="transferCertificate">Transfer Certificate / School Leaving Certificate
+                                :</label>
+                        </div>
+                        <div *ngIf="attachments.tc.url== undefined" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="tenthMarkSheet" (change)="onFileChange($event.target.files, 'transferCertificate')">
+                                <label class="custom-file-label" for="transferCertificate">{{transferCertificateLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.tc.url != undefined"><a href="{{attachments.tc.url}}">{{attachments.tc.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.tc.url != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('transferCertificateRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.tc.url == undefined && attachments.tc.versionId == undefined && transferCertificate != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.tc.url == undefined && attachments.tc.versionId != undefined && transferCertificate != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div>
+                    <!-- -------------------------------profile pic attachment------------------------------------------ -->
+
+                    <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="profilePhoto">Passport Size Photo :</label>
+                        </div>
+                        <div *ngIf="attachments.profilePic.url== undefined" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="profilePhoto" (change)="onFileChange($event.target.files, 'profilePhoto')">
+                                <label class="custom-file-label" for="profilePhoto">{{profilePhotoLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.profilePic.url != undefined"><a href="{{attachments.profilePic.url}}">{{attachments.profilePic.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.profilePic.url != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('profilePhotoRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.profilePic.url == undefined && attachments.profilePic.versionId == undefined && profilePhoto != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.profilePic.url == undefined && attachments.profilePic.versionId != undefined && profilePhoto != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div>
+                    <!-- -------------------------------nativeFront attachment------------------------------------------ -->
+                    <label for="descriptionLable">Native Certificate (Aadhar/Voter ID/Driving License/Ration) :</label>
+
+                    <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="nativeCertificateFront">Native Certificate:</label>
+                        </div>
+                        <div *ngIf="attachments.nativeFront.url== undefined" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="nativeCertificateFront" (change)="onFileChange($event.target.files, 'nativeCertificateFront')">
+                                <label class="custom-file-label" for="nativeCertificateFront">{{nativeCertificateFrontLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.nativeFront.url != undefined"><a href="{{attachments.nativeFront.url}}">{{attachments.nativeFront.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.nativeFront.url != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('nativeCertificateFrontRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.nativeFront.url == undefined && attachments.nativeFront.versionId == undefined && nativeCertificateFront != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.nativeFront.url == undefined && attachments.nativeFront.versionId != undefined && nativeCertificateFront != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div>
+                    <!-- -------------------------------nativeBack attachment------------------------------------------ -->
+
+                    <!-- <div class="row  mt-4">
+                        <div class="col-md-4 mb-2 text-right">
+                            <label for="nativeCertificateBack">Native Certificate Back :</label>
+                        </div>
+                        <div *ngIf="attachments.nativeBack.url== undefined" class="col-md-5">
+                            <div class="custom-file bold">
+                                <input type="file" class="custom-file-input" id="nativeCertificateBack" (change)="onFileChange($event.target.files, 'nativeCertificateBack')">
+                                <label class="custom-file-label" for="nativeCertificateBack">{{nativeCertificateBackLable}}</label>
+                            </div>
+                        </div>
+                        <div *ngIf="attachments.nativeBack.url != undefined"><a href="{{attachments.nativeBack.url}}">{{attachments.nativeBack.fileKey}}</a>
+                        </div>
+                        <div>
+                            <button *ngIf="attachments.nativeBack.url != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile('nativeCertificateBackRemove')">Change</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button *ngIf="attachments.nativeBack.url == undefined && attachments.nativeBack.versionId == undefined && nativeCertificateBack != undefined" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                            <button *ngIf="attachments.nativeBack.url == undefined && attachments.nativeBack.versionId != undefined && nativeCertificateBack != undefined" class="btn btn-success" (click)="updateFile()">Upload</button>
+                        </div>
+                    </div> -->
+
+                    <div class="row mt-4" style="width: 80%;">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-1">
+                            <button mat-button matStepperPrevious class="btn btn-primary ml-3">&nbsp;Back&nbsp;</button>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2 float-right">
+                            <button mat-button matStepperNext class="btn btn-primary ml-4" (click)="redirect()">&nbsp;Submit&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+
+    </div>
+</div>

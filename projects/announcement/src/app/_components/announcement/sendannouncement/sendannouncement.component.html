@@ -1,0 +1,27 @@
+<section class="container-fluid flex-grow">
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <h3 style="text-align:center">Sent Announcement</h3>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">#</th>
+                            <th style="text-align: center;">Announcement</th>
+                            <th style="text-align: center;">Date</th>
+                 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sentAnnouncement of sentAnnouncements let i = index">
+                            <th style="text-align: center;" scope="row">{{ i+1 }}</th>
+                            <td style="text-align: center;"><a  [routerLink]="" (click)="viewMessage(sentAnnouncement)">{{sentAnnouncement.title}}</a></td>
+                            <td style="text-align: center;">{{sentAnnouncement.createdOn |date:'medium'}}</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

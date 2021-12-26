@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title">Edit File</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class="modal-body" >
+     <div class="form-group row" >
+      <div class="col-md-4 mb-2 text-right">
+        <label for="twelfthMarkSheet">{{getFile.label}} :</label>
+    </div>
+        <div class="col-md-2" *ngIf="getFile.fileKey == undefined">
+        <input #fileInput type="file" id="file">
+        <span><br></span>
+        <button  class="btn btn-success" (click)="uploadFiles(fileInput.files,naac.fieldValues.key)">Upload</button>
+        <span class="badge badge-warning">Valid extentions   {{getFile.regex}}</span>
+      </div>
+     
+      <div *ngIf="getFile.fileKey != undefined">
+        <a href="{{getFile.url}}">{{getFile.fileKey}}</a>
+      </div>
+      <div>
+        <button *ngIf="getFile.url != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile(naac.fieldValues.key)">Change</button>
+        <button *ngIf="getFile.url != undefined && getFile.required =='false'" class="btn btn-sm btn-outline-danger ml-4" (click)="removeFileFromDb(naac.fieldValues.key)">Delete</button>
+      </div>
+  </div> 
+
+    </div>

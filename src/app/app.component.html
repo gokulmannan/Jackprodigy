@@ -1,0 +1,46 @@
+<!-- <nav class="navbar navbar-expand fixed-top" style="background-color: rgba(219, 221, 223, 0.87);">
+
+    <div class="row w-100">
+        <div class="col-md-7 float-right">
+
+        </div>
+        <div class="col-md-5 text-right ">
+            <strong> Welcome</strong>
+        </div>
+    </div>
+</nav> -->
+<div *ngIf="!sms && !feedBackForm && !admission">
+   
+<nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color:#ccc;height: 60px;">
+     <span style="padding-right:100"><img  src="/assets/images/mgr.png" width="200px" height="40px"></span> 
+   
+   
+    <span style="padding-left: 40%;"> <loading-alert></loading-alert></span>
+           <span style="padding-left: 40%;">Welcome - <strong>{{singleUser.name}}</strong></span> 
+
+        </nav>
+        
+<br><br>
+<section id="sidebar" class="container-fluid ">
+    <div class="row">
+        <div class="col-md-2 order-md-1 pt-3">
+            <div class="bg-faded mb-3">
+        
+                <span *ngIf="currentUser.userType !='STUDENT'"><faculty-body></faculty-body> </span>
+                <span *ngIf="currentUser.userType =='STUDENT'"><student-body></student-body> </span>
+            </div>
+        </div>
+        <div  class="col-md-10 order-md-2 pt-4">
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+</section>
+</div>
+
+<div *ngIf="sms">  <router-outlet></router-outlet></div>
+
+<div *ngIf="feedBackForm">  <router-outlet></router-outlet></div>
+
+
+<div *ngIf="admission">  <router-outlet></router-outlet></div>

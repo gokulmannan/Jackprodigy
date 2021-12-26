@@ -1,0 +1,27 @@
+<div class="modal-header">
+  
+    <button type="button" class="btn btn-info" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+     Back
+      </button>
+      
+    </div>
+<div class="modal-body">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th style="color: teal;">#</th>
+                <th style="color: teal;">Name</th>
+                <th style="color: teal;">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let eachStaff of userData ;let i=index ">
+                <td style="width: 10%;">{{i+1}}</td>
+                <td> &nbsp; {{eachStaff.name}} </td>
+                <td> &nbsp; {{eachStaff.email}} </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>

@@ -1,0 +1,34 @@
+<div class="modal-header bd-example-modal-lg">
+  <h4 class="modal-title">Subject</h4>
+  <button type="button" class="close " aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card bg-light text-dark">
+    <table class="table table-striped">
+      <thead style="text-align:center">
+        <tr>
+          <th style="text-align: center;"> </th>
+          <th style="text-align: left;">Subject</th>
+        </tr>
+      </thead>
+      <tbody class="table">
+        <tr *ngFor=" let eachSelectSubject of selectSubject; let i =index;">
+          <td style="text-align: right;">
+            <input class="form-check-input" type="radio" value="subject" name="selectSubject"
+              (change)="selectedSubject(eachSelectSubject)">
+          </td>
+          <td style="text-align: left;">{{eachSelectSubject.subjectName}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-11 text-right">
+      <button type="submit" class="btn btn-primary" (click)="add()">Add</button>
+    </div>
+  </div>
+</div>

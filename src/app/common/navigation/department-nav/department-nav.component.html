@@ -1,0 +1,29 @@
+<!-- <select name="department" [ngModel]="selectedId" style="width: 200px;" (ngModelChange)="onSelect($event)"> -->
+
+<div class="form-group row">
+    <label for="departmentselect" class="col-sm-3 my-2 text-right">Degree & Department<span class="text-danger">*</span>:</label>
+    <div class="col-sm-6 mb-3">
+        <!-- <select class="custom-select " name="departmentselect" [(ngModel)]="dept" (change)="onSelect(dept)" required #depType="ngModel" ngModel>
+      <option value="" selected>----------------- Select Department ----------------</option>
+      <option style="height: 30px;font-size: 18px" *ngFor="let department of departments" [ngValue]="department">
+        {{department.degreeName}} -- {{department.departmentName}}</option>
+    </select> -->
+
+    <ng-select 
+    #departmentSelect
+    placeholder="------------------------------Select Department-------------------------------"
+    [searchable]="true"  
+    [clearable] = "false"
+    [(ngModel)]="dept"
+   (change)="onSelect(dept)"  
+    
+    >
+    <ng-option [value]="department" *ngFor="let department of departments">
+       
+        {{department.degreeName}} - {{department.departmentName}}
+    </ng-option>
+</ng-select>
+    </div>
+
+</div>
+ 

@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+  integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4> Edit Department </h4>
+   
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <form class="form" #editForm="ngForm" >
+        <div class="form-group row">
+    
+          <label class="col-sm-4 text-right ">Degree Name<span class="text-danger">*</span>:</label>
+    
+          <div class="col-sm-6">
+            <input type="text" class="form-control" #degreeName="ngModel" required placeholder="Degree Name" name="degreeName"
+              [(ngModel)]="editDept.degreeName" ngModel>
+     <span *ngIf="(editForm.submitted && degreeName.invalid) || (degreeName.invalid && degreeName.touched)" style="color: red;">
+                Name required
+              </span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 text-right">Department Name <span class="text-danger">*</span>:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" #departmentName="ngModel"required placeholder="departmentName"  name="departmentName"
+            [(ngModel)]="editDept.departmentName" ngModel >
+            <span *ngIf="(editForm.submitted && departmentName.invalid) || (departmentName.invalid && departmentName.touched)" style="color: red;">
+              Name required
+            </span>
+          </div>
+        </div>
+
+          <div class="form-group row">
+            <label class="col-sm-4 text-right" >Faculty of <span class="text-danger">*</span>:</label>
+            <div class="col-sm-6">
+              <ng-select 
+              #facultySelect
+              [searchable]="true" [clearable]="false"
+             groupBy="name" reuired name="facId" [(ngModel)]="editDept.facultyId"  (change)="onselect(editDept.facultyId)"
+             placeholder="----------------------Select Faculty--------------------">
+             <!-- <ng-option value="" >----------------------Select Faculty--------------------</ng-option> -->
+             <ng-option [value]="eachFaculty.id" *ngFor="let eachFaculty of fac">
+               {{eachFaculty.name}}
+             </ng-option>
+       </ng-select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 text-right">Department of <span class="text-danger">*</span>:</label>
+            <div class="col-sm-6">
+              <ng-select 
+              [searchable]="true" [clearable]="false"
+             groupBy="name" required #facultyDeptId="ngModel" name="facultyDeptId"  [(ngModel)]="editDept.facultyDeptId" 
+             placeholder="----------------------Select Faculty--------------------">
+             <!-- <ng-option value="" >----------------------Select Faculty--------------------</ng-option> -->
+             <ng-option [value]="eachDepartment.id" *ngFor="let eachDepartment of facDept">
+               {{eachDepartment.name}}
+             </ng-option>
+       </ng-select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-4 text-right">Total Semester <span class="text-danger">*</span>:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" required #totalSemester="ngModel"  name="totalSemester"
+                [(ngModel)]="editDept.totalSemester"  ngModel>
+                <span *ngIf="(editForm.submitted && totalSemester.invalid) || (totalSemester.invalid && totalSemester.touched)" style="color: red;">
+                  Required
+                 </span>
+            </div>
+          </div>
+
+        <div class="form-group row">
+          <div class="col-md-7">
+            <button type="submit" class="btn btn-success float-right" style="margin-bottom: 30px;"
+              (click)="updateDepartment(editForm.form.valid)">Submit</button>
+          </div>
+        </div>
+      </form>
+  </div>
+  </div>

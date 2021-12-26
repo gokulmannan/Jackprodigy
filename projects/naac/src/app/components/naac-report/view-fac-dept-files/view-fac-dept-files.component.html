@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h4 class="modal-title">View Files</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<h4 *ngIf="showLoading;" style="text-align: center;color:teal;">Loading ...</h4>
+<div class="modal-body">
+  <div class= "table-responsive"> 
+    <table class="table table-striped" *ngIf="naacData.length != 0" >
+        <thead>
+             <tr> 
+              <th style="text-align: center;">S.No</th>
+              <th style="text-align: center;" *ngFor="let eachField of naacData[0].fieldValues | keyvalue : originalOrder">
+                <span *ngIf="eachField.value.label != 'version' && eachField.value.type == 'file' && eachField.key==fileName"  style="text-align: center;">{{eachField.value.label}}</span></th>
+          
+            </tr> 
+         </thead>
+        <tbody>
+            <tr *ngFor="let eachNaacData of naacData;let i= index">
+                <td style="text-align: center;">{{i+1}}</td>
+                <td style="text-align: center;"  *ngFor="let eachNaacField of eachNaacData.fieldValues | keyvalue : originalOrder">
+                <span  *ngIf="eachNaacField.value.label != 'version' && eachNaacField.value.type == 'file' && eachNaacField.value.url != undefined && eachNaacField.key==fileName" ><a href="{{eachNaacField.value.url}}" target="_blank">{{eachNaacField.value.fileKey}}</a> </span>
+                <span  *ngIf="eachNaacField.value.label != 'version' && eachNaacField.value.type == 'file' && eachNaacField.value.url == undefined && eachNaacField.key==fileName" >---</span>
+            </td> 
+        </tr>
+        </tbody>
+    </table> 
+</div>
+<div class="row" >
+  <div class="col-sm-6 offset-sm-3" *ngIf="naacData.length == 0 && showdata">
+  <div class="alert alert-warning">
+    <span class="badge badge-warning"> Sorry !</span> No NAAC Data found.
+  </div>
+</div>
+      </div>
+
+</div>
+

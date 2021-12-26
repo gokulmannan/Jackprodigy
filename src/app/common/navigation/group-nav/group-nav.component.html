@@ -1,0 +1,15 @@
+
+<app-accyear-nav (accyearnav)="loadAccData($event)" ></app-accyear-nav>
+
+<div class="form-group row">
+  <label for="departmentselect" class="col-sm-3 text-right">Group* :
+  </label>
+  <div class="col-sm-6">
+      <select  class="custom-select" name="departmentselect" #t [(ngModel)]="groups" (change)="onSelect(groups)"  >
+          <option value='' selected> ---------------------- Select Group -------------------- </option>
+          <option [ngValue]="groups" *ngFor="let groups of group ">{{groups.groupName }}</option>
+      </select>
+    
+  </div>
+
+</div>

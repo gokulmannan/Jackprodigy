@@ -1,0 +1,98 @@
+<div class="row">
+	<div class="col-md-12 card card-body bg-light">
+	<!-- <div  ng-controller="smsHomeController" ng-init="getList(0)"> -->
+		<div class="row"><h4 class="col-md-2">Sent Items</h4></div>
+ <div class="container mb-1">
+  <div class="row justify-content-end">
+    <label style="color:teal" class="col-md-2 text-right"><strong>Total &nbsp; </strong></label><div class="col-md-2">{{smsCount.cAvailable}}</div>
+  </div>
+  <div class="row justify-content-end">
+    <label style="color:teal" class=" col-md-2 text-right"><strong>Sent &nbsp; </strong></label><div class="col-md-2">{{smsCount.totalSent}}</div>
+  </div>
+  <div class="row justify-content-end">
+  <label style="color:teal" class=" col-md-2 text-right"><strong>Available &nbsp; </strong></label>  <div class="col-md-2">{{smsCount.cAvailable - smsCount.totalSent}}</div>
+  </div>
+</div>
+<div class=" form-group row">
+	<label class="col-md-2 col-form-label text-right">Date :</label>
+ 	<div class="col-md-3">
+        <input type="text" class="form-control"   name="dateCtrl" placeholder="Select Date"
+        [(ngModel)]="dateCtrl"  bsDatepicker >
+ 	<!-- <input type="text" class="form-control" ng-model="date"
+					id="date" onkeydown="return disables(event);" 
+					onmouseover="javascript:loadcalendarforPast('date');" />   -->
+					
+					</div>
+					<input type="button" value="View" class="btn btn-secondary" (click)="getDayCount(dateCtrl)" />
+					<label class="col-md-3 col-form-label text-right">Filter :</label>
+					<div class="col-md-2"> 
+					<!-- <select	class="form-control" ng-model="filterItem.showAll"
+					options="item.name for item in filterOptions.options" (change)="getList(0)">
+                    </select> {{filterOptions.options[0]}} -->                      
+                    <ng-select 
+                    [searchable]="true" [clearable]="false"
+                    name="itemStatus" placeholder="--Filter--"  [(ngModel)]="itemStatus" (change)="getList(dateCtrl,itemStatus)">
+                   <ng-option value="" >-------Select Status-------</ng-option>
+                   <ng-option [value]="filterOption.status" *ngFor="let filterOption of filterOptions.options ">{{filterOption.name}}
+                   </ng-option>
+             </ng-select> 
+					</div>
+					
+  </div>
+  <div class="row justify-content-end">
+    <label style="color:teal" class=" col-md-2 text-right"><strong> Day Count&nbsp; </strong></label>
+    <div class="col-md-2" *ngIf="dayCount != undefined" >{{dayCount.length}}</div>
+  </div>
+		<div *ngIf="sentSms.length > 0">
+		<div class="row">
+			<div class="col-md-11" *ngFor="let eachSms of sentSms|slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" >
+			<div class="card mb-5" style="font-size: 17px;">
+								<div class="card-header">{{eachSms.fUser}} Sent to
+									{{eachSms.toName}}{{eachSms.toUserType}} </div>
+
+								<div class="card-body"
+									style="max-height: 25px; overflow-y: scroll;">
+									<p>{{eachSms.msg}}</p>
+								</div>
+								<div class="card-footer" >
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-md-6">{{eachSms.phone}}</div>
+
+											<div class="col-md-6" style="text-align: right;">
+												<div *ngIf="eachSms.status=='P'">
+													<i class="fa fa-upload"></i>&nbsp;Queued
+												</div>
+												<div *ngIf="eachSms.status=='S'">
+													<i class="fa fa-ok"></i>&nbsp;Sent
+												</div>
+												<div *ngIf="eachSms.status=='F'">
+													<i class="fa fa-remove"></i>&nbsp;Failed
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+			</div>
+			
+		</div>
+		
+		</div>
+		<div *ngIf="sentSms.length == 0">
+			<br>
+			<div class="alert alert-warning">
+				<span class="badge badge-warning">Warning</span> &nbsp;Sorry!, No
+				data found.
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="pagination">
+				<ngb-pagination [collectionSize]="sentSms.length" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" ></ngb-pagination>
+			</div>
+		<!-- </div> 
+	 </div> -->
+</div>
+</div>
+

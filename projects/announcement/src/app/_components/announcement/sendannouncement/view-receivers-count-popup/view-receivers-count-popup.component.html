@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title">Receivers</h4>
+    <span *ngIf="showLoading" style="color: brown;padding-left: 30%;"><h3 > Loading...</h3></span>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="row">
+<div class="col-md-2"></div>
+<div class="col-md-8">
+    <label class="col-12"><Strong>Hod &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Strong>
+        <span *ngIf="hodCount.length >0">
+        <a  [routerLink]="" (click)="viewReceivers('HOD')">&nbsp;{{hodCount.length}}</a></span>
+       <span *ngIf="hodCount.length==0"> &nbsp;{{hodCount.length}}</span></label>
+    
+    <label class="col-12"><Strong>Faculty &nbsp;:</Strong>
+        <span *ngIf="facultyCount.length >0">
+        <a [routerLink]="" (click)="viewReceivers('FACULTY')">&nbsp;{{facultyCount.length}}</a></span>
+        <span *ngIf="facultyCount.length==0"> &nbsp;{{facultyCount.length}}</span></label>
+    <label class="col-12"><Strong>Student :</Strong>
+        <span *ngIf="studentCount.length >0">
+        <a [routerLink]="" (click)="viewReceivers('STUDENT')">&nbsp;{{studentCount.length}}</a>
+    </span><span *ngIf="studentCount.length==0"> &nbsp;{{studentCount.length}}</span></label>
+</div>
+    
+</div>

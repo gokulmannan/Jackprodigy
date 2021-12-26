@@ -1,0 +1,38 @@
+<div class="container mt-1">
+    <div ngbAutofocus>
+        <button type="button" class="close text-danger" aria-label="Close" (click)="close()">
+    x
+  </button>
+    </div>
+    <br>
+</div>
+<h5 style="text-align: justify;">
+    <div class="col-md-12">
+        <span style=color:#0a7f8f> Survey Template: </span>
+        <span> {{questionsData.name}}</span>
+    </div>
+</h5>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead style="color:#0a7f8f ;">
+                <tr>
+                    <th class="ml-1 text-center">#</th>
+                    <th>Questions</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let eachCategory of questionsData.questions; let i=index">
+                    <td class="ml-1 text-center"><strong>{{i+1}}</strong> </td>
+                    <td>{{eachCategory.question}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

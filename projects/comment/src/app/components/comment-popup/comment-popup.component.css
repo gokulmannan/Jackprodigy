@@ -1,0 +1,16 @@
+.modal-dialog {
+ 
+    width: 500px;
+
+    height:700px;
+
+  }
+  .card{
+      height: 500px;
+  }
+
+  .modal-backdrop
+{
+
+    background-color: gray;
+}

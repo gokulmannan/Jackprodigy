@@ -1,0 +1,52 @@
+<div class="col-md-12 card card-body bg-light text-dark">
+    <section class="container-fluid flex-grow">
+
+        <button class="pull-right btn btn-primary" (click)="openAddPopup()">Add</button>
+   <div class="row">   
+<label class="col-sm-5 text-right mt-1"><b>Template Type :</b></label>
+<div class="col-md-4">
+    <ng-select 
+    [searchable]="true" [clearable]="false"
+    name="type"   [(ngModel)]="templateType" (change)="getTemplatesByType(templateType)" placeholder="------------Select Type-------------"   >
+   <ng-option value="" >----------Select Type------------</ng-option>
+   <ng-option [value]="eachType" *ngFor="let eachType of types ">{{eachType}}
+   </ng-option>
+</ng-select>
+    </div>
+</div>  
+            <h3 style="text-align:center">NAAC Templates</h3>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" style="text-align: center;">Title</th>
+                            <th scope="col" style="text-align: center;">Description</th>
+                            <th scope="col" style="text-align: center;">Json File</th>
+                            <th scope="col" style="text-align: center;">Position</th>
+                            <th scope="col" style="text-align: center;">Criteria</th>
+                            <th scope="col" style="text-align: center;">Edit</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let eachNaacData of naacDatas let i= index">
+                            <th scope="row" style="text-align: center;">{{ i +1 }}</th>
+                            <td style="text-align: center;">{{eachNaacData.title}}</td>
+                            <td style="text-align: center;">{{eachNaacData.description}}</td>
+                            <td *ngIf="eachNaacData.jsonFile != undefined"  style="text-align: center;"><a href="{{eachNaacData.jsonFile.url}}">{{eachNaacData.jsonFile.fileKey}}</a></td>
+                            <td *ngIf="eachNaacData.jsonFile == undefined" style="text-align: center;">-----</td>
+                            <td style="text-align: center;">{{eachNaacData.position}}</td>
+                            <td style="text-align: center;">{{eachNaacData.criteria}}</td>
+                            <td style="text-align: center;"><a [routerLink]="" (click)="openEditPage(eachNaacData.id)">Edit</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</div>

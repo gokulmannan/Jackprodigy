@@ -1,0 +1,81 @@
+<div class="card card-body bg-light text-dark">
+    <div class="pull-left">
+        <a class="btn btn-dark" [routerLink]="['/manageDepartment/home']"><i class="fa fa-arrow-left"></i>Back</a>
+    </div>
+    &nbsp;&nbsp;
+    
+    <div class="pull-right">
+        <a class="btn btn-warning" (click)="disableStaff(staffDetail)">Disable</a>
+   &nbsp;&nbsp;
+        <a class="btn btn-danger" (click)="removeStaff(staffDetail)">Remove</a>
+    </div>
+<div class="page-header">
+    <br>
+    <br><h4>Account Details</h4>
+    <dl class="dl-horizontal">
+        <dt>Name :</dt>
+        <dd>{{staffDetail.name}}</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Department :</dt>
+        <dd *ngFor="let eachDept of staffDetail.departments">  {{eachDept.degreeName}}-{{eachDept.departmentName}}</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Gender :</dt>
+        <dd *ngIf="staffDetail.gender != undefined ">{{staffDetail.gender}}</dd>
+        <dd *ngIf="staffDetail.gender == undefined ">---</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Specialization :</dt>
+        <dd *ngIf="staffDetail.specialization != undefined ">{{staffDetail.specialization}}</dd>
+        <dd *ngIf="staffDetail.specialization == undefined ">---</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Address Line 1 :</dt>
+        <dd *ngIf="staffDetail.addressline1 != undefined ">{{staffDetail.addressline1}}</dd>
+        <dd *ngIf="staffDetail.addressline1 == undefined ">---</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Address Line 2 :</dt>
+        <dd *ngIf="staffDetail.addressline2 != undefined ">{{staffDetail.addressline2}}</dd>
+        <dd *ngIf="staffDetail.addressline2 == undefined ">---</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>City :</dt>
+        <dd *ngIf="staffDetail.city != undefined ">{{staffDetail.city}}</dd>
+        <dd *ngIf="staffDetail.city == undefined ">---</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>State :</dt>
+        <dd *ngIf="staffDetail.state != undefined ">{{staffDetail.state}}</dd>
+        <dd *ngIf="staffDetail.state == undefined ">---</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Pin :</dt>
+        <dd *ngIf="staffDetail.pin != undefined ">{{staffDetail.pin}}</dd>
+        <dd *ngIf="staffDetail.pin == undefined ">---</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Phone :</dt>
+        <dd *ngIf="staffDetail.phone != undefined ">{{staffDetail.phone}}</dd>
+        <dd *ngIf="staffDetail.phone == undefined ">---</dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>Email :</dt>
+        <dd *ngIf="staffDetail.email != undefined ">{{staffDetail.email}}</dd>
+        <dd *ngIf="staffDetail.email == undefined ">---</dd>
+    </dl>
+
+</div>
+
+    </div>

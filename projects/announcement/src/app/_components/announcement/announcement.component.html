@@ -1,0 +1,43 @@
+<section class="container-fluid flex-grow">
+    <div class="row">
+        <div class="col-md-12" >
+            <br>
+            <div *ngIf="announcements.length>0">
+            <h3 style="text-align:center">Received</h3>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">#</th>
+                            <th style="text-align: center;">Title</th>
+                            <th style="text-align: center;">Date</th>
+                            <th style="text-align: center;">Sent by</th>
+                            <th style="text-align: center;">Attachment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let announcement of announcements let i = index">
+                            <th style="text-align: center;">{{ i+1 }}</th>
+                            <td style="text-align: center;"> <a  [routerLink]="" (click)="viewMessage(announcement)"> {{announcement.title}} </a></td>
+                            <td style="text-align: center;">{{announcement.createdOn |date:'medium'}}</td>
+                            <td style="text-align: center;">{{announcement.createdByName}}</td>
+                            <td style="text-align: center;">
+                                <span *ngIf="announcement.file != undefined"><a href="{{announcement.file.url}}">{{announcement.file.fileKey}}</a></span>
+                                <span *ngIf="announcement.file == undefined">---------</span></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3" *ngIf="announcements.length == 0 ">
+              <div class="alert alert-warning">
+                <span class="badge badge-warning"> Sorry !</span> No Announcement Recieved.
+              </div>
+            </div>
+          </div>
+    </div>
+    </div>
+</section>

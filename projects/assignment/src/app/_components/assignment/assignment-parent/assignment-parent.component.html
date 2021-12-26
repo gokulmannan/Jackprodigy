@@ -1,0 +1,33 @@
+
+<section class="container-fluid flex-grow">
+    <div *ngIf="currentUser.userType !='STUDENT'" class="row">
+        <div  class="col-md-10 order-md-1 pt-3">
+            <div class="bg-faded mb-3">
+                <div class="card bg-light">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2 order-md-2 pt-4">
+            <div class="list-group">
+              <!-- <a  routerLink="/assignment" class="list-group-item list-group-item-action Active"  [routerLinkActiveOptions]="{exact:
+                  true}" routerLinkActive="active-link"><i class="fa fa-book"></i>&nbsp;Home</a> -->
+                  <a  routerLink="/assignment/compose" class="list-group-item list-group-item-action" [routerLinkActiveOptions]="{exact:
+                  true}" routerLinkActive="active-link"><i class="fa fa-edit"></i>&nbsp;Compose</a>
+              <a routerLink="/assignment" class="list-group-item list-group-item-action" [routerLinkActiveOptions]="{exact:
+                      true}" routerLinkActive="active-link"><i class="fa fa-paper-plane"></i>&nbsp;sent</a>
+          </div>
+          </div>
+        </div>
+        <div *ngIf="currentUser.userType =='STUDENT'" class="row">
+          <div  class="col-md-12 order-md-1 pt-3">
+              <div class="bg-faded mb-3">
+                  <div class="card bg-light">
+                      <router-outlet></router-outlet>
+                  </div>
+              </div>
+          </div>
+        </div>
+      
+</section>

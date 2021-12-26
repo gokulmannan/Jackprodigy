@@ -1,0 +1,131 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+  integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4> Course Material </h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="form" #createForm="ngForm">
+      <!-- End ------------------------------------------------------------>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-right">Title
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6">
+          <input type="text" class="form-control" #title="ngModel" required name="title" placeholder="Title"
+            [(ngModel)]="courseMaterial.title" ngModel>
+          <small *ngIf="!title.valid && title.touched" class="text-danger">Title required.</small>
+        </div>
+      </div>
+      <!-- End ------------------------------------------------------------>
+      <div *ngIf="data == undefined || mySubject" class="form-group row">
+        <label class="col-md-3 col-form-label text-right">Subject
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6">
+          <ng-select 
+             [searchable]="true" [clearable]="false"
+            [(ngModel)]="courseMaterial.subjectId" groupBy="department"  name="subjectId">
+            <ng-option value="" >----------------------Select Subject--------------------</ng-option>
+            <ng-option [value]="eachSubject.regSubId" *ngFor="let eachSubject of subjects">
+              {{eachSubject.subjectName }}
+            </ng-option>
+      </ng-select>
+    <small *ngIf="!subjects.valid && subjects.touched" class="text-danger">Subject required.</small>
+        </div>
+      </div>
+
+      <div *ngIf="data != undefined && !mySubject" class="form-group row">
+        <label class="col-md-3 col-form-label text-right">Subject</label>
+        <div class="col-md-6 mt-1">
+          {{data.subjectName}}
+        </div>
+      </div>
+      <!-- End ------------------------------------------------------------>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-right">Type
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6">
+
+
+          <ng-select 
+            [searchable]="true" [clearable]="false" [(ngModel)]="courseMaterial.courseMaterialType"
+            name="courseMaterialType">
+            <ng-option value="" >-----------------------Select Type---------------------</ng-option>
+            <ng-option [value]="type" *ngFor="let type of types">
+              {{type}}
+            </ng-option>
+          </ng-select>
+
+        </div>
+      </div>
+
+
+      <!-- End ------------------------------------------------------------>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-right">Description
+        </label>
+        <div class="col-md-6">
+          <textarea class="form-control" rows="3" cols="10" name="description"  placeholder="Description"  [(ngModel)]="courseMaterial.description"
+            ngModel></textarea>
+
+        </div>
+      </div>
+      <!-- End ------------------------------------------------------------>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-right">Attach File
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6">
+
+        <ng-container *ngIf="fileAttached == false; else fileBrowseHide">
+          <div class="custom-file">
+
+            <input type="file" required class="custom-file-input" id="file"
+              (change)="handleFileInput($event.target.files)">
+            <label class="custom-file-label" for="file">{{fileLable}}</label>
+
+
+          </div>
+        </ng-container>
+        <ng-template #fileBrowseHide>
+          <div class="my-2">
+            {{fileLable}} <a data-toggle="modal"  class="la la-trash"
+              (click)="removeFile()">&nbsp;<span style="color: red;">Remove</span></a>
+          </div>
+
+        </ng-template>
+
+        </div>
+      </div>
+      <ng-container *ngIf="enebleUpdateButton == false; else updatebutton">
+        <div class="form-group row my-2 ">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-success " [disabled]="!createForm.valid || fileAttached== false "
+              (click)="createMaterial()">Create</button>
+          </div>
+
+
+        </div>
+
+      </ng-container>
+      <ng-template #updatebutton>
+        <div class="form-group row my-2">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-success " [disabled]="!createForm.valid || fileAttached== false "
+              (click)="updateCourseMaterials()">Update</button>
+          </div>
+
+        </div>
+      </ng-template>
+      <!-- End ------------------------------------------------------------>
+    </form>
+  </div>
+</div>
+

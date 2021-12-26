@@ -1,0 +1,15 @@
+<div class="navbar navbar-default navbar-fixed-left">
+    <a routerLink="/naac" data-toggle="pill" routerLinkActive="class-name" role="tab" class="nav-link list-group-item list-group-item-action">Naac</a>
+    <a routerLink="/announcement" data-toggle="pill" routerLinkActive="class-name" role="tab" class="nav-link list-group-item list-group-item-action">Announcement</a>
+    <a routerLink="/assignment" data-toggle="pill" routerLinkActive="class-name" role="tab" class=" nav-link list-group-item list-group-item-action">Assignment</a>
+    <a routerLink="/coursematerial" data-toggle="pill" routerLinkActive="class-name" role="tab" class="nav-link list-group-item list-group-item-action">Course material</a>
+    <a routerLink="/academic" data-toggle="pill" routerLinkActive="class-name" role="tab" class="nav-link list-group-item list-group-item-action">Manage Academic year</a>
+    <a *ngIf="currentUser.userType == 'HOD'" routerLink="/manageMentor" data-toggle="pill" routerLinkActive="class-name" role="tab" class="nav-link list-group-item list-group-item-action">Manage Mentor</a>
+    <a *ngIf="currentUser.userType == 'ADMIN'" routerLinkActive="class-name" routerLink="/manageDepartment" data-toggle="pill" role="tab" class="nav-link list-group-item list-group-item-action">Manage Department</a>
+    <a *ngIf="currentUser.userType == 'HOD'" routerLinkActive="class-name" routerLink="/feedBack" data-toggle="pill" role="tab" class="nav-link list-group-item list-group-item-action">Feedback</a>
+    <a *ngIf="currentUser.userType == 'CUSTOM' && singleUser.rollType[0] == 'ACADEMICADMIN'" routerLinkActive="class-name" routerLink="/academicadmin" data-toggle="pill" role="tab" class="nav-link list-group-item list-group-item-action">Academic Admin</a>
+    <a *ngIf="currentUser.userType == 'HOD'" routerLinkActive="class-name" routerLink="/dashboard" data-toggle="pill" role="tab" class="nav-link list-group-item list-group-item-action">Dashboard</a>
+
+    <!-- <a *ngIf="currentUser.userType == 'ADMISSIONADMIN' || currentUser.userType == 'ADMIN' || currentUser.userType == 'HOD'" routerLinkActive="class-name" routerLink="/admission" data-toggle="pill" role="tab" class="nav-link list-group-item list-group-item-action">Admission</a> -->
+
+</div>

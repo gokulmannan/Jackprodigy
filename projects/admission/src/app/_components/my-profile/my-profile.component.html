@@ -1,0 +1,707 @@
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+        <div class="row">
+            <div class="col-md-9 text-left">
+                <h3 style="text-align: center;">Profile</h3>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary" style="color: beige;" (click)="edit()">Edit</button>
+                <!--
+                        <a class="btn btn-sm btn-secondary mr-1" href="" routerLink="/admission/change-password">Change password</a>
+                   -->
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-11">
+                <table class="table table-bordered mt-3 bg-light">
+                    <tbody>
+                        <tr class="bg-secondary text-light">
+                            <th colspan="5">BASIC DETAILS</th>
+                        </tr>
+                        <tr>
+                            <th style="width: 3%;"> NAME
+                            </th>
+                            <td *ngIf="user.firstName != undefined" style="text-align: center;">
+                                {{user.title}}&nbsp; {{user.firstName}}&nbsp;{{user.middleName}}&nbsp;{{user.lastName}}
+                            </td>
+                            <td *ngIf="user.firstName == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> EMAIL
+                            </th>
+                            <td *ngIf="user.email != undefined" style="text-align: center;">
+                                {{user.email}} &nbsp;{{user.alternateEmail}}
+                            </td>
+                            <td *ngIf="user.email == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MOBILE
+                            </th>
+                            <td *ngIf="user.mobile != undefined" style="text-align: center;">
+                                {{user.mobile}}
+                            </td>
+                            <td *ngIf="user.mobile == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> DATE_OF_BIRTH
+                            </th>
+                            <td *ngIf="user.dateOfBirth != undefined" style="text-align: center;">
+                                {{user.dateOfBirth}}
+                            </td>
+                            <td *ngIf="user.dateOfBirth == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> PLACE_OF_BIRTH
+                            </th>
+                            <td *ngIf="user.placeOfBirth != undefined" style="text-align: center;">
+                                {{user.placeOfBirth}}
+                            </td>
+                            <td *ngIf="user.placeOfBirth == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> GENDER
+                            </th>
+                            <td *ngIf="user.gender != undefined" style="text-align: center;">
+                                {{user.gender}}
+                            </td>
+                            <td *ngIf="user.gender == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> BLOOD_GROUP
+                            </th>
+                            <td *ngIf="user.bloodGroup != undefined" style="text-align: center;">
+                                {{user.bloodGroup}}
+                            </td>
+                            <td *ngIf="user.bloodGroup == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> COMMUNITY
+                            </th>
+                            <td *ngIf="user.community != undefined" style="text-align: center;">
+                                {{user.community}}
+                            </td>
+                            <td *ngIf="user.community == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> RELIGION
+                            </th>
+                            <td *ngIf="user.religion != undefined" style="text-align: center;">
+                                {{user.religion}}
+                            </td>
+                            <td *ngIf="user.religion == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MOTHER_TONGUE
+                            </th>
+                            <td *ngIf="user.motherTongue != undefined" style="text-align: center;">
+                                {{user.motherTongue}}
+                            </td>
+                            <td *ngIf="user.motherTongue == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th> NATIONALITY
+                            </th>
+                            <td *ngIf="user.nationality != undefined" style="text-align: center;">
+                                {{user.nationality}}
+                            </td>
+                            <td *ngIf="user.nationality == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> DIFFERENTLY_ABLED
+                            </th>
+                            <td *ngIf="user.differentlyAbled != undefined" style="text-align: center;">
+                                {{user.differentlyAbled}}
+                            </td>
+                            <td *ngIf="user.differentlyAbled == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> STUDIED_FROM_INDIA
+                            </th>
+                            <td *ngIf="user.studiedFromIndia != undefined" style="text-align: center;">
+                                {{user.studiedFromIndia}}
+                            </td>
+                            <td *ngIf="user.studiedFromIndia == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+
+                        <tr class="bg-secondary text-light">
+                            <th colspan="5">Address for Communication</th>
+                        </tr>
+                        <tr>
+                            <th> ADDRESSLINE 1
+                            </th>
+                            <td *ngIf="communication.addressLine1 != undefined" style="text-align: center;">
+                                {{user.communicationDetails.communication.addressLine1}}
+                            </td>
+                            <td *ngIf="communication.addressLine1 == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> ADDRESSLINE 2
+                            </th>
+                            <td *ngIf="communication.addressLine2 != undefined" style="text-align: center;">
+                                {{user.communicationDetails.communication.addressLine2}}
+                            </td>
+                            <td *ngIf="communication.addressLine2 == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> CITY
+                            </th>
+                            <td *ngIf="communication.city != undefined" style="text-align: center;">
+                                {{user.communicationDetails.communication.city}}
+                            </td>
+                            <td *ngIf="communication.city == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> DISTRICT
+                            </th>
+                            <td *ngIf="communication.district != undefined" style="text-align: center;">
+                                {{user.communicationDetails.communication.district}}
+                            </td>
+                            <td *ngIf="communication.district == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> STATE
+                            </th>
+                            <td *ngIf="communication.state != undefined" style="text-align: center;">
+                                {{user.communicationDetails.communication.state}}
+                            </td>
+                            <td *ngIf="communication.state == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> COUNTRY
+                            </th>
+                            <td *ngIf="communication.country != undefined" style="text-align: center;">
+                                {{user.communicationDetails.communication.country}}
+                            </td>
+                            <td *ngIf="communication.country == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> PINCODE
+                            </th>
+                            <td *ngIf="communication.pincode != undefined" style="text-align: center;">
+                                {{user.communicationDetails.communication.pincode}}
+                            </td>
+                            <td *ngIf="communication.pincode == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr class="bg-secondary text-light">
+                            <th colspan="5">ACADEMIC DETAILS -SSLC </th>
+                        </tr>
+
+                        <tr>
+                            <th> INSTITUTE NAME
+                            </th>
+                            <td *ngIf="academicSslc.instituteName != undefined" style="text-align: center;">
+                                {{user.academicDetails.sslc.instituteName}}
+                            </td>
+                            <td *ngIf="academicSslc.instituteName == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> BOARD
+                            </th>
+                            <td *ngIf="academicSslc.board != undefined" style="text-align: center;">
+                                {{user.academicDetails.sslc.board}}
+                            </td>
+                            <td *ngIf="academicSslc.board == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MARKING SCHEME
+                            </th>
+                            <td *ngIf="academicSslc.markingScheme != undefined" style="text-align: center;">
+                                {{user.academicDetails.sslc.markingScheme}}
+                            </td>
+                            <td *ngIf="academicSslc.markingScheme == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MARK OBTAINED
+                            </th>
+                            <td *ngIf="academicSslc.markObtained != undefined" style="text-align: center;">
+                                {{user.academicDetails.sslc.markObtained}}
+                            </td>
+                            <td *ngIf="academicSslc.markObtained == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> YEAR OF PASSING
+                            </th>
+                            <td *ngIf="academicSslc.yearOfPassing != undefined" style="text-align: center;">
+                                {{user.academicDetails.sslc.yearOfPassing}}
+                            </td>
+                            <td *ngIf="academicSslc.yearOfPassing == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> REGISTRATION NO.
+                            </th>
+                            <td *ngIf="academicSslc.registrationNo != undefined" style="text-align: center;">
+                                {{user.academicDetails.sslc.registrationNo}}
+                            </td>
+                            <td *ngIf="academicSslc.registrationNo == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> UNIVERSITY
+                            </th>
+                            <td *ngIf="academicSslc.university != undefined" style="text-align: center;">
+                                {{user.academicDetails.sslc.university}}
+                            </td>
+                            <td *ngIf="academicSslc.university == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MODE OF STUDY
+                            </th>
+                            <td *ngIf="academicSslc.modeOfStudy != undefined" style="text-align: center;">
+                                {{user.academicDetails.sslc.modeOfStudy}}
+                            </td>
+                            <td *ngIf="academicSslc.modeOfStudy == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr class="bg-secondary text-light">
+                            <th colspan="5">HSC DETAILS</th>
+                        </tr>
+                        <tr>
+                            <th> INSTITUTE NAME
+                            </th>
+                            <td *ngIf="academicHsc.instituteName != undefined" style="text-align: center;">
+                                {{user.academicDetails.hsc.instituteName}}
+                            </td>
+                            <td *ngIf="academicHsc.instituteName == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> BOARD
+                            </th>
+                            <td *ngIf="academicHsc.board != undefined" style="text-align: center;">
+                                {{user.academicDetails.hsc.board}}
+                            </td>
+                            <td *ngIf="academicHsc.board == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MARKING SCHEME
+                            </th>
+                            <td *ngIf="academicHsc.markingScheme != undefined" style="text-align: center;">
+                                {{user.academicDetails.hsc.markingScheme}}
+                            </td>
+                            <td *ngIf="academicHsc.markingScheme == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MARK OBTAINED
+                            </th>
+                            <td *ngIf="academicHsc.markObtained != undefined" style="text-align: center;">
+                                {{user.academicDetails.hsc.markObtained}}
+                            </td>
+                            <td *ngIf="academicHsc.markObtained == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> YEAR OF PASSING
+                            </th>
+                            <td *ngIf="academicHsc.yearOfPassing != undefined" style="text-align: center;">
+                                {{user.academicDetails.hsc.yearOfPassing}}
+                            </td>
+                            <td *ngIf="academicHsc.yearOfPassing == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> REGISTRATION NO.
+                            </th>
+                            <td *ngIf="academicHsc.registrationNo != undefined" style="text-align: center;">
+                                {{user.academicDetails.hsc.registrationNo}}
+                            </td>
+                            <td *ngIf="academicHsc.registrationNo == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> UNIVERSITY
+                            </th>
+                            <td *ngIf="academicHsc.university != undefined" style="text-align: center;">
+                                {{user.academicDetails.hsc.university}}
+                            </td>
+                            <td *ngIf="academicHsc.university == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MODE OF STUDY
+                            </th>
+                            <td *ngIf="academicHsc.modeOfStudy != undefined" style="text-align: center;">
+                                {{user.academicDetails.hsc.modeOfStudy}}
+                            </td>
+                            <td *ngIf="academicHsc.modeOfStudy == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr class="bg-secondary text-light">
+                            <th colspan="5">OTHERS DETAILS</th>
+                        </tr>
+                        <tr>
+                            <th> INSTITUTE NAME
+                            </th>
+                            <td *ngIf="academicOthers.instituteName != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.instituteName}}
+                            </td>
+                            <td *ngIf="academicOthers.instituteName == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> BOARD
+                            </th>
+                            <td *ngIf="academicOthers.board != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.board}}
+                            </td>
+                            <td *ngIf="academicOthers.board == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> DESCRIPTION
+                            </th>
+                            <td *ngIf="academicOthers.description != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.description}}
+                            </td>
+                            <td *ngIf="academicOthers.description == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MARKING SCHEME
+                            </th>
+                            <td *ngIf="academicOthers.markingScheme != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.markingScheme}}
+                            </td>
+                            <td *ngIf="academicOthers.markingScheme == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MARK OBTAINED
+                            </th>
+                            <td *ngIf="academicOthers.markObtained != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.markObtained}}
+                            </td>
+                            <td *ngIf="academicOthers.markObtained == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> YEAR OF PASSING
+                            </th>
+                            <td *ngIf="academicOthers.yearOfPassing != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.yearOfPassing}}
+                            </td>
+                            <td *ngIf="academicOthers.yearOfPassing == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> REGISTRATION NO.
+                            </th>
+                            <td *ngIf="academicOthers.registrationNo != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.registrationNo}}
+                            </td>
+                            <td *ngIf="academicOthers.registrationNo == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> UNIVERSITY
+                            </th>
+                            <td *ngIf="academicOthers.university != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.university}}
+                            </td>
+                            <td *ngIf="academicOthers.university == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MODE OF STUDY
+                            </th>
+                            <td *ngIf="academicOthers.modeOfStudy != undefined" style="text-align: center;">
+                                {{user.academicDetails.others.modeOfStudy}}
+                            </td>
+                            <td *ngIf="academicOthers.modeOfStudy == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr class="bg-secondary text-light">
+                            <th colspan="5">ATTACHEMENT DETAILS</th>
+                        </tr>
+                        <tr>
+                            <th>SSLC
+                            </th>
+                            <td *ngIf="attachments.sslc != undefined" style="text-align: center;">
+                                <a href="{{user.attachments.sslc.url}}">{{user.attachments.sslc.fileKey}}</a>
+                            </td>
+                            <td *ngIf="attachments.sslc == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> HSC
+                            </th>
+                            <td *ngIf="attachments.hsc != undefined" style="text-align: center;">
+                                <a href="{{user.attachments.hsc.url}}">{{user.attachments.hsc.fileKey}}</a>
+                            </td>
+                            <td *ngIf="attachments.hsc == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> OTHERS
+                            </th>
+                            <td *ngIf="attachments.others != undefined" style="text-align: center;">
+                                <a href="{{user.attachments.others.url}}">{{user.attachments.others.fileKey}}</a>
+                            </td>
+                            <td *ngIf="attachments.others == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> COMMUNITY
+                            </th>
+                            <td *ngIf="attachments.community != undefined" style="text-align: center;">
+                                <a href="{{user.attachments.community.url}}">{{user.attachments.community.fileKey}}</a>
+                            </td>
+                            <td *ngIf="attachments.community == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> TRANSFER CERTIFICATE
+                            </th>
+                            <td *ngIf="attachments.tc != undefined" style="text-align: center;">
+                                <a href="{{user.attachments.tc.url}}">{{user.attachments.tc.fileKey}}</a>
+                            </td>
+                            <td *ngIf="attachments.tc == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> NATIVE CERTIFICATE
+                            </th>
+                            <td *ngIf="attachments.nativeFront != undefined" style="text-align: center;">
+                                <a href="{{user.attachments.nativeFront.url}}">{{user.attachments.nativeFront.fileKey}}</a>
+                            </td>
+                            <td *ngIf="attachments.nativeFront == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <th>NATIVE CERTIFICATE BACK
+                            </th>
+                            <td *ngIf="attachments.nativeBack != undefined" style="text-align: center;">
+                                <a href="{{user.attachments.nativeBack.url}}">{{user.attachments.nativeBack.fileKey}}</a>
+                            </td>
+                            <td *ngIf="attachments.nativeBack == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <th> PASSPORT SIZE PHOTO
+                            </th>
+                            <td *ngIf="attachments.profilePic != undefined" style="text-align: center;">
+                                <a href="{{user.attachments.profilePic.url}}">{{user.attachments.profilePic.fileKey}}</a>
+                            </td>
+                            <td *ngIf="attachments.profilePic == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr class="bg-secondary text-light">
+                            <th colspan="5">PARENTS_DETAILS<br>FATHER</th>
+                        </tr>
+                        <tr>
+                            <th> NAME
+                            </th>
+                            <td *ngIf="parents.fathersName != undefined" style="text-align: center;width: 10%;">
+                                {{user.parentsDetails.fathersTitle}}. &nbsp; {{user.parentsDetails.fathersName}}
+                            </td>
+                            <td *ngIf="parents.fathersTitle == undefined" style="text-align: center;width: 10%">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> OCCUPATION
+                            </th>
+                            <td *ngIf="parents.fathersOccupation != undefined" style="text-align: center;">
+                                {{user.parentsDetails.fathersOccupation}}
+                            </td>
+                            <td *ngIf="parents.fathersOccupation == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> MOBILE
+                            </th>
+                            <td *ngIf="parents.fathersMobile != undefined" style="text-align: center;">
+                                {{user.parentsDetails.fathersMobile}}
+                            </td>
+                            <td *ngIf="parents.fathersMobile == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> EMAIL
+                            </th>
+
+                            <td *ngIf="parents.fathersEmail != undefined" style="text-align: center;">
+                                {{user.parentsDetails.fathersEmail}}
+                            </td>
+                            <td *ngIf="parents.fathersEmail == undefined" style="text-align: center;">
+                                ----------
+                            </td>
+                        </tr>
+                        <tr>
+                            <tr class="bg-secondary text-light">
+                                <th colspan="5">MOTHER DETAILS</th>
+                            </tr>
+                            <tr>
+                                <th> NAME
+                                </th>
+                                <td *ngIf="parents.mothersName != undefined" style="text-align: center;">
+                                    {{user.parentsDetails.mothersTitle}}. &nbsp; {{user.parentsDetails.mothersName}}
+                                </td>
+                                <td *ngIf="parents.mothersName == undefined" style="text-align: center;">
+                                    ----------
+                                </td>
+                            </tr>
+                            <tr>
+                                <th> OCCUPATION
+                                </th>
+                                <td *ngIf="parents.mothersOccupation != undefined" style="text-align: center;">
+                                    {{user.parentsDetails.mothersOccupation}}
+                                </td>
+                                <td *ngIf="parents.mothersOccupation == undefined" style="text-align: center;">
+                                    ----------
+                                </td>
+                            </tr>
+                            <tr>
+                                <th> MOBILE
+                                </th>
+                                <td *ngIf="parents.mothersMobile != undefined" style="text-align: center;">
+                                    {{user.parentsDetails.mothersMobile}}
+                                </td>
+                                <td *ngIf="parents.mothersMobile == undefined" style="text-align: center;">
+                                    ----------
+                                </td>
+                                <tr>
+                                    <th> EMAIL
+                                    </th>
+                                    <td *ngIf="parents.mothersEmail != undefined" style="text-align: center;">
+                                        {{user.parentsDetails.mothersEmail}}
+                                    </td>
+                                    <td *ngIf="parents.mothersEmail == undefined" style="text-align: center;">
+                                        ----------
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <tr class="bg-secondary text-light">
+                                        <th colspan="5">GAURDIAN DETAILS</th>
+                                    </tr>
+                                    <tr>
+                                        <th> NAME
+                                        </th>
+                                        <td *ngIf="parents.guardiansName != undefined" style="text-align: center;">
+                                            {{user.parentsDetails.guardiansTitle}}. &nbsp; {{user.parentsDetails.guardiansName}}
+                                        </td>
+                                        <td *ngIf="parents.guardiansName == undefined" style="text-align: center;">
+                                            ----------
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> OCCUPATION
+                                        </th>
+                                        <td *ngIf="parents.guardiansOccupation != undefined" style="text-align: center;">
+                                            {{user.parentsDetails.guardiansOccupation}}
+                                        </td>
+                                        <td *ngIf="parents.guardiansOccupation == undefined" style="text-align: center;">
+                                            ----------
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> MOBILE
+                                        </th>
+                                        <td *ngIf="parents.guardiansMobile != undefined" style="text-align: center;">
+                                            {{user.parentsDetails.guardiansMobile}}
+                                        </td>
+                                        <td *ngIf="parents.guardiansMobile == undefined" style="text-align: center;">
+                                            ----------
+                                        </td>
+                                        <tr>
+                                            <th> EMAIL
+                                            </th>
+                                            <td *ngIf="parents.guardiansEmail != undefined" style="text-align: center;">
+                                                {{user.parentsDetails.guardiansEmail}}
+                                            </td>
+                                            <td *ngIf="parents.guardiansEmail == undefined" style="text-align: center;">
+                                                ----------
+                                            </td>
+                                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>

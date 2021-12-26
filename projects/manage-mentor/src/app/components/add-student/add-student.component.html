@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+  integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4> Add Student </h4>
+     <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div> 
+  <div class="modal-body"> 
+     <form class="form"  >
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-right">Degree and Department
+          <span class="text-danger">*</span>
+        </label>
+      <div class="col-md-6">
+        <select class="custom-select " name="departmentselect" [(ngModel)]="dept" (change)="onSelect(dept)">
+          <option value="" selected>----------------- Select Department ----------------</option>
+          <option *ngFor="let department of departments" [ngValue]="department">
+            {{department.degreeName}} -- {{department.departmentName}}</option>
+        </select>
+      </div>    
+      </div>    
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-right">AccademicYear
+          <span class="text-danger">*</span>
+        </label>
+      <div class="col-md-6">
+        <select class="custom-select " name="departmentselect" [(ngModel)]="academicYear" (change)="selectAcademicYear(academicYear)">
+          <option value="" selected>----------------- Select AcademicYear ----------------</option>
+          <option *ngFor="let acadYear of facultyDepartments" [ngValue]="acadYear">
+            {{acadYear.startYear}} -- {{acadYear.endYear}}</option>
+        </select>
+      </div>     
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label text-right">Group
+        <span class="text-danger">*</span>
+      </label>
+    <div class="col-md-6">
+      <select class="custom-select " [(ngModel)]="academicYearGroup" (change)="academicYeaGroup(academicYearGroup)" name="departmentselect" >
+        <option value="" selected>----------------- Select Group ----------------</option>
+        <option *ngFor="let academicYearGroup of getAcademicYear" [ngValue]="academicYearGroup.id">
+        {{academicYearGroup.groupName}}  
+        </option>
+      </select>
+    </div>      
+  </div>
+  <div class="text-left"*ngIf="noData">
+    <div class="alert alert-warning">
+      <span class="badge badge-warning"> Sorry !</span> No data found.
+    </div>
+  </div> 
+  <div class="alert"*ngIf="showDiv">
+    <div class="alert alert-danger">
+      <span class="badge badge-warning"> Please</span> Select any one student.
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="dept!=undefined && dept!='' && academicYear!=undefined && academicYear!='' && academicYearGroup!=undefined && academicYearGroup!=''  && studentList!=undefined && studentList!=''"  >
+    <div class="card-body">
+        <div >
+            <table class="table table-bordered" >
+            <thead>
+                <tr>
+                  <th>
+                     <input type="hidden"  > 
+                  </th> 
+                    <th scope="col">RegisterNo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                </tr>
+            </thead> 
+            <tbody>
+                <tr *ngFor="let list of  studentList ">
+                        <!-- {{list.assignedValue}} -->
+ <th><input type="checkbox"  [ngModelOptions]="{standalone: true}" (change)="checkAllCheckBox(list.checked,list.id)"  value="{{list.id}}"  [(ngModel)]="list.checked" [checked]="assignedValue" [disabled]="list.disabled">
+</th>
+                   <td>
+  {{list.registerNo}}
+</td> 
+<td>
+  {{list.name}}
+</td>
+<td>
+  {{list.email}}
+</td>
+<td *ngIf="list.phone!=undefined ">
+      {{list.phone}}
+</td>
+<td *ngIf="list.phone==undefined ">
+  ---
+</td>
+</tr> 
+</tbody>
+        </table>
+              
+    </div>
+</div> 
+<div class="modal-footer" style="position: sticky;bottom: 0">
+<button  class="btn btn-success btn-lg float-right"  (click)="addStudents()" >Create</button> 
+</div>
+</div>
+</form>
+</div>
+</div>

@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+  integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4> Add Comment </h4>
+   
+      <button type="button" class="close" aria-label="Close" (click)="activeModaldismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div> 
+  <div class="modal-body" style="max-height: 400px;overflow-y: auto;" >
+    <div style="margin-left: 8%;">
+    <form class="form" #createForm="ngForm">  
+
+        <div class="form-group"> 
+            <label for="dateOfBirth"> 
+       Comment*
+          </label> 
+          <div >
+<textarea rows="4" cols="50" required name="commentDesc" #commentDesc="ngModel"
+          [(ngModel)]="createComments.commentDesc" ngModel placeholder="write  your Comments here" rows="7" style="width: 90%;" ng-trim="false" maxlength="1500" >
+              Write your comment here...</textarea>
+              <small *ngIf="!commentDesc.valid && commentDesc.touched" class="text-danger">No Comments required.</small>
+
+                          
+      <div>
+           <b>Rating:</b>{{currentRate}}/10
+              <br/> 
+            </div>   
+            <div>
+              
+               <ngb-rating [(rate)]="currentRate" [(ngModel)]="createComments.rating" name="rating" #rating="ngModel"  [readonly]="false"  >
+                <ng-template let-fill="fill" let-index="index">
+                  <span class="star" [class.filled]="fill === 100" [class.bad]="index < 3">&#9733;</span>
+                </ng-template>
+              </ngb-rating> 
+              </div>
+                  <button type="button" class="btn btn-primary" ngDefaultControl  (click)="minRate()" name=minRate>Min Rate</button><Button type="button" class="btn btn-primary" (click)="midRate()" name=midRate ngDefaultControl>Mid Rate</Button><button type="button" class="btn btn-primary" (click)="maxRate()"  name=maxRate ngDefaultControl>Max Rate</button>
+
+</div> 
+        </div>
+<div class="d-flex justify-content-center">
+  <button type="button" class="btn btn-success" [disabled]="!createForm.valid" (click)=addComment() >Save</button>
+  </div>  
+
+
+
+    </form> 
+</div>
+</div>

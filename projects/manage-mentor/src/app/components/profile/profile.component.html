@@ -1,0 +1,163 @@
+<div class="row">
+    <div class="col-md-120 card card-body bg-light text-dark">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-18">
+                    <div class="card-header bg-primary">
+                        <div class="row">
+                            <span class="col-md-6" style="padding-top: 1%;padding-bottom: 1%;">
+                                <span>
+                                    <a [routerLink]="" routerLinkActive="router-link-active" (click)="goBack()"
+                                        class="btn btn-light"><i class="fa fa-arrow-left">&nbsp;</i>&nbsp;</a>
+                                </span>
+                                <span class="text-white">&nbsp;Personal Information</span>
+                            </span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5" style="padding-left: 1%;">
+                                <table class="table borderless table-condensed" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-weight: bold;width: 30%;">Name</td>
+                                            <td style="width: 70%;">{{profile.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold;width: 30%;">E-mail</td>
+                                            <td style="width: 70%;">{{profile.email}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold;">Register No</td>
+                                            <td ng-if="profile.registerNo != '' ">{{profile.registerNo}}</td>
+                                        </tr>
+                                        <tr>
+                                            <!-- <td style="font-weight: bold;">Overall Rating</td> -->
+                                            <!-- <td ng-if="profile.registerNo != '' ">{{getComments[0].rating}}</td> -->
+                                            <!-- <td ng-if="profile.registerNo == '' ">--------------</td>  -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4">
+                                <table class="table borderless table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-weight: bold;">Gender</td>
+                                            <td ng-if="profile.gender != ''">{{profile.gender}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold;">Phone</td>
+                                            <td ng-if="profile.phone == undefined || profile.phone == ''">--------------
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold;">Date Of Birth</td>
+                                            <td ng-if="profile.dateofBirth == undefined || profile.dateofBirth == ''">
+                                                --------------</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-3">
+                                <form name="profileimage">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail">
+                                            <span id="reloadimagre">
+                                                <img src="assets/images/user.png">
+                                               
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <div class="row" *ngIf="getComments.length!=0">
+                            <div class="col-md-6" style="padding-left: 1%;">
+                                <table class="table borderless table-condensed" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-weight: bold;width: 28%;">Overall Rating</td>
+                                            <td style="width: 72%;">
+                                                <ngb-rating [(rate)]="average" [readonly]="true"   >
+                                                    <ng-template let-fill="fill" let-index="index">
+                                                      <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+                                                    </ng-template> 
+                                                  </ngb-rating>
+                                                [{{average}}/10]
+                                              
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card mb-3">
+                                    <div class="card-header bg-primary">
+                                        <div class="row">
+                                            <span class="col-md-6" style="padding-top: 1%;padding-bottom: 1%;">
+                                                <span>
+
+                                                </span>
+                                                <span class="text-white">&nbsp;Comments</span>
+                                            </span>
+                                            <span>
+                                                <button type="button"  class="btn btn-light" (click)="AddingComment(profile)"> <i
+                                                        class="fa fa-comment">Add New Comment</i></button>
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div *ngIf="getComments.length>0">
+                                            <div>
+                                                <div *ngFor="let list of getComments;let i=index">
+                                                    <b>
+                                                        rating:
+                                                        <ngb-rating [(rate)]="list.rating" [readonly]="true">
+                                                            <ng-template let-fill="fill" let-index="index">
+                                                                <span class="star"
+                                                                    [class.filled]="fill === 100">&#9733;</span>
+                                                            </ng-template>
+                                                        </ngb-rating>
+                                                        [{{list.rating}}/10]
+                                                    </b>
+                                                    <a data-toggle="modal" class="la la-trash"
+                                                        (click)="deleteComment(list)"><i class="fa fa-trash"></i></a>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <a data-toggle="modal" class="la la-trash"
+                                                        (click)="editComment(list)"><i class="fa fa-edit"></i></a>
+
+                                                    <br />
+                                                    {{list.commentDesc}}<br />
+
+                                                    <i>Mentor:{{list.staffInfo.name}}</i><br />
+                                                    <div>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                        <i> Commentby: {{list.staffInfo.name}} </i> <br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                        <i> CommentOn:{{list.commentDate|date:'MMM/dd/yyyy hh:mm '}}</i>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="alert" *ngIf="getComments.length==0">
+                                            <div class="alert alert-danger">
+                                                <span class="badge badge-warning"> Status</span> No Comments Posted Yet.
+                                            </div>
+                                        </div>
+
+                                    </div>

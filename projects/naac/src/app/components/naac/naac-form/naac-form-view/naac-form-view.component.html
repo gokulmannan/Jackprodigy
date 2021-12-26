@@ -1,0 +1,51 @@
+<div class="col-md-12 card card-body bg-light text-dark">
+    <div class="row" >
+        <div class="col-md-2">
+            <button type="button" class="btn btn-dark" (click)="goBack()">Back</button>
+            </div>
+            <div class="col-md-10"><span class="pull-right" *ngIf="naacRole == 'AUTHORIZER' || naacRole == 'INPUTTER'">
+            <span *ngIf="(naacs.status=='WAITING' || naacs.status=='UNAPPROVED') && naacRole == 'AUTHORIZER'">
+              <button class="btn btn-success" (click)="openConfirmationDialog('APPROVED')">Approve</button>&nbsp;</span>
+           <span *ngIf="naacs.status=='APPROVED' && naacRole == 'AUTHORIZER'">
+             <button class="btn btn-danger" (click)="openConfirmationDialog('UNAPPROVED')">UnApprove</button>&nbsp;
+            </span><button class="btn btn-secondary" (click)="openCommentPopup()"><i class="fa fa-comments"></i>Comment</button>&nbsp;
+            <button class="btn btn-primary" (click)="openEditPage()"><i class="fa fa-edit"></i>Edit</button>&nbsp;
+            <br>
+            <span  *ngIf="comments.length>0"> Comments Status : <span *ngIf="comments[0].status =='CLOSED'" class="badge badge-danger">CLOSED</span>
+            <span *ngIf="comments[0].status =='OPEN'" class="badge badge-success">OPEN</span></span></span>  </div> 
+        </div>
+            <hr>
+            <strong>{{naacs.title}}</strong><br>
+                {{naacs.description}}
+                <hr>
+            <div *ngFor="let eachField of naacs.fieldValues | keyvalue : originalOrder let i= index">
+                <span *ngIf="eachField.value.type != 'hidden'">
+                <div class="row" *ngIf="eachField.value.type == 'text'">
+                <label class="col-md-6 text-right"><strong>{{eachField.value.label}} :</strong></label>
+                <div class="col-md-6">
+                  <p> {{eachField.value.value}}</p>
+                </div>
+              </div>
+              <div class="row" *ngIf="eachField.value.type == 'textDate'">
+                <label class="col-md-6 text-right"><strong>{{eachField.value.label}} :</strong></label>
+                <div class="col-md-6">
+                  <p> {{eachField.value.value}}</p>
+                </div>
+              </div>
+              <div class="row" *ngIf="eachField.value.type == 'date'">
+                <label class="col-md-6 text-right"><strong>{{eachField.value.label}} :</strong></label>
+                <div class="col-md-6">
+                  <p> {{eachField.value.value}}</p>
+                </div>
+              </div>
+              <div class="row" *ngIf="eachField.value.type == 'file'">
+                <label class="col-md-6 text-right"><strong>{{eachField.value.label}} :</strong></label>
+                <div class="col-md-6">
+                <span *ngIf="eachField.value.label != 'version'  && eachField.value.url != undefined" style="text-align: center;">
+                    <a href="{{eachField.value.url}}">{{eachField.value.fileKey}}</a> </span>
+            <span *ngIf="eachField.value.label != 'version'  && eachField.value.url == undefined" style="text-align: center;">----</span>
+                </div>
+              </div>
+            </span>
+        </div>
+    </div>

@@ -1,0 +1,165 @@
+<h3 style="text-align:center;margin-top: 15px">Manage Mentor</h3>
+
+<div class="form-group row" >
+    <label for="departmentselect" class="col-sm-3 my-2 text-right">Degree & Department<span
+            class="text-danger">*</span>:</label>
+    <div class="col-sm-6 mb-3">
+        <ng-select #departmentSelect
+           
+            [searchable]="true" [clearable]="false" [(ngModel)]="dept" (change)="onSelect(dept)">
+            <ng-option value="" >----------------------Select Department--------------------</ng-option>
+            <ng-option [value]="department.id" *ngFor="let department of departments">
+
+                {{department.degreeName}} - {{department.departmentName}}
+            </ng-option>
+        </ng-select>
+    </div>
+</div>
+<div class="col-md-12" *ngIf="currentUser.userType == 'HOD'">
+    <div class="card-body">
+        <div *ngIf="dept!=undefined && dept!='' && DepartmentsFaculty!=undefined &&DepartmentsFaculty!=''">
+            <label>Search:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" placeholder="Name or Email or Faculty " [(ngModel)]="SearchText">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Total Students</th>
+                        <th scope="col">Add Students</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let faculty of  DepartmentsFaculty | filter:SearchText">
+                        <td *ngIf="faculty.mentorInfo.usertype =='HOD'"><a
+                                [routerLink]="['/manageMentor/studentDetails',faculty.staffId,dept]"
+                                (click)="viewStudents(faculty,dept)"
+                                class="la la-trash">{{faculty.mentorInfo.name}}</a>({{faculty.mentorInfo.usertype}})
+                        </td>
+                        <td *ngIf="faculty.mentorInfo.usertype !='HOD'"><a
+                                [routerLink]="['/manageMentor/studentDetails',faculty.staffId,dept]"
+                                (click)="viewStudents(faculty,dept)" class="la la-trash">{{faculty.mentorInfo.name}}
+                            </a></td>
+
+                        <td>{{faculty.mentorInfo.email}}</td>
+                        <td *ngIf="faculty.mentorInfo.phone==undefined">---</td>
+                        <td *ngIf="faculty.mentorInfo.phone!=undefined">{{faculty.mentorInfo.phone}}</td>
+                       
+                        <td>{{faculty.studentsCount}}</td>
+                        <td *ngIf="faculty.studentsCount==0">
+                            <a data-toggle="modal" class="la la-trash" (click)="CreateNewStudents(faculty)">
+                                <i class="fa fa-plus" aria-hidden="true">
+                                    [Add]</i></a>
+                            <br>
+                        </td>
+                        <td class="align-middle" *ngIf="faculty.studentsCount > 0">
+                            <a data-toggle="modal" class="la la-trash" (click)="CreateNewStudents(faculty)">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true">
+                                    [Modify]</i></a>
+                            <br>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div *ngIf="bacDeptId!=undefined && bacDeptId!='' && DepartmentsFaculty!=undefined &&DepartmentsFaculty!='' ">
+            <label>Search:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" placeholder="name or email or faculty " [(ngModel)]="SearchText">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Total Students</th>
+                        <th scope="col">Add Students</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let faculty of  DepartmentsFaculty | filter:SearchText">
+                        <td *ngIf="faculty.mentorInfo.usertype =='HOD'"><a [routerLink]=""
+                                (click)="viewStudents(faculty,dept)"
+                                class="la la-trash">{{faculty.mentorInfo.name}}</a>({{faculty.mentorInfo.usertype}})
+                        </td>
+                        <td *ngIf="faculty.mentorInfo.usertype !='HOD'"><a [routerLink]=""
+                                (click)="viewStudents(faculty,dept)" class="la la-trash">{{faculty.mentorInfo.name}}
+                            </a></td>
+
+                        <td>{{faculty.mentorInfo.email}}</td>
+                        <td>{{faculty.mentorInfo.phone}}</td>
+                        <td>{{faculty.studentsCount}}</td>
+                        <td *ngIf="faculty.studentsCount==0">
+                            <a data-toggle="modal" class="la la-trash" (click)="CreateNewStudents(faculty)">
+                                <i class="fa fa-plus" aria-hidden="true">
+                                    [Add]</i></a>
+                            <br>
+                        </td>
+                        <td class="align-middle" *ngIf="faculty.studentsCount > 0">
+                            <a data-toggle="modal" class="la la-trash" (click)="CreateNewStudents(faculty)">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true">
+                                    [Modify]</i></a>
+                            <br>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-md-12" *ngIf="currentUser.userType == 'FACULTY'">
+    <div class="card-body">
+
+<div *ngIf="dept!=undefined && dept!='' && DepartmentsFaculty!=undefined &&DepartmentsFaculty!=''">
+    <label>Search:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="text" placeholder="Name or Email or Faculty " [(ngModel)]="SearchText">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Total Students</th>
+               
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let faculty of  DepartmentsFaculty | filter:SearchText">
+                <td *ngIf="faculty.mentorInfo.usertype =='HOD'"><a
+                        [routerLink]="['/manageMentor/studentDetails',faculty.staffId,dept]"
+                        (click)="viewStudents(faculty,dept)"
+                        class="la la-trash">{{faculty.mentorInfo.name}}</a>({{faculty.mentorInfo.usertype}})
+                </td>
+                <td *ngIf="faculty.mentorInfo.usertype !='HOD'"><a
+                        [routerLink]="['/manageMentor/studentDetails',faculty.staffId,dept]"
+                        (click)="viewStudents(faculty,dept)" class="la la-trash">{{faculty.mentorInfo.name}}
+                    </a></td>
+
+                <td>{{faculty.mentorInfo.email}}</td>
+                <td *ngIf="faculty.mentorInfo.phone==undefined">---</td>
+                <td *ngIf="faculty.mentorInfo.phone!=undefined">{{faculty.mentorInfo.phone}}</td>
+               
+                <td>{{faculty.studentsCount}}</td>
+            
+              
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+</div>
+</div>

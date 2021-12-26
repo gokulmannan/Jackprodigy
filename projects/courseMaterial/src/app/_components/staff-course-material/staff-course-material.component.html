@@ -1,0 +1,70 @@
+<br>
+<div class="row justify-content-center mb-3">
+  <h4>Staff Course Material</h4>
+</div>
+<div class="card-body">
+  <div class="container">
+    <div>
+      <app-subject-nav-by-regulation (subjectByRegulationNav)="onLoad($event)"></app-subject-nav-by-regulation>
+    </div>
+
+    <div class="card mb-3 ng-scope" *ngFor="let item of coursematerial | groupBy: 'subjectName'">
+      <div class="card-header bg-primary text-white">
+        <p>{{item.key }}</p>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Material</th>
+              <th>Subject</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of item.value">
+              <td style="width: 60%">
+                <label class="text-right">
+                  <span>
+                    <a data-toggle="modal"  class="la la-trash" (click)="viewDetails(data)">{{data.title}}</a>
+                  </span>
+                </label>
+                <br>
+                <label for="" class="text-right">
+                  <small>Attachment</small>&nbsp;
+                </label>
+                <span>
+                  <a href="{{data.file.url}}">{{data.file.fileKey | titlecase}}</a> ({{data.courseMaterialType}})
+                </span>
+                <br>
+                <small class="text-muted">-{{data.createdByStaff | titlecase}}</small>
+              </td>
+              <td class="align-middle" style="width: 30%">
+                <span>{{data.subjectName}}</span>
+                <br>
+              </td>
+              <td class="align-middle" style="width: 5%">
+                <a data-toggle="modal"  class="la la-trash" (click)="editMaterial(data)"><i
+                    class="fa fa-edit"></i></a>
+                <br>
+              </td>
+              <td class="align-middle" style="width: 5%">
+                <a data-toggle="modal"  class="la la-trash" (click)="deleteMaterial(data)"><i
+                    class="fa fa-trash"></i></a><br>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-10 offset-sm-1" [hidden]="!noDataFound">
+    <div class="alert alert-warning">
+      <span class="badge badge-warning"> Sorry !</span> No data found.
+    </div>
+  </div>
+</div>

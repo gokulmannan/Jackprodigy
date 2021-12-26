@@ -1,0 +1,19 @@
+<div class="container mt-1">
+    <h3 style="text-align:center;" ngbAutofocus>
+        <button type="button" class="close text-danger" aria-label="Close" (click)="close()">
+        x
+      </button> Add Questions
+    </h3>
+</div>
+<hr class="my-2">
+<form [formGroup]="QuestionForm" (ngSubmit)="onSubmit()" class=" border border-light p-2">
+    <label for="crecategoryNameLable">Question:</label>
+    <textarea formControlName="question" placeholder="Enter Question" id="crecategoryNameLable" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.question.errors }"></textarea>
+    <div *ngIf="submitted && f.question.errors" class="invalid-feedback">
+        <div *ngIf="f.question.errors.required"> required</div>
+    </div>
+
+
+    <button class="btn btn-primary pull-right my-2" *ngIf="QuestionInformation == undefined">Create</button>
+    <button class="btn btn-primary  pull-right my-2" *ngIf="QuestionInformation != undefined">Update</button>
+</form>

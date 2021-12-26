@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <h4>Manage Department</h4>
+  </div>
+  <div class="card-body">
+
+  
+    <div class="row justify-content-end m-4">
+    <button type="button" data-toggle="modal" (click)="createDepartment()" class="btn btn-primary">Create New Department</button>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Degree Name</th>
+            <th scope="col">Department Name</th>
+            <th scope="col">Faculty Department</th>
+            <th scope="col" style="text-align: center">Total Semester</th>
+            <th scope="col">HOD</th>
+            <th scope="col">Edit Department</th>
+            <th scope="col">Delete Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let eachDept of allDepartments; let i =index">
+            <th>{{ i+1 }}</th>
+            <td>{{eachDept.degreeName}}</td>
+            <td>{{eachDept.departmentName}}</td>
+            <td>{{eachDept.facultyDepartment}}</td>
+            <td style="text-align: center">{{eachDept.totalSemester}}</td>
+            <td ><span *ngFor="let eachHod of eachDept.hod"><a [routerLink]="" (click)="viewStaff(eachHod,eachDept)">{{eachHod.name}}<br></a></span>
+            <span><a [routerLink]=""  data-toggle="modal" (click)="assignStaff(eachDept.id)"><font color="green">Assign</font> </a ></span></td>
+            <td ><a [routerLink]=""  data-toggle="modal" (click)="editDepartment(eachDept)" >Edit</a></td>
+            <td><a [routerLink]="" [routerLink]=""   data-toggle="modal" (click)="deleteDepartment(eachDept)" >Delete</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>

@@ -1,0 +1,133 @@
+<div class="text-center">
+  <div class="h4 mb-4">Manage Academic Year</div>
+ <div class="mt-4 mb-5 row"><div class="col-lg-1 "></div>
+ <div class="col-lg-3 col-md-3 col-xs-12 ml-5 pl-5"> <p>Degree & Department : </p></div>
+ <div class="col-lg-4 col-md-3 col-xs-12 "><select  class="form-control" 
+  (change)="onChange($event.target.value)">
+    <option value="" [disabled]=true>------------------select-----------------</option>
+    <option *ngFor="let data of department" [value]="data.id">{{data.degreeName}} -{{data.departmentName}}</option>
+</select></div> <div class="col-lg-4 col-md-3 col-xs-1"></div>
+</div>
+ 
+</div>
+<!-- <div *ngIf="academicYears != undefined " > -->
+<div *ngIf="show" >
+<div class="pull-right" style="margin-right: 10%"  >
+    <div class="dropdown" id="top">
+        <button class="btn btn-primary  dropdown-toggle" type="button"
+         id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Add
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a [routerLink]="" class="btn  btn-block" id="academic"  (click)="newAcademicYear()">Academic Year</a>
+          <a [routerLink]="" class="btn  btn-block" id="group"  (click)="newGroup()">Group</a>
+         </div>
+      </div>
+
+ 
+</div>
+</div>
+ <div class="mt-5" *ngIf="show">
+   <div class="container row">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#active" role="tab" 
+    aria-controls="Active" aria-selected="true">Active Academic Year</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#inactive" role="tab" 
+    aria-controls="inActive" aria-selected="false">Inactive Academic Year</a>
+  </li>
+  
+</ul>
+</div>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="home-tab"> 
+    <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg css-serial">
+      <thead class="text-info text-center">
+        <tr>
+          <th scope="col">S.no</th>
+          <th scope="col">Academic Year</th>
+          <th scope="col">Regulation</th>
+          <th scope="col">Type</th>
+          <th scope="col">No. Of Years</th>
+          <th scope="col">Current Years</th>
+          <th scope="col">Current Sem</th>
+          <th scope="col">Session Time</th>
+          <th scope="col">Group</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let details of academicYears ">
+          <ng-container *ngIf="details.inactive=='NO'">
+          
+          <td scope="col"></td>
+           <td scope="col" class="text-primary"><a [routerLink]="" routerLinkActive="router-link-active" (click)="viewDetails(details)" >{{details.startYear}}-{{details.endYear}}</a></td>
+          <td scope="col">{{details.regulation}}</td>
+          <td scope="col">{{details.type}}</td>
+          <td scope="col">{{details.noOfYears}}</td>
+          <td scope="col">{{details.currentYear}}</td>
+          <td scope="col">{{details.currentSem}}</td>
+          <td scope="col">{{details.sessionTime.fnTime}}-{{details.sessionTime.anTime}}</td>
+          <td scope="col">{{details.groupList}}</td>
+          <td scope="col"> <a [routerLink]=""  (click)="update(details)"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+          <td scope="col"><a [routerLink]=""  (click)="delete(details)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+        </ng-container>
+       
+        </tr>
+      
+      
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="profile-tab">
+    <table *ngIf="table" class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg css-serial" >
+      <thead class="text-info text-center text-info">
+        <tr>
+          <th scope="col">S.no</th>
+          <th scope="col">Academic Year</th>
+          <th scope="col">Regulation</th>
+          <th scope="col">Type</th>
+          <th scope="col">No. Of Years</th>
+          <th scope="col">Current Years</th>
+          <th scope="col">Current Sem</th>
+          <th scope="col">Session Time</th>
+          <th scope="col">Group</th>
+          <th scope="col">Edit</th>
+         </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of academicYears ">
+          <ng-container *ngIf="detail.inactive=='YES'">
+          <td scope="col"></td>
+           <td scope="col" class="text-primary"><a [routerLink]="" routerLinkActive="router-link-active" (click)="viewDetails(detail)" >{{detail.startYear}}-{{detail.endYear}}</a></td>
+          <td scope="col">{{detail.regulation}}</td>
+          <td scope="col">{{detail.type}}</td>
+          <td scope="col">{{detail.noOfYears}}</td>
+          <td scope="col">{{detail.currentYear}}</td>
+          <td scope="col">{{detail.currentSem}}</td>
+          <td scope="col">{{detail.sessionTime.fnTime}}-{{detail.sessionTime.anTime}}</td>
+          <td scope="col">{{detail.groupList}}</td>
+          <td scope="col"> <button type="button" class="btn btn-info" (click)="activate(detail)">Activate</button></td>
+        </ng-container> 
+        <ng-container *ngIf="detail == null">
+          <div class="alert alert-warning" style="text-align: center;">
+            <span class="badge badge-warning"> Sorry !</span> No Academic Year Found
+          </div>
+        </ng-container>
+        </tr>
+       
+      </tbody>
+    </table>
+  </div>
+ </div>
+ <div class="row" *ngIf="academicYears == ''">
+  <div class="col-md-12">
+  <div class="alert alert-warning" style="text-align: center;">
+    <span class="badge badge-warning"> Sorry !</span> No Academic Year Found
+  </div>
+  </div>
+</div>
+</div>

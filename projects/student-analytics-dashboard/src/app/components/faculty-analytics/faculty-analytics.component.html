@@ -1,0 +1,181 @@
+
+  <div class="card-body">
+
+<br>
+
+
+<div class="form-group row">
+    <label for="departmentselect" class="col-sm-3 text-right mt-2">Faculty<span style="color: red;">*</span></label>
+    <div class="col-md-6">
+      <ng-select 
+         [searchable]="true" [clearable]="false"
+         [(ngModel)]="facId" (change)="getFacultyReports(facId)"   name="facultyDeptSelect" placeholder="----------------------Select Faculty--------------------">
+        <!-- <ng-option value="" >----------------------Select Faculty--------------------</ng-option> -->
+        <ng-option [value]="faculty.id" *ngFor="let faculty of getFaculties ">{{faculty.name}}</ng-option>
+  </ng-select>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="showRadio">
+    <div class="col-3"></div>
+    <div class="col-5">
+    <span><input type="radio"  [(ngModel)]="reportRadio" value="CONSOLIDATED" (change)="getReport(reportRadio)" >&nbsp;CONSOLIDATED </span>&nbsp;&nbsp;
+   <span><input type="radio" [(ngModel)]="reportRadio" value="ALL" (change)="getReport(reportRadio)">&nbsp;ALL</span>
+  </div>
+</div>
+  
+  <div class="row justify-content-center" *ngIf="showReport">
+    <h4 > Gender</h4></div>
+                      <div class="row" *ngIf="showReport">
+
+                        <div class="col-md-12">
+                            <div class="card-group">
+                      <div class="card bg-light text-dark" *ngFor="let gen of facultyReports['gender'] | keyvalue">
+                        <div class="card-header">
+                            {{gen.key}}
+                          </div>
+                          <div class="card-body">
+                            {{gen.value}}
+                              </div>
+                      </div>
+                      </div>
+                      <br>
+                      <div class="row justify-content-center" *ngIf="showReport">
+                        <h4 > BloodGroup</h4></div>
+                      <div class="card-group">
+                        <div class="card bg-light text-dark" *ngFor="let gen of facultyReports['bloodGroup'] | keyvalue">
+                            <div class="card-header">
+                                {{gen.key}}
+                              </div>
+                              <div class="card-body">
+                                {{gen.value}}
+                                  </div>
+                        </div>
+                        </div>
+                        <br>
+                      <div class="row justify-content-center" *ngIf="showReport">
+                        <h4 > Admitted As</h4></div>
+                        <div class="card-group">
+                            <div class="card bg-light text-dark" *ngFor="let gen of facultyReports['admittedAs'] | keyvalue">
+                                <div class="card-header">
+                                    {{gen.key}}
+                                  </div>
+                                  <div class="card-body">
+                                    {{gen.value}}
+                                      </div>
+                            </div>
+                            </div>
+                            <div class="row justify-content-center" *ngIf="showReport">
+                                <h4 > Category</h4></div>
+                            <div class="card-group">
+                                <div class="card bg-light text-dark" *ngFor="let gen of facultyReports['category'] | keyvalue">
+                                    <div class="card-header">
+                                        {{gen.key}}
+                                      </div>
+                                      <div class="card-body">
+                                        {{gen.value}}
+                                          </div>
+                                </div>
+                                </div>
+                                <div class="row justify-content-center" *ngIf="showReport">
+                                  <h4 > Attachment</h4></div>
+                                  <div class="card">
+                                    <div class="card bg-light text-dark" *ngFor="let gen of facultyReports['attachments'] | keyvalue">
+                                        <div class="card-header">
+                                            {{gen.key}}
+                                          </div>
+                                          <div class="card-body">
+                                            {{gen.value}}
+                                              </div>
+                                    </div>
+                                    </div>
+                    </div>
+                      </div>
+                    <!-- </div>
+                      </div> -->
+
+
+                                          <div class="row" *ngIf="showAllReport && !showReport">
+                                        
+<div class="col-md-12" *ngFor="let facReport of allFacultyReports">
+<h4 class="row justify-content-center" style="color: darkslateblue;" ><strong>{{facReport.departmentName}}</strong></h4>
+<div class="col-md-12">
+    <div class="row justify-content-center" *ngIf="showAllReport && !showReport && facReport['gender'] != undefined">
+        <h4 > Gender</h4></div>
+    <div class="card-group">
+<div class="card bg-light text-dark" *ngFor="let gen of facReport['gender'] | keyvalue">
+    <div class="card-header">
+        {{gen.key}}
+      </div>
+      <div class="card-body">
+        {{gen.value}}
+          </div>
+</div>
+</div>
+<br>
+<div class="row justify-content-center" *ngIf="showAllReport && !showReport && facReport['bloodGroup'] != undefined">
+    <h4 > BloodGroup</h4></div>
+<div class="card-group">
+    <div class="card bg-light text-dark" *ngFor="let gen of facReport['bloodGroup'] | keyvalue">
+        <div class="card-header">
+            {{gen.key}}
+          </div>
+          <div class="card-body">
+            {{gen.value}}
+              </div>
+    </div>
+    </div>
+    <br>
+<div class="row justify-content-center" *ngIf="showAllReport && !showReport && facReport['admittedAs'] != undefined">
+    <h4 > Admitted As</h4></div>
+    <div class="card-group">
+        <div class="card bg-light text-dark" *ngFor="let gen of facReport['admittedAs'] | keyvalue">
+            <div class="card-header">
+                {{gen.key}}
+              </div>
+              <div class="card-body">
+                {{gen.value}}
+                  </div>
+        </div>
+        </div>
+        <br>
+<div class="row justify-content-center" *ngIf="showAllReport && !showReport && facReport['category'] != undefined">
+    <h4 > Category</h4></div>
+        <div class="card-group">
+            <div class="card bg-light text-dark" *ngFor="let gen of facReport['category'] | keyvalue">
+                <div class="card-header">
+                    {{gen.key}}
+                  </div>
+                  <div class="card-body">
+                    {{gen.value}}
+                      </div>
+            </div>
+          
+            </div>
+
+            <div class="row justify-content-center" *ngIf="showAllReport && !showReport && facReport['attachments'] != undefined">
+              <h4 > Attachments</h4></div>
+                  <div class="card-group">
+                      <div class="card bg-light text-dark" *ngFor="let gen of facReport['attachments'] | keyvalue">
+                          <div class="card-header">
+                              {{gen.key}}
+                            </div>
+                            <div class="card-body">
+                              {{gen.value}}
+                                </div>
+                      </div>
+                    
+                      </div>
+</div>          
+                                          </div>
+
+                                        
+
+                                        </div>
+
+                  
+
+
+
+
+    </div>

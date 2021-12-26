@@ -1,0 +1,187 @@
+<div *ngIf="feedbackReport.questions !=undefined" class="row">
+    <div class="col-md-12 card card-body text-dark">
+        <div>
+
+            <button onclick="window.print();" style="text-decoration: none;" class="pull-right no-print btn btn-link"><i
+            class="fa fa-print" aria-hidden="true"></i>
+            &nbsp;Print&nbsp;&nbsp;&nbsp;</button>
+        </div>
+        <div>
+            <h4 class="page-header" style="width: 90%; text-align: center;">FeedBack Survey Report</h4>
+        </div>
+
+        <div>
+            <div class="btn-group-sm pull-right no-print" data-toggle="buttons-radio">
+                <button class="btn btn-info" (click)="viewType('TEXT')">Text View</button>
+                <button class="btn btn-success active" (click)="viewType('GRAPH')">Graph View</button>
+            </div>
+        </div>
+
+
+
+
+
+        <div *ngIf="type=='TEXT'">
+            <div class="alert alert-success" role="alert">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6><strong>Feedback Name: </strong>{{eventName}}</h6>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <h6><strong>Polled user:</strong> {{feedbackReport.polledUser}}</h6>
+                        <h6><strong>Over All Avg:</strong> {{feedbackReport.overAllAvg}}/5.0</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="colorBox" style="background-color: red;"></span>&nbsp;- Poor<br>
+                        <span class="colorBox" style="background-color: #CC6600;"></span>&nbsp;- Average<br>
+                        <span class="colorBox" style="background-color: #DAA520;"></span>&nbsp;- Good<br>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="colorBox" style="background-color: #6600FF;"></span>&nbsp;- Very Good<br>
+                        <span class="colorBox" style="background-color: #008A00;"></span>&nbsp;- Excellent<br>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+
+            <table class="table table-condensed table-striped" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 5%">#</th>
+                        <th style="width: 65%">Questions</th>
+                        <th style="width: 5%; color: red;">1</th>
+                        <th style="width: 5%; color: #CC6600;">2</th>
+                        <th style="width: 5%; color: #DAA520">3</th>
+                        <th style="width: 5%; color: #6600FF">4</th>
+                        <th style="width: 5%; color: #008A00">5</th>
+                        <th style="width: 5%;">Average</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let each of feedbackReport.questions; let i=index">
+                        <td> {{i+1}}</td>
+                        <td>{{each.question}}</td>
+                        <td>{{each.firstGrade}}</td>
+                        <td>{{each.secondGrade}}</td>
+                        <td>{{each.thirdGrade}}</td>
+                        <td>{{each.fouthGrade}}</td>
+                        <td>{{each.fifthGrade}}</td>
+                        <td style="text-align: center;color: #008A00;">{{each.avg}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="type =='GRAPH'">
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <div class="btn-group-sm mt-1 pull-right no-print" data-toggle="buttons-radio">
+                        <button class="btn btn-default active" (click)="viewGraph('BAR')"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+                            Bar</button>
+                        <button class="btn btn-default" (click)="viewGraph('PIE')"><i class="fa fa-pie-chart" aria-hidden="true"></i>Pie</button>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="alert alert-success col-md-8" role="alert">
+                    <h6><strong>Feedback Name: </strong>{{eventName}}</h6>
+                    <h6><strong>Polled user:</strong> {{feedbackReport.polledUser}}</h6>
+                    <h6><strong>Over All Avg:</strong> {{overAllpercentage}}</h6>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+        <div *ngIf="type=='GRAPH' && graph =='PIE' " style="display: block">
+            <div class="row">
+                <div *ngFor="let item of feedbackReport.questions;let i =index" class="col-md-6">
+
+                    <div class="chart vl">
+                        <p class="text-justify mr-5" style="color:#eb6e34">Question {{item.question}}</p>
+                        <canvas baseChart [data]="getValueByIndex(item)" [labels]="getlabel(item)" [chartType]="questionChartType" [colors]="questionChartColors" [legend]="questionChartLegend" [plugins]="questionChartPlugins" [options]="debitChartOptions">
+                        </canvas>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="type=='GRAPH' && graph =='BAR'" style="display: block">
+            <div class="row">
+                <div class="container p-3 my-3 bg-light">
+                    Questions
+                    <div *ngFor="let item of feedbackReport.questions;let i =index" class="col-md-12">
+                        <div> {{i+1}}.{{item.question}}</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="chart" class="col-md-8">
+                    <h3 class="text-center" style="width: 130%;"><u>QUESTION WISE AVG BAR</u></h3>
+                    <canvas baseChart [data]="overallChartData" [labels]="overallChartLabels" [chartType]="overallChartType" [plugins]="overallChartPlugins" [colors]="overallChartColors" [legend]="overallChartLegend" [options]="overAllChartOptions">
+  </canvas>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <br>
+            <br>
+            <hr class="my-1">
+            <br>
+            <br>
+            <div class="row">
+
+                <div class="col-md-12 text-center">
+
+                    <h3> <u>QUESTION-GRADE WISE BAR</u></h3>
+                </div>
+            </div>
+
+
+            <div *ngFor="let item of feedbackReport.questions;let i =index">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-8">
+                        <div class="chart">
+                            <p class="text-justify mr-5 " style="color:#eb6e34 ">{{i+1}} .{{item.question}}</p>
+                            <canvas baseChart [data]="getValueByIndex(item) " [labels]="getlabel(item) " [chartType]="overallChartType " [colors]="overallChartColors " [legend]="overallChartLegend " [plugins]="overallChartPlugins " [options]="overAllChartOptions ">
+                        </canvas>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="feedbackReport.questions==undefined ">
+    <br><br><br><br>
+    <div class="row ">
+        <div class="col-md-3 "></div>
+        <div class='alert alert-warning col-md-5'>
+            <span class='badge badge-danger'>Sorry!</span> No Feedback survey report found..!
+
+        </div>
+    </div>
+
+</div>

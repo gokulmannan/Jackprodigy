@@ -1,0 +1,130 @@
+<div class="col-md-12 card card-body bg-light text-dark">
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="row" >
+                <div class="col-md-10">
+            <button type="button" class="btn btn-dark" (click)="goBack()">Back</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="!hideCreateAndImport">
+                <div class="col-md-10"></div>
+                <div class="col-md-1" *ngIf="naacRole == 'AUTHORIZER' || naacRole == 'INPUTTER'">
+            <button   class="pull-right btn btn-success" (click)="openAddPage()">Create</button></div>
+            <div class="col-md-1" *ngIf="naacRole == 'AUTHORIZER' || naacRole == 'INPUTTER'"> 
+                 <button   class="pull-right btn btn-primary" (click)="importPopup()">Import</button>
+</div>
+            </div>
+<br>
+<div class="row" >
+  <div class="col-md-5"></div>
+ <div class="form-check">
+   <input class="form-check-input" type="checkbox" id="select" [(ngModel)]="deptSelected.checked" [checked]="deptSelected.checked" (change)="selectDeptNaac(deptSelected)">
+   <label class="form-check-label" for="selectAllHod">
+    <b>Not Applicable</b>
+</label>
+</div>
+</div>
+<br>
+<div class="row" *ngIf="naacTemplate != undefined">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="text-align: center;">
+        <strong>{{naacTemplate.title}}</strong><br>
+                {{naacTemplate.description}}
+    </div>
+</div>
+<div class="row" *ngIf="naacTemplate == undefined && naacData[0] != undefined">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="text-align: center;">
+        <strong>{{naacData[0].title}}</strong><br>
+                {{naacData[0].description}}
+    </div>
+</div>
+<h3 *ngIf="showLoad" style="text-align: center;"> Loading .....</h3>
+<div class="row">
+    <div class="col-md-10">
+    </div>
+    <div class="col-md-1">
+        <button class="pull-right btn btn-primary" *ngIf="notShow" (click)="approveByCheckbox()">Approve</button>
+
+    </div>
+    <div class="col-md-1">
+        <button class="pull-right btn btn-danger" *ngIf="notShow" (click)="deleteNaacByCheckbox()">Delete</button>
+
+    </div>
+</div>
+
+
+            <h3 style="text-align:center">NAAC</h3>
+            <div class="card-body" *ngIf="naacData.length>0">
+                <div class="row" *ngIf="notenaac.note != undefined">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="alert alert-warning">
+                        <strong class="text-align:center">{{notenaac.note.label}} Template</strong><br>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class= "table-responsive"> 
+                <table class="table table-striped" style="width:100%" >
+                    <thead>
+                         <tr> 
+                            <th scope="col">
+                                <input type="checkbox" [checked]="checks" (click)="checkAll()">
+                              All
+                              </th>
+                             <th style="text-align: center;" style="width:10%">#</th>
+                             
+                             <th  style="text-align: center;" class="societe" style="width:20%">Actions</th>
+                            <th style="text-align: left;" style="width:40%" *ngFor="let eachField of naacData[0].fieldValues | keyvalue : originalOrder">
+                                <span *ngIf="eachField.value.label != 'version'"  style="text-align: center;">{{eachField.value.label}}</span></th>
+                                <th  style="text-align: center;" style="width:10%">Created</th>
+                                <th  style="text-align: center;" style="width:10%">Modified</th>
+                        </tr> 
+                     </thead>
+                    <tbody>
+                        <tr *ngFor="let eachNaacData of naacData;let i=index">
+                            <th ><input type="checkbox" (change)="checkAllCheckBox(eachNaacData.checked,eachNaacData.id,eachNaacData)"
+                                value="{{eachNaacData.id}}" [(ngModel)]="eachNaacData.checked" [ngModelOptions]="{standalone: true}" [checked]="checks"></th>
+                            <td >{{i+1}}</td>
+                            <td  style="text-align: center;" >
+                                <small *ngIf="eachNaacData.commentStatus == undefined">--</small>&nbsp;
+                                <small class="badge-success" *ngIf="eachNaacData.commentStatus =='OPEN'" ><span><strong>OPEN</strong></span></small>&nbsp;
+                                <small class="badge-danger" *ngIf="eachNaacData.commentStatus =='CLOSED'"><span><strong>CLOSED</strong></span></small>&nbsp;
+                                <small class="badge-warning" *ngIf="eachNaacData.status =='WAITING'"><i class="fa fa-clock-o"></i></small>&nbsp;
+                                <small class="badge-success" *ngIf="eachNaacData.status =='APPROVED'"><i class="fa fa-check-circle"></i></small>&nbsp;
+                                <small class="badge-danger" *ngIf="eachNaacData.status =='UNAPPROVED'"><i class="fa fa-times"></i></small>&nbsp;
+                                <a routerLink="" (click)="openViewPage(eachNaacData.id)"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a  routerLink="" (click)="deleteNaac(eachNaacData.id)" ><i class="fa fa-trash"></i></a></td>
+                            <td style="text-align: left;"  *ngFor="let eachNaacField of eachNaacData.fieldValues | keyvalue : originalOrder">
+
+                                <span  *ngIf="eachNaacField.value.label != 'version' && eachNaacField.value.type != 'file'" > {{eachNaacField.value.value}}</span>
+                            <span  *ngIf="eachNaacField.value.label != 'version' && eachNaacField.value.type == 'file' && eachNaacField.value.url != undefined" ><a href="{{eachNaacField.value.url}}">{{eachNaacField.value.fileKey}}</a> </span>
+                            <span  *ngIf="eachNaacField.value.label != 'version' && eachNaacField.value.type == 'file' && eachNaacField.value.url == undefined" >----</span>
+                            <br>
+                            <span *ngIf="eachNaacField.value.label != 'version' && eachNaacField.value.type == 'file' && eachNaacField.value.url != undefined"> <a [routerLink]="" (click)="editFile(eachNaacData.id,eachNaacField.value.label)">Edit</a></span>
+                            <span *ngIf="eachNaacField.value.label != 'version' && eachNaacField.value.type == 'file' && eachNaacField.value.url == undefined"> <a [routerLink]="" (click)="addFile(eachNaacData.id,eachNaacField.value.label)">Add</a></span>
+                          
+                        </td> 
+                        <td >
+                            <small *ngIf="eachNaacData.createdOn != undefined && eachNaacData.createdOn != '0'"><label >Created On :</label>{{eachNaacData.createdOn | date:"MMM d, y"}}</small>
+                            <small *ngIf="eachNaacData.created != undefined "><label >Created By:</label>{{eachNaacData.created}}</small></td>
+
+                        <td >
+                           <small *ngIf="eachNaacData.modifiedOn != undefined && eachNaacData.modifiedOn != '0'"><label >ModifiedOn :</label>{{eachNaacData.modifiedOn | date:"MMM d, y"}}</small>
+                           <label *ngIf=" eachNaacData.modified == undefined ">---</label>
+                           <small *ngIf="eachNaacData.modified != undefined "><label >Modified By:</label>{{eachNaacData.modified}}</small></td>
+                    </tr>
+                    </tbody>
+                </table> 
+            </div>
+             </div> 
+            <div class="text-left" *ngIf="naacData.length == 0 && showNoData">
+                <div class="alert alert-warning">
+                  <span class="badge badge-warning"> Sorry !</span> No data found.
+                </div>
+              </div> 
+              <ngb-pagination class="d-flex justify-content-center" (pageChange)="getNaacWithLabel($event, pageSize)" [pageSize]="pageSize" [collectionSize]="totalCount" [maxSize]="10" [(page)]="page" [boundaryLinks]="true" ></ngb-pagination> 
+        </div>
+    </div>
+</div>

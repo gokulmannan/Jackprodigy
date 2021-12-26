@@ -1,0 +1,71 @@
+<div class="modal-header bd-example-modal-lg">
+  <h4 class="modal-title">Update</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<br>
+<div class="container align-right">
+  <form>
+    <div class="form-group row">
+
+      <label class="col-sm-4 text-right ">Title<span class="text-danger">*</span>:</label>
+
+      <div class="col-sm-6">
+        <input type="text" class="form-control" #title="ngModel" placeholder="title" required name="title"
+          [(ngModel)]="assignmentData.title" ngModel>
+
+        <small *ngIf="!title.valid && title.touched" class="text-danger">Title required.</small>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-4 text-right">Description <span class="text-danger">*</span>:</label>
+      <div class="col-sm-6">
+        <textarea class="form-control" #message="ngModel" required name="message" [(ngModel)]="assignmentData.message"
+          ngModel></textarea>
+        <small *ngIf="!message.valid && message.touched" class="text-danger">Description required.</small>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-4 text-right">Attach File :</label> &nbsp;
+      <ng-container *ngIf="assignmentData.file != undefined && showBrowse">
+        <div class="col-sm-6">
+          <span> {{assignmentData.file.fileKey}}</span> <a style="color:red" (click)="removeFile()">&nbsp;Remove</a>
+        </div>
+      </ng-container>
+
+      <div *ngIf="(assignmentData.file != undefined && !showBrowse) || (assignmentData.file == undefined)"
+        class="col-sm-6">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="file" (change)="handleFileInput($event.target.files)">
+          <label class="custom-file-label" for="file">{{fileLable}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-4 text-right">Select Subject :</label>
+      <a class="col-sm-6" data-toggle="modal" href="" (click)="subjectPop()">click here</a><br>
+    </div>
+    <div class="container">
+      <div class=" row">
+        <div class="col-md-7 offset-md-4"
+          *ngIf="assignmentData.subjectName != undefined && assignmentData.subjectName.length >0">
+          <div #alert class="alert alert-success alert-dismissible " role="status">
+            <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{assignmentData.subjectName}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-7">
+        <button type="submit" class="btn btn-success float-right" style="margin-bottom: 30px;"
+          (click)="updateAssignment()">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>

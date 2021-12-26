@@ -1,0 +1,27 @@
+<section class="container-fluid flex-grow">
+    <div class="row justify-content-center">
+        <h4> Dashboard</h4>
+      </div>
+    <div class="row">
+		<span class="col-md-9">
+			<ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" routerLink='/dashboard/facultyAnalytics'>Students</a></li>
+                <!-- <li class="nav-item"><a  class="nav-link" data-toggle="tab" routerLink='/dashboard/allFacultyAnalytics'>Faculty Report</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" routerLink='/dashboard/departmentAnalytics'>Consolidated Department</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" routerLink='/dashboard/allDepartmentAnalytics'>Department Report</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" routerLink='/dashboard/academicAnalytics'>Consolidated Academic Report</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" routerLink='/dashboard/allAcademicAnalytics'>Academic Report</a></li> -->
+            </ul>
+            </span>
+            </div>
+    <div *ngIf="currentUser.userType !='STUDENT'" class="row">
+    <div class="col-md-12 order-md-1 pt-3">
+      <div class="bg-faded mb-3">
+          <div class="card bg-light">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </section>

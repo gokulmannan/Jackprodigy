@@ -1,0 +1,111 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add Template</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+<form class="form" #composeForm="ngForm">
+
+    <div class="form-group row">
+      <label class="col-sm-4 my-1 text-right">Title<span class="text-danger">*</span>:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" #title="ngModel" required name="title"
+          [(ngModel)]="save.title" ngModel required>
+          <span *ngIf="(composeForm.submitted && title.invalid) || (title.invalid && title.touched)" style="color: red;">
+            required
+          </span>
+          </div>
+
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-4 my-1 text-right">Description<span class="text-danger">*</span>:</label>
+      <div class="col-sm-6">
+        <textarea class="form-control" #message="ngModel" required name="message" [(ngModel)]="save.description"
+          ngModel></textarea>
+          <span *ngIf="(composeForm.submitted && message.invalid) || (message.invalid && message.touched)" style="color: red;">
+            required
+          </span>
+          </div>
+    </div>
+      <div class="form-group row">
+        <label class="col-sm-4 my-1 text-right">Position<span class="text-danger">*</span>:</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" #position="ngModel" required name="position" [(ngModel)]="save.position"
+            ngModel></textarea>
+            <span *ngIf="(composeForm.submitted && position.invalid) || (position.invalid && position.touched)" style="color: red;">
+              required
+            </span>
+            </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 my-1 text-right">Type<span class="text-danger">*</span>:</label>
+        <div class="col-sm-6">
+            <ng-select 
+            [searchable]="true" [clearable]="false"
+            name="type" #type="ngModel" required [(ngModel)]="save.type" placeholder="----------------------Select Type--------------------"   >
+           <ng-option value="" >----------------------Select Type--------------------</ng-option>
+           <ng-option [value]="eachType" *ngFor="let eachType of types ">{{eachType}}
+           </ng-option>
+      </ng-select>
+            <span *ngIf="(composeForm.submitted && type.invalid) || (type.invalid && type.touched)" style="color: red;">
+              required
+            </span>
+            </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-4 my-1 text-right">Criteria<span class="text-danger">*</span>:</label>
+        <div class="col-sm-6">
+            <ng-select 
+            [searchable]="true" [clearable]="false"
+            name="criteria" #criteria="ngModel" required [(ngModel)]="save.criteria" placeholder="----------------------Select Criteria--------------------"   >
+           <ng-option value="" >----------------------Select Criteria--------------------</ng-option>
+           <ng-option [value]="criteria" *ngFor="let criteria of criterias ">{{criteria}}
+           </ng-option>
+     </ng-select>
+            <span *ngIf="(composeForm.submitted && criteria.invalid) || (criteria.invalid && criteria.touched)" style="color: red;">
+              required
+            </span>
+            </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-4 my-1 text-right">Sub Criteria<span class="text-danger">*</span>:</label>
+        <div class="col-sm-6">
+         
+            <input type="text" class="form-control" #subCriteria="ngModel" required name="subCriteria"
+              [(ngModel)]="save.subCriteria" ngModel required>
+              <span *ngIf="(composeForm.submitted && subCriteria.invalid) || (subCriteria.invalid && subCriteria.touched)" style="color: red;">
+                required
+              </span>
+            
+            </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-md-4 mb-2 text-right">
+          <label for="twelfthMarkSheet">Json File<span class="text-danger">*</span> :</label>
+      </div>
+          <div class="col-md-2" *ngIf="jsonFile.fileKey == undefined">
+          <input #fileInput type="file" id="file">
+          <span><br></span>
+          <button  class="btn btn-success" (click)="uploadFiles(fileInput.files)">Upload</button>
+
+        </div>
+       
+        <div *ngIf="jsonFile.fileKey  != undefined">
+          <a href="{{jsonFile.url}}">{{jsonFile.fileKey}}</a>
+        </div>
+        <div>
+          <button *ngIf="jsonFile.fileKey != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile()">Change</button>
+      </div>
+    </div>
+    <div class="form-group-row">
+        <div class="col-sm-8 text-right">
+          <button type="submit" class="btn btn-success " (click)="create(composeForm.form.valid)">Submit</button></div>
+      </div>
+    </form>
+    </div>
+    <br><br>

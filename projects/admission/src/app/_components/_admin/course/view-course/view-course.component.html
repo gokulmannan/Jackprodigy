@@ -1,0 +1,40 @@
+<div class="row mt-3">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="shadow-sm p-5 mb-5 bg-white text-center ">
+            <h3 style="text-align: center;">COURSES</h3>
+            <hr>
+            <div class="row ">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" (click)="createCourse()">Create</button>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <table class="table table-striped bordered mt-1">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let course of courses; let i=index">
+                                <td>{{i+1}}</td>
+                                <td style="width: 100%;">{{course.name}}</td>
+                                <td><button class="btn btn-sm btn-primary btn-block" (click)="edit(course.id)">Edit</button></td>
+                                <td><button class="btn btn-sm btn-danger btn-block" (click)="delete(course.id)">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

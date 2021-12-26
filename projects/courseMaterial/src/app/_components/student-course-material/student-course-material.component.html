@@ -1,0 +1,89 @@
+<div class="row justify-content-center">
+  <br>
+  <br>
+  <h4>Course Material</h4>
+</div>
+<br>
+
+<div class="container">
+  <div class="form-group row">
+    <label class="col-sm-3 text-right" for="subjectselect">Subject<span class="text-danger">*</span> :</label>
+    <div class="col-sm-5 mb-1">
+      <!-- <select class="custom-select" name="subjectselect" #t (change)="onSelect(eachSubject)" [(ngModel)]="eachSubject">
+        <option value="" selected style="text-align: center;">-------------------- Select Subject -------------------</option>
+        <option style="font-size: 18px" [ngValue]="eachSubject" *ngFor="let eachSubject of subject  ">
+          {{eachSubject.subjectName}}</option>
+      </select> -->
+     
+      <ng-select 
+      placeholder="------------------------------Select Subject-------------------------------"
+      [searchable]="true"  
+      [clearable] = "false"
+      [(ngModel)]="eachSubject"
+     (change)="onSelect(eachSubject)"  
+      
+      >
+      <ng-option [value]="eachSubject" *ngFor="let eachSubject of subject">
+         
+          {{eachSubject.subjectName}}
+      </ng-option>
+</ng-select>
+      <!-- <small *ngIf="!eachSubject.valid && eachSubject.touched" class="text-danger">Subject Requied</small> -->
+    </div>
+  </div>
+  <div *ngIf="subjectDetail.length > 0" class="card mb-3">
+    <div class="card-header bg-primary text-white">
+      {{subjectName}}
+    </div>
+    <div class="card-body ">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Subject</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let eachsubjectDetail of subjectDetail">
+            <td style="width: 60%">
+              <label class="text-right">
+                <span>
+                  <label>{{eachsubjectDetail.title}}</label>
+                </span>
+              </label>
+              <br>
+              <label for="" class="text-right">
+                <small>Attachment</small>&nbsp;
+              </label>
+              <span>
+                <a href="{{eachsubjectDetail.file.url}}">{{eachsubjectDetail.file.fileKey | titlecase}}</a>
+                ({{eachsubjectDetail.courseMaterialType}})
+              </span>
+              <br>
+              <small class="text-muted">-{{eachsubjectDetail.createdByStaff | titlecase}}</small>
+            </td>
+            <td class="align-middle" style="width: 30%">
+              <span>{{eachsubjectDetail.subjectName}}</span>
+              <br>
+              <span ng-if="eachsubjectDetail.description !=null &amp;&amp; eachsubjectDetail.description != ''"><span
+                  class="lead badge badge-info">Note </span><small> {{eachsubjectDetail.description}} </small></span>
+              <br>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3" *ngIf="subjectDetail.length == 0 && subjectName != undefined">
+      <div class="alert alert-warning">
+        <span class="badge badge-warning"> Sorry !</span> No data found.
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand fixed-top shadow-lg" style="background-color: white;">
+
+    <div class="row w-100">
+        <div class="col-md-7 float-right">
+
+            <!-- <loading-alert></loading-alert> -->
+        </div>
+        <div class="col-md-5 text-right ">
+            <strong> Welcome {{user.email}}</strong>
+        </div>
+     
+    </div>
+</nav>
+<br><br>
+<div class="row">
+    <div *ngIf="userType =='USER'" class="col-md-2">
+        <nav id="sidebar" class="navbar-dark" style="background-color: #044EA0;">
+            <ul class="navbar-nav">
+                <!-- <li class="border-bottom-line "> <a class="nav-link" style="color: white; " routerLink="/admission/dashboard" href="# " data-toggle="pill " role="tab ">Dashboard</a>
+                </li> -->
+                <li class="border-bottom-line "> <a class="nav-link" style="color: white; " routerLink="/admission/all-application" href="# " data-toggle="pill " role="tab ">&nbsp;&nbsp;All
+                        Application Form(s)</a>
+                </li>
+                <li class="border-bottom-line ">
+                    <a class="nav-link " style="color: white; " routerLink="" (click)=openMyProfile() data-toggle="pill " role="tab ">&nbsp;&nbsp;My Profile</a>
+                </li>
+                <li class="border-bottom-line ">
+                    <a class="nav-link" style="color: white;" routerLink="" (click)=logout() data-toggle="pill " role="tab ">&nbsp;&nbsp;Logout</a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+    <div *ngIf="userType =='ADMISSIONADMIN'" class="col-md-2">
+        <nav id="sidebar" class="navbar-dark" style="background-color: #044EA0;">
+            <ul class="navbar-nav ">
+                <!-- <li class="border-bottom-line">
+                    <a class="nav-link  text-left" style="color: white;" routerLink="/user/dashboard" href="#" data-toggle="pill" role="tab">Dashboard</a>
+                </li> -->
+
+                <li class="border-bottom-line">
+                    <a class="nav-link  text-left" style="color: white;" routerLink="/admission/admin/application-forms" href="#" data-toggle="pill" role="tab">&nbsp;&nbsp;Application Form(s)</a>
+                </li>
+                <li class="border-bottom-line">
+                    <a class="nav-link  text-left" style="color: white;" routerLink="/admission/admin/applications" href="#" data-toggle="pill" role="tab">&nbsp;&nbsp;All User</a>
+                </li>
+                <li class="border-bottom-line">
+                    <a class="nav-link  text-left" style="color: white;" routerLink="/admission/admin/course/view" href="#" data-toggle="pill" role="tab">&nbsp;&nbsp;Courses</a>
+                </li>
+                <li class="border-bottom-line">
+                    <a class="nav-link  text-left" style="color: white;" routerLink="/admission/admin/campus/view" href="#" data-toggle="pill" role="tab">&nbsp;&nbsp;Campus</a>
+                </li>
+                <li class="border-bottom-line ">
+                    <a class="nav-link" style="color: white;" routerLink="" (click)=adminLogout() data-toggle="pill " role="tab ">&nbsp;&nbsp;Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-10">
+        <router-outlet></router-outlet>
+    </div>
+</div>

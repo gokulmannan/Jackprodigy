@@ -1,0 +1,48 @@
+<section class="container-fluid flex-grow">
+  <br>
+  <h3 style="text-align:center">Sent Assignment</h3>
+  <div class="row">
+
+    <div class="card-body">
+      <table class="table table-striped" *ngIf="assignment.length >0">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Assignment</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Date</th>
+            <th scope="col">Attachment</th>
+            <th scope="col">Modified On</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let eachAssignment of assignment; let i =index;">
+            <th>{{ i+1 }}</th>
+            <td> <a data-toggle="modal" [routerLink]="['/assignment/viewSubmission',eachAssignment.id]"
+                (click)="viewSubmission(eachAssignment)" class="la la-trash"> {{eachAssignment.title}} </a></td>
+           <td>{{eachAssignment.subjectName}}</td>
+            <td>{{eachAssignment.createdOn}}</td>
+            <td *ngIf="eachAssignment.file.fileKey != undefined"><a
+                href="{{eachAssignment.file.url}}">{{eachAssignment.file.fileKey}}</a></td>
+            <td *ngIf="eachAssignment.file.fileKey == undefined">No Attachment Found</td>
+            <td *ngIf="eachAssignment.modifiedOn != undefined" style="text-align:center;">{{eachAssignment.modifiedOn}}</td>
+            <td *ngIf="eachAssignment.modifiedOn == undefined" style="text-align:center;">---</td>
+
+            <td>
+              <div class="input-group-prepend" (click)="editAssignment(eachAssignment)">
+                <i class="fa fa-pencil" style="color:blue;margin-top:2px"></i></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-sm-6 offset-sm-3" *ngIf="assignment.length == 0 ">
+          <div class="alert alert-warning">
+            <span class="badge badge-warning"> Sorry !</span> No data found.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

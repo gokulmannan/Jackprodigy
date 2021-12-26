@@ -1,0 +1,82 @@
+<h3 style="text-align: center;">
+    All Application Forms</h3>
+<!-- </div> -->
+<hr class="hr">
+<div class="row mt-4">
+    <div class="col-md-10">
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary btn-small" (click)="openCreateForm()">New Form</button>
+    </div>
+</div>
+<div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+
+</div>
+<div class="row mt-3">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+
+        <div class="row float-right">
+            <div class="col-md-12">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="index">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Sl. No. </th>
+                <td mat-cell *matCellDef="let index = index" style="text-align: center;"> {{index + 1}} </td>
+            </ng-container>
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Application Form </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;"> <a [routerLink] (click)="viewApplication(element.id)">{{element.name}}</a> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fees">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Application Fees </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.fees}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="rule">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Courses </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+
+                    <span *ngFor="let eachId of element.courseName">
+            {{eachId}}&nbsp;
+
+
+          </span>
+                </td>
+            </ng-container>
+
+            <!--
+      <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element">  
+        <button mat-button class="btn btn-primary btn-sm" (click)="openNewApplication(element)">Apply</button> </td>
+    </ng-container>
+     <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> Edit </th>
+      <td mat-cell *matCellDef="let element" > <button class="btn btn-sm btn-primary" (click)="edit(element)">Edit</button> </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let element"> <button class="btn btn-sm btn-danger" (click)="delete(element)">Delete</button> </td>
+    </ng-container>
+-->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+    </div>
+</div>

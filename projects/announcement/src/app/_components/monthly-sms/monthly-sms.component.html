@@ -1,0 +1,45 @@
+<div class="row">
+	<div class="col-md-12 card card-body bg-light">
+		<div class="page-header">
+	 	<h4 >Monthly SMS Review</h4>
+	 	</div>
+		<div ng-if="smsSent.length > 0">
+			<table class="table table-striped table-condensed" style="width: 100%;">
+				<thead>
+					<tr>
+						<th style="color: teal; width: 10%;text-align: center">#</th>
+						<th style="color: teal; width: 22%; padding-left: 5%">Month & Year</th>
+						<th style="color: teal; width: 18%;">Total SMS Sent</th>
+						<th style="color: teal; width: 18%;">Total Fail Count</th>
+						<th style="color: teal; width: 30%;">Export Excel</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let eachSmsReport of smsReview;let i=index">
+						<td style=" width: 10%; text-align: center">{{i+1}}</td>
+						<td style=" width: 10%; padding-left: 5%">{{eachSmsReport.monthYear}}</td>
+						<td style=" width: 10%; padding-left: 4%">{{eachSmsReport.smsCount}}</td>
+						<td style=" width: 10%; padding-left: 4%">{{eachSmsReport.smsFailCount}}</td>
+						<td style=" width: 10%;padding-left: 4%;">
+							<span *ngIf="eachSmsReport.smsCount != 0">
+								
+                                    <a [routerLink]="" (click)="exportAsXLSX(eachSmsReport.monthYear)">
+								<i class="fa fa-download"></i></a>
+							</span>
+							<span *ngIf="eachSmsReport.smsCount == 0">
+								<i class="fa fa-ban"></i>
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div *ngIf="smsReview.length == 0">
+			<br>
+			<div class="alert alert-warning">
+				<span class="badge badge-warning">Warning</span> &nbsp;Sorry!, No data found.
+			</div>
+		</div>
+	</div>
+	<div ui-view="rightContainer" class="col-md-2"></div>
+</div>

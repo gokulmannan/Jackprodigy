@@ -1,0 +1,188 @@
+<div class="modal-header">
+  <h4>Academic Year</h4><button type="button" class="close" (click)="close()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+</div>
+<form #formData="ngForm" (ngSubmit)="onSubmit(formData)" novalidate>
+  <div class="form-group row mt-3">
+    <label class="col-sm-4 text-right ">Start Year<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <input type="text" class="form-control" name="startYear" #startYear="ngModel" [(ngModel)]="modal.startYear"
+        ngModel minlength="4" pattern="^[0-9]+$" required
+        [class.is-invalid]="!startYear?.valid && (startYear?.dirty || startYear?.touched)">
+      <small> Give the year as full ex: <i class="badge badge-success">2017</i></small>
+      <div *ngIf="!startYear?.valid && (startYear?.dirty || startYear?.touched)" class="error">
+        <div *ngIf="startYear.errors.required">
+          <small class="text-danger"> Year is required</small>
+        </div>
+
+        <div *ngIf="startYear.errors.minlength">
+          <small class="text-danger"> Minimum Length is {{startYear.errors.minlength?.requiredLength}}</small>
+        </div>
+        <div *ngIf="startYear.errors.pattern">
+          <small class="text-danger">Number are required</small>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group row mt-3">
+    <label class="col-sm-4 text-right ">End Year<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <input type="text" class="form-control" name="endYear" minlength="4" pattern="^[0-9]+$" required
+        #endYear="ngModel" [(ngModel)]="modal.endYear" ngModel
+        [class.is-invalid]="!endYear?.valid && (endYear?.dirty || endYear?.touched)">
+      <small> Give the year as full ex: <i class="badge badge-success">2019</i></small>
+      <div *ngIf="!endYear?.valid && (endYear?.dirty || endYear?.touched)" class="error">
+        <div *ngIf="endYear.errors.required">
+          <small class="text-danger"> Year is required</small>
+        </div>
+
+        <div *ngIf="endYear.errors.minlength">
+          <small class="text-danger"> Minimum Length is {{endYear.errors.minlength?.requiredLength}}</small>
+        </div>
+        <div *ngIf="endYear.errors.pattern">
+          <small class="text-danger">Number are required</small>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row mt-3">
+    <label class="col-sm-4 text-right ">Regulation<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <select class="form-control" name="regulation" #regulation="ngModel" [(ngModel)]="modal.regulation" ngModel
+        required [class.is-invalid]="!regulation?.valid && (regulation?.dirty || regulation?.touched)">
+        id="Select1">
+        <option value="" [disabled]=true>-----select-----</option>
+        <option [value]="reg" *ngFor="let reg of regYears">{{reg}}</option>
+      </select>
+      <div *ngIf="!regulation?.valid && (regulation?.dirty || regulation?.touched)" class="error">
+        <div *ngIf="regulation.errors.required">
+          <small class="text-danger"> regulation is required</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group row mt-3">
+    <label for="Select1" class="col-sm-4 text-right ">Type<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <select class="form-control" name="type" #type="ngModel" [(ngModel)]="modal.type" ngModel required
+        [class.is-invalid]="!type?.valid && (type?.dirty || type?.touched)">
+        id="Select1">
+        <option value="" [disabled]=true>-----select-----</option>
+        <option value="sem">sem</option>
+        <option value="year">year</option>
+      </select>
+      <div *ngIf="!type?.valid && (type?.dirty || type?.touched)" class="error">
+        <div *ngIf="type.errors.required">
+          <small class="text-danger"> Type is required</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row mt-3">
+    <label for="Select2" class="col-sm-4 text-right ">No. Of Years<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <select class="form-control" name="noOfYears" #noOfYears="ngModel" [(ngModel)]="modal.noOfYears"
+        [class.is-invalid]="!noOfYears?.valid && (noOfYears?.dirty || noOfYears?.touched)" required ngModel
+        id="Select1">
+        <option value="" [disabled]=true>-----select-----</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <div *ngIf="!noOfYears?.valid && (noOfYears?.dirty || noOfYears?.touched)" class="error">
+        <div *ngIf="noOfYears.errors.required">
+          <small class="text-danger"> no of years is required</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group row mt-3">
+    <label for="Select3" class="col-sm-4 text-right ">Current Year<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <select class="form-control" name="currentYear" #currentYear="ngModel" [(ngModel)]="modal.currentYear"
+        [class.is-invalid]="!currentYear?.valid && (currentYear?.dirty || currentYear?.touched)" required ngModel
+        id="Select3">
+        <option value="" [disabled]=true>-----select-----</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <div *ngIf="!currentYear?.valid && (currentYear?.dirty || currentYear?.touched)" class="error">
+        <div *ngIf="currentYear.errors.required">
+          <small class="text-danger"> current year is required</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row mt-3">
+    <label for="Select4" class="col-sm-4 text-right ">Current Sem<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <select class="form-control" name="currentSem" #currentSem="ngModel" [(ngModel)]="modal.currentSem " ngModel
+        [class.is-invalid]="!currentSem?.valid && (currentSem?.dirty || currentSem?.touched)" required id="Select4">
+        <option value=""[disabled]=true>-----select-----</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+      <div *ngIf="!currentSem?.valid && (currentSem?.dirty || currentSem?.touched)" class="error">
+        <div *ngIf="currentSem.errors.required">
+          <small class="text-danger"> current Sem is required</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row mt-3">
+    <label class="col-sm-4 text-right ">Forenoon End Time<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <ng-template #popTemplate>
+        <timepicker  [(ngModel)]="modal.fnTime"  name="fnTime" (click)="meridianFormat()" [showMeridian]="true"></timepicker>
+      </ng-template>
+      <input type="text" class="form-control" name="fnTime" #fnTime="ngModel" [(ngModel)]="modal.fnTime"
+        value="{{modal.fnTime}}"   
+            [popover]="popTemplate"
+       [outsideClick]="true" placement="top" required  >
+    </div>
+  </div>
+
+  <div class="form-group row mt-3">
+    <label class="col-sm-4 text-right ">Afternoon End Time<span class="text-danger">*</span>:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <ng-template #pop>
+        <timepicker  [(ngModel)]="modal.anTime"  name="anTime" (click)="meridianAn()" [showMeridian]="true"></timepicker>
+      </ng-template>
+      <input type="text" class="form-control"    value="{{modal.anTime}}"     name="anTime" #anTime="ngModel"
+       [(ngModel)]="modal.anTime" [popover]="pop"
+       [outsideClick]="true" placement="top" required  >
+    </div>
+  </div>
+    
+  
+ 
+  
+  <button type="submit" class="btn btn-success float-right mr-5 mb-3" [disabled]="!formData.valid">Submit</button>
+</form>

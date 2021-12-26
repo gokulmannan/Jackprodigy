@@ -1,0 +1,76 @@
+<div class="row">
+
+    <div class="col-md-12 card card-body bg-light text-dark">
+
+
+        <form class="form-horizontal">
+            <h3 style="text-align:center;">Create Survey Template</h3>
+
+            <div class="form-group row">
+                <div class="col-md_12"></div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md_12"></div>
+            </div>
+            <div *ngIf="questionsstate.value !=undefined || questionsstate.value != 0">
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label text-right"><b> Name</b>:
+      </label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" placeholder="Enter Survey Template Name" #name="ngModel" required name="name" [(ngModel)]="details.name" [ngModelOptions]="{standalone:true}"> </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" (click)=createDetails(this.details)>Create</button>
+                    </div>
+
+                </div>
+
+
+                <table mat-table [dataSource]="questionsstate">
+                    Checkbox Column
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef class="text-center dark" style="width: 10%;">
+                            <div class="mb-1 ">
+                                <h4>Select</h4>
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let row" class="text-center" style="width: 10%;">
+                            <div class="mt-2">
+                                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)"></mat-checkbox>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="slno">
+                        <th mat-header-cell *matHeaderCellDef class=" table-font dark" style="width: 5%;">
+                            <div class="mb-1 ">
+                                <h4>#</h4>
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index;" style="width: 5%;">
+                            <div>{{i +1}}</div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="question">
+                        <th mat-header-cell *matHeaderCellDef class="table-font dark ml-1 " style="width: 80%;">
+                            <div>
+                                <h4>Questions</h4>
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" style="width: 80%;">
+                            <div>{{(element.question != null)?element.question: "-"}}</div>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+                </table>
+            
+            </div>
+
+
+
+        </form>
+
+
+
+
+    </div>
+</div>

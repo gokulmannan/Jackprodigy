@@ -1,0 +1,11 @@
+/* .vl {
+    border-left: .1px solid black;
+    height: 500px;
+} */
+
+.colorBox {
+    float: left;
+    width: 20px;
+    height: 10px;
+    margin: 5px;
+}

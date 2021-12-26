@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <h4 class="modal-title">View Files</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<h4 *ngIf="showLoading;" style="text-align: center;color:teal;">Loading ...</h4>
+<span style="padding-left: 20%;"><b>{{facultyDeptName}}</b></span>
+<div class="modal-body">
+  <div class="row" *ngIf="singleUser.usertype=='ADMIN'">
+    <label class="col-sm-5 my-1 text-right">  <b>Status :</b></label>
+    <div class="col-sm-4 ">  <span *ngIf="naacFileData.length >0">{{naacFileData[0].status}}</span>
+         <span *ngIf="naacFileData.length ==0 ">------</span>
+   </div>
+  </div>
+    <div class="row">
+      <label class="col-sm-5 my-1 text-right"><b>Merged On :</b> </label> 
+      <div class="col-sm-4">
+        <span *ngIf="naacFileData.length >0 && naacFileData[0].modifiedOn != undefined && naacFileData[0].modifiedOn != 0">{{naacFileData[0].modifiedOn | date:"MMM d, y, h:mm:ss a"}}</span>
+        <span *ngIf="(naacFileData.length >0 && naacFileData[0].modifiedOn == undefined) || (naacFileData.length >0 && naacFileData[0].modifiedOn == 0)">{{naacFileData[0].createdOn | date:"MMM d, y, h:mm:ss a"}}</span>
+        <span *ngIf="naacFileData.length == 0 || naacFileData[0].modifiedOn == undefined">------</span>
+     </div>
+        <div class="col-md-3" *ngIf="singleUser.usertype=='ADMIN'">
+            <button type="submit" class="btn btn-success" (click)="downloadFiles()" [disabled]="btnDisable">Merge Request</button>
+        </div>
+    </div>
+    <span *ngIf="naacData.length >0">
+    <div *ngFor="let eachField of naacData[0].fieldValues | keyvalue : originalOrder let i= index">
+        <div class="form-group row" *ngIf="eachField.value.type == 'file'">
+        <label class="col-sm-5  text-right">{{eachField.value.label}} :</label>
+        <div class="col-sm-4 text-left"> 
+        <span *ngIf="naacFileData.length >0">
+            <span *ngFor="let eachNaacData of naacFileData[0].attachment">
+              <span *ngIf="eachNaacData.fileName == eachField.key">
+              <span *ngFor="let eachFile of eachNaacData.files">
+                     <a href="{{eachFile.url}}" target="_blank" style="padding-top: 3%;">{{eachFile.fileKey}}</a><br>
+                    </span>
+                </span>
+                </span>
+              </span>
+                <span *ngIf="naacFileData.length ==0">-----</span>
+          </div>
+        </div>
+      </div>
+      </span>
+<div class="row" >
+  <div class="col-sm-6 offset-sm-3" *ngIf="naacFileData.length == 0 && showdata">
+  <div class="alert alert-warning">
+    <span class="badge badge-warning"> Sorry !</span> No NAAC Data found.
+  </div> 
+</div>
+      </div>
+
+</div>
+

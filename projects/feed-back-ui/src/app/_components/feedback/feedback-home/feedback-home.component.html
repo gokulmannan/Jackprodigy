@@ -1,0 +1,19 @@
+<section class="container-fluid mt-5">
+    <div class="row ">
+        <div class="col-md-10">
+            <div class="card mb-3" style="background-color:#ffffff;">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="list-group">
+                <a routerLink="/feedBack/questions" class="btn list-group-item list-group-item-action" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-link"><i
+              class="fa fa-question-circle"></i>&nbsp;Questions</a>
+                <a routerLink="/feedBack/feedbackTemplate" class="btn list-group-item list-group-item-action" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-link"><i
+            class="fa fa-file"></i>&nbsp;Feedback Template</a>
+            </div>
+        </div>
+    
+       
+    </div>
+</section>

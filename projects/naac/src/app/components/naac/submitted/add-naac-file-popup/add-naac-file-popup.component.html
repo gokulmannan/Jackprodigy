@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h4 class="modal-title">Add File</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class="modal-body" >
+<div class="row"  >
+    <label class="col-sm-4  text-right">{{getFile.label}}</label>
+    <div class="col-md-6">
+        <input #fileInput type="file" id="file">
+        <span><br></span>
+        <button  class="btn btn-success mt-1" (click)="uploadFiles(fileInput.files,getFile.label)">Upload</button>
+        <br>
+        <span class="badge badge-warning">Valid extentions  {{getFile.regex}}</span>
+      </div>
+      <!-- <div *ngIf="eachField.value.fileKey != undefined">
+            {{eachField.value.fileKey}}
+      </div> -->
+    </div>
+</div>
+
+

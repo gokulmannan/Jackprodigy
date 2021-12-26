@@ -1,0 +1,19 @@
+/* _tables.scss:115 */
+
+.dark {
+    color: white;
+    background-color: dimgrey;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-row:nth-child(even) {
+    background-color: #ebeced;
+}
+
+
+/* .mat-row:nth-child(odd) {
+    background-color: black;
+} */

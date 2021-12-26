@@ -1,0 +1,14 @@
+.fa-smile-o {
+    color: rgb(14, 161, 14);
+}
+
+.img {
+    text-align: center;
+    height: 300px;
+}
+
+.img>i {
+    position: relative;
+    top: calc(50% - 2px);
+    /* 50% - 3/4 of icon height */
+}

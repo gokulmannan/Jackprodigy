@@ -1,0 +1,38 @@
+<div style="margin-top:85px;">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="shadow-lg p-5 mb-5 bg-white rounded">
+                <div class="text-center">
+                    CREATE ACCOUNT
+                    <form [formGroup]="registerForm" (ngSubmit)="register()">
+                        <div class="example-container">
+                            <mat-form-field>
+                                <input matInput placeholder="Name *" formControlName="firstName">
+                                <mat-error>Enter valid name</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput pattern="[789][0-9]{9}" placeholder="Mobile Number *" formControlName="mobile">
+                                <mat-error>Enter valid mobile number</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput email placeholder="Email *" formControlName="email">
+                                <mat-error>Enter valid email</mat-error>
+                            </mat-form-field>
+
+
+                            <button mat-button class="btn btn-primary mt-3">NEXT</button>
+
+                            <!-- <a routerLink="/login" class="mt-2">EXISTING USER? LOGIN</a>
+                                <a routerLink="/reset"> Resend Verification Email</a> -->
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

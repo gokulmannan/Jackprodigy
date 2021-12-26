@@ -1,0 +1,19 @@
+<div class="bg-light card">
+    <div class="bg-light card">
+        <h3 style="text-align:center;margin-top: 15px">Preview Announcement</h3>
+        <span *ngIf="announcement != undefined">
+        &nbsp;<strong>Title : </strong> {{announcement.title}}<br>
+        &nbsp;<strong>Message : </strong> {{announcement.message}}<br>
+        &nbsp;<span *ngIf="announcement.file != undefined && announcement.file.fileKey != undefined"> <strong>File Name : </strong> {{announcement.file.fileKey}}
+        </span></span>
+    </div>
+    <div class="card">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-11">
+                <br>
+                <app-select-members></app-select-members>
+            </div>
+        </div>
+    </div>
+</div>

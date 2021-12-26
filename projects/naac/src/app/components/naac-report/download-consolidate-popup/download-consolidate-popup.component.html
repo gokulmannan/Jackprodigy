@@ -1,0 +1,95 @@
+<div class="modal-header">
+    <h4 class="modal-title">Download Consolidated Attachment</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+<div class="row">
+
+    <div class="col-md-9">
+        <h4 *ngIf="showLoading" style="text-align: center;">Loading ...</h4>
+    </div>
+    <div class="col-md-3">
+        <!-- <button type="submit" class="btn btn-success" (click)="downloadFiles()">Merge Request</button> -->
+    </div>
+</div>
+<br>
+<div class="badge-info" >
+  <Strong>NOTE : <br>
+  NAAC attachment files will be automatically merged daily on 8 PM - 12 PM</Strong>
+</div>  
+<br>
+<div class="card text-center" *ngIf="showCard">
+        {{naacTemplate.title}}<br>
+        {{naacTemplate.description}}
+  </div>      
+<br>
+<Strong>Faculty Department Wise Consolidated Attachment ( {{facultys.name}})</Strong><br>
+  <div *ngFor="let eachField of naacTemplate.fields | keyvalue : originalOrder let i= index">
+        <div class="card text-center" *ngIf="eachField.value.type == 'file'">
+            <div class="card-body bg-light text-dark">
+                <div class="card-header"><Strong>{{eachField.value.label}}</Strong></div>
+              
+            <div class="row">
+                <div class="col-md-6">
+                    </div>
+                    </div>
+            <div class="row" *ngFor="let facDept of facultyDepartments">
+                <div class="col-md-8 d-flex align-items-stretch" style="text-align: right;" >
+                    {{facDept.name}}
+                </div>
+                <div class="col-md-4" style="text-align: left;">
+                  <a [routerLink]="" (click)="openFacultyDeptConsolidatedPopup(facDept.id,eachField.key,facDept.name)"><b>Consolidated</b></a> &nbsp;&nbsp;
+                  <a [routerLink]="" (click)="viewFiles(facDept.id,eachField.key)"><b>Individual</b></a>
+                </div>
+            </div>
+          </div> 
+</div>
+</div>
+<div class="card text-center" *ngIf="showCard" >
+  <span><br><br></span>
+ 
+
+  <div class="row" *ngIf="singleUser.usertype=='ADMIN'">
+    <label class="col-sm-4 my-1 text-right"> <b>Status :</b> </label>
+    <div class="col-sm-4"> <span *ngIf="naacData.length > 0">{{naacData[0].status}}</span>
+      <span *ngIf="naacData.length == 0 || naacData[0].status == undefined ">------</span>
+   </div>
+   </div>
+  <div class="row">
+   
+    <label class="col-sm-4 my-1 text-right"><b>Merged On :</b> </label> 
+    <div class="col-sm-4">
+      <span *ngIf="naacData.length >0 && naacData[0].modifiedOn != undefined && naacData[0].modifiedOn != 0">{{naacData[0].modifiedOn | date:"MMM d, y, h:mm:ss a"}}</span>
+      <span *ngIf="(naacData.length >0 && naacData[0].modifiedOn == undefined) || (naacData.length >0 && naacData[0].modifiedOn == 0)">{{naacData[0].createdOn | date:"MMM d, y, h:mm:ss a"}}</span>
+      <span *ngIf="naacData.length == 0 || naacData[0].modifiedOn == undefined">------</span>
+   </div>
+    <div class="col-md-3" *ngIf="singleUser.usertype=='ADMIN'">
+        <button type="submit" class="btn btn-success" (click)="downloadFiles()" [disabled]="btnDisable">Merge Request</button>
+    </div>
+</div>
+    <div class="card-body bg-light" >
+        <div class="card-header"><Strong>FacultyWise Consolidate Attachment  ( {{facultys.name}})</Strong></div>
+        <div *ngFor="let eachField of naacTemplate.fields | keyvalue : originalOrder let i= index">
+            <div class="form-group row" *ngIf="eachField.value.type == 'file'">
+            <label class="col-md-6  text-right">{{eachField.value.label}} :</label>
+            <div class="col-md-4 text-left"> 
+            <span *ngIf="naacData.length >0">
+                <span *ngFor="let eachNaacData of naacData[0].attachment">
+                  <span *ngIf="eachNaacData.fileName == eachField.key">
+                  <span *ngFor="let eachFile of eachNaacData.files">
+                         <a href="{{eachFile.url}}" target="_blank" style="padding-top: 3%;">{{eachFile.fileKey}}</a><br>
+                        </span>
+                    </span>
+                    </span>
+                  </span>
+                    <span *ngIf="naacData.length ==0">-----</span>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>  
+
+
+

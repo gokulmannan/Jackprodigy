@@ -1,0 +1,49 @@
+<section class="container-fluid flex-grow">
+  <br>
+  <h3 style="text-align:center"> Assignment</h3>
+  <div class="row">
+  <div class="card-body">
+      <table class="table table-striped" *ngIf="studentSubmission.length>0">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Assignment</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Date</th>
+            <th scope="col">Sent by</th>
+            <th scope="col">Deadline</th>
+            <th scope="col">Attachment</th>
+            <th scope="col">Upload</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let eachStudentSubmission of studentSubmission; let i =index;">
+            <th>{{ i+1 }}</th>
+            <td> <a data-toggle="modal"  (click)="viewAssignment(eachStudentSubmission)" class="la la-trash">
+                {{eachStudentSubmission.title}} </a></td>
+            <td>{{eachStudentSubmission.subjectName}}</td>
+            <td>{{eachStudentSubmission.createdOn}}</td>
+            <td>{{eachStudentSubmission.name}}</td>
+            <td>{{eachStudentSubmission.deadLine}}</td>
+            <td *ngIf="eachStudentSubmission.file != undefined"><a
+                href="{{eachStudentSubmission.file.url}}">{{eachStudentSubmission.file.fileKey}}</a></td>
+            <td *ngIf="eachStudentSubmission.file == undefined">No Attachment Found</td>
+
+            <td *ngIf="eachStudentSubmission.submission=='Enable'">
+              <a data-toggle="modal" class="btn btn-primary" (click)="uploadPopup(eachStudentSubmission)">Upload</a>
+            </td>
+            <td *ngIf="eachStudentSubmission.submission=='Disable'"> Disabled </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-sm-6 offset-sm-3" *ngIf="studentSubmission.length==0">
+          <div class="alert alert-warning">
+            <span class="badge badge-warning"> Sorry !</span> No data found.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

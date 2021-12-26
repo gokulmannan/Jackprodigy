@@ -1,0 +1,73 @@
+<br><br><br>
+
+
+<!-- <div class="row">
+<div class="col-md-2"></div>
+<div class="card bg-light col-md-6">
+    <span *ngIf="announcement != undefined" style="font-size: x-large;">
+        <u>TITLE&nbsp;&nbsp;:</u>&nbsp;{{announcement.title}}<br>
+    <u>MESSAGE :</u>&nbsp;{{announcement.message}}</span></div>
+</div> -->
+
+
+
+<div class="row justify-content-center">
+    <!-- <img [src]="mgrLogo"> -->
+    <img src="assets/images/mgr.png">
+  </div>
+
+<br>
+ 
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-3">
+        <div class="card-header bg-info">
+          <div class="row">
+            <span class="col-md-6" style="padding-top: 1%;padding-bottom: 1%;">
+              <span>
+  
+              </span>
+              <span class="text-white">&nbsp;{{announcement.title}}</span>
+            </span>
+  
+</div></div>
+</div>
+  
+          </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card mb-3">
+                <div class="card-header bg-light text-dark">
+                  <div class="row">
+                    
+                     {{announcement.message}}
+                
+          
+        </div></div>
+        </div>
+          
+                  </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                      <div class="card mb-3">
+                        <div class="card-header bg-light text-dark">
+                          <div class="row">
+                           <label>Attachment :</label> 
+                            <span *ngIf="announcement.file != undefined" ><a href="{{announcement.file.url}}" target="_blank">{{announcement.file.fileKey}}</a></span>
+                            <span *ngIf="announcement.file == undefined">---------</span>
+                  
+                </div></div>
+                </div>
+                  
+                          </div>
+                        </div>
+
+  

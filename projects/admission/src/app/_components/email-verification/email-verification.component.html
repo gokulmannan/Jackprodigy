@@ -1,0 +1,33 @@
+<div style="margin-top:85px;">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="text-center">
+                    RESET
+                    <form [formGroup]="resetForm" (ngSubmit)="sendMail()">
+                        <div class="example-container">
+
+                            <mat-form-field>
+                                <input matInput email placeholder="Enter Your Email *" formControlName="email">
+                                <mat-error>Enter valid email</mat-error>
+                            </mat-form-field>
+
+                            <button mat-button class="btn btn-primary mt-3">SUBMIT</button>
+
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <a routerLink="/register">NEW REGISTRATION</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a routerLink="/login"> Login Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

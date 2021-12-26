@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h4 class="modal-title">Import</h4>
+    <span *ngIf="showLoading" style="color: brown;padding-left: 30%;"><h3 > Loading...</h3></span>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+ 
+  <div class="modal-body">
+    <Strong>{{naacData.title}}</Strong><br>
+    {{naacData.description}}
+    <hr>
+    <br>
+    <div class="form-group row">
+        <div class="col-md-4 mb-2 text-right">
+          <label for="twelfthMarkSheet">Import<span  style="color: red;">*</span>:</label>
+      </div>
+          <div class="col-md-6" >
+          <input #fileInput type="file" id="file"><br>
+          <span><br></span>
+          <span>.xls (or) .xlsx format only (MS Excel 97-2003).
+        </span><span><br></span><br>
+        <span ><a [routerLink]="" (click)="exportAsXLSX()"><i class="fa fa-download"></i>
+            Download Sample Template as Xls file
+           </a><br></span><br>
+          <button  class="btn btn-outline-success" (click)="uploadFiles(fileInput.files)" [disabled]="!showButton">Upload</button><br>
+        
+        </div>
+        <!-- <div *ngIf="eachField.value.fileKey != undefined">
+              {{eachField.value.fileKey}}
+        </div> -->
+        <div>
+          <!-- <button *ngIf="eachField.value.fileKey != undefined" class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile(eachField.key)">Change</button> -->
+      </div>
+    </div>
+      </div>
+      <div class="badge-danger" *ngIf="showError">
+          <h4 style="padding-left: 10%;">{{status}}</h4>
+      </div>
+      <br><br>
+      <hr>
+      <div class="row">
+        <div class="col-md-1"></div>  
+        <div class="col-md-10">
+       <strong>NOTE :</strong> <br>
+
+1. Use  sample  template excel above and import data<br>
+2. Sample template excel header position, spacing should not be changed. <br>
+3. Sample template excel header and Excel to be imported header should be same.<br>
+4. <strong> Valid date format dd/MM/yyyy(Eg: 30/10/1994) </strong>
+</div></div><br><br>
+

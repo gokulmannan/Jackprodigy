@@ -1,0 +1,131 @@
+<div class="col-md-12 card card-body bg-light text-dark">
+    <section class="container-fluid flex-grow">
+      <div class="alert alert-warning">
+        <span style="font-weight: bold;">NOTE</span> :
+        <ul class="row"><li><span class="col-md-12">If you have any issue in importing data, please send your excel file(.xls) file to <b style="color: green;">naac-support@drmgrdu.ac.in</b> with screenshot of error you have faced (if applicable) .</span></li></ul>
+        <ul class="row"><li><span class="col-md-12">For general queries contact <b style="color: green;">Mr.Nararyan - 9787369541 </b>.</span></li></ul>
+      </div>
+      <div class="row">   
+        <label class="col-sm-5 text-right mt-1"><b>Template Type :</b></label>
+        <div class="col-md-4">
+            <ng-select 
+            [searchable]="true" [clearable]="false"
+            name="type"   [(ngModel)]="templateType" (change)="getTemplatesByType(templateType)" placeholder="------------Select Type-------------"   >
+           <ng-option value="" >----------Select Type------------</ng-option>
+           <ng-option [value]="eachType" *ngFor="let eachType of types ">{{eachType}}
+           </ng-option>
+        </ng-select>
+            </div>
+        </div>     
+        <h3 style="text-align:center">NAAC Templates</h3>
+     
+          <div class="form-group row">
+            <label for="departmentselect" class="col-sm-3 text-right mt-2">Faculty<span style="color: red;">*</span></label>
+            <div class="col-md-6">
+              <ng-select 
+                 [searchable]="true" [clearable]="false"
+                 [(ngModel)]="faculty" (change)="getAllFacultyDepartments(faculty)" name="facultyDeptSelect">
+                <ng-option value="" >----------------------Select Faculty--------------------</ng-option>
+                <ng-option [value]="faculty.id" *ngFor="let faculty of facultys ">{{faculty.name}}
+                </ng-option>
+          </ng-select>
+            </div>
+          </div>
+          <div  class="form-group row">
+            <label for="departmentselect" class="col-sm-3 text-right mt-2">Department<span style="color: red;">*</span></label>
+            <div class="col-md-6">
+              <ng-select 
+                 [searchable]="true" [clearable]="false"
+                 name="facultySelect"  [(ngModel)]="facultyDept" (change)="getNaacTemplates()">
+                <ng-option value="" >----------------------Select Department--------------------</ng-option>
+                <ng-option [value]="facultyDepartment.id" *ngFor="let facultyDepartment of facultyDepartments ">{{facultyDepartment.name}}
+                </ng-option>
+          </ng-select>
+            </div>
+          </div>
+
+          <div  class="form-group row">
+            <label for="departmentselect" class="col-sm-3 text-right mt-2">Criteria<span style="color: red;">*</span></label>
+            <div class="col-md-6">
+              <ng-select 
+                 [searchable]="true" [clearable]="false"
+                 name="criteriaSelect"  [(ngModel)]="criteriaVal" placeholder="----------------------Select Criteria--------------------"   (change)="getCriteriaTemplate(criteriaVal)">
+                <ng-option value="" >----------------------Select Criteria--------------------</ng-option>
+                <ng-option [value]="criteria" *ngFor="let criteria of criterias ">{{criteria}}
+                </ng-option>
+          </ng-select>
+            </div>
+          </div>
+
+        </section>
+
+       
+        <div class="row" *ngIf="showLegend"> 
+           <div class="col-md-12"  style="width:max-content; text-align:justify;border:dimgray; height: 50px;">
+             <!-- <fieldset style="padding: 5px;"> -->
+               <legend style="color: teal;text-align: center;">Legends</legend>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;
+               <label >submitted</label>&nbsp;&nbsp;
+               <i class="fa fa-clock-o"></i>&nbsp;
+               <label >Waiting </label>&nbsp;&nbsp;
+               <i class="fa fa-check-circle"></i>&nbsp;
+               <label >Approved</label>&nbsp;&nbsp;
+               <i class="fa fa-times"></i>&nbsp;
+               <label >UnApproved</label>&nbsp;&nbsp;
+               <i class="fa fa-comment"></i>&nbsp;
+               <label >Comment</label><br/>
+           <!-- </fieldset> -->
+           </div>
+ </div>
+<br>
+        <div class="row" *ngIf="facultyDept != undefined && facultyDept != '' && criteriaTemplates != undefined && (naacRole == 'AUTHORIZER' || naacRole == 'INPUTTER')">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align: center;">#</th>
+                                <th scope="col" style="text-align: center;">Title</th>
+                                <th scope="col" style="text-align: center;"><i class="fa fa-file-text" aria-hidden="true"></i></th>
+                                <th scope="col" style="text-align: center;"><i class="fa fa-clock-o"></i></th>
+                                <th scope="col" style="text-align: center;"><i class="fa fa-check-circle"></i></th>
+                                <th scope="col" style="text-align: center;"><i class="fa fa-times"></i></th>
+                                <th scope="col" style="text-align: center;"><i class="fa fa-comment"></i></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let naacTemplate of criteriaTemplates  let i = index">
+                                <th scope="row" style="text-align: center;">{{ i+1 }}</th>
+                                <td style="text-align: center;"> <a [routerLink]="" (click)="redirectToSubmitted(naacTemplate.id)"> {{naacTemplate.title}} </a>
+                                <br>                                  <span style="color:blue;background-color:whitesmoke;" *ngIf="naacTemplate.note != undefined">{{naacTemplate.note}}</span>
+                              </td>
+                                <td style="text-align: center;">{{naacTemplate.submitted}}</td>
+                                <td style="text-align: center;">{{naacTemplate.waiting}}</td>
+                                <td style="text-align: center;">{{naacTemplate.approved}}</td>
+                                <td style="text-align: center;">{{naacTemplate.unApproved}}</td>
+                                <td style="text-align: center;">{{naacTemplate.commentCount}}</td>
+                                <td>
+                                  <i class="fa fa-spinner fa-spin" *ngIf="loadOutside" ></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-left" *ngIf="facultyDept != undefined && facultyDept != '' && criteriaVal != undefined && criteriaVal != '' && naacRole != 'AUTHORIZER' && naacRole != 'INPUTTER' && showWarning">
+          <div class="alert alert-warning">
+            <span class="badge badge-warning"> Sorry !</span> only {{facultyDeptName}} INPUTTER and AUTHORIZER has view rights.
+          </div>
+        </div> 
+
+        <div class="text-left" *ngIf="criteriaTemplates.length == 0 && showTemplate">
+          <div class="alert alert-warning">
+            <span class="badge badge-warning"> Sorry !</span> No Criteria Data Found .
+          </div>
+        </div> 
+
+      </div>

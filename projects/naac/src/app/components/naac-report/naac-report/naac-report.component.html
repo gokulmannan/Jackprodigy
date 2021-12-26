@@ -1,0 +1,255 @@
+<div class="col-md-12 card card-body bg-light text-dark">
+    <section class="container-fluid flex-grow">
+      <div class="row">   
+        <label class="col-sm-4 text-right mt-1"><b>Template Type :</b></label>
+        <div class="col-md-4">
+            <ng-select 
+            [searchable]="true" [clearable]="false"
+            name="type"   [(ngModel)]="templateType" (change)="getTemplatesByType(templateType)" placeholder="------------Select Type-------------"   >
+           <ng-option value="" >----------Select Type------------</ng-option>
+           <ng-option [value]="eachType" *ngFor="let eachType of types ">{{eachType}}
+           </ng-option>
+        </ng-select>
+            </div>
+        </div>   
+        <h3 style="text-align:center">NAAC Templates</h3>
+
+
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-5">
+          <span><input type="radio"  [(ngModel)]="reportRadio" value="FACULTY" (change)="getReport(reportRadio)" >&nbsp;FACULTY</span>&nbsp;&nbsp;
+         <span><input type="radio" [(ngModel)]="reportRadio" value="CRITERIA" (change)="getReport(reportRadio)">&nbsp;CRITERIA</span>
+      &nbsp;   <span><input type="radio" [(ngModel)]="reportRadio" value="ATTACHMENTS" (change)="getReport(reportRadio)">&nbsp;ATTACHMENTS</span>
+
+        </div>
+      </div>
+
+      <div *ngIf="facultyWise == true ">
+      
+<div class="row" *ngIf="singleUser.usertype=='ADMIN'">
+  <div class="col-md-9 text-right"></div>
+  <div class="col-md-3 text-right" >
+    <button class="btn btn-primary" (click)="mergeNaacConsolidateTrigger()">Merge Naac Consolidate</button>
+    </div>
+</div>
+
+          <div class="form-group row">
+            <label for="departmentselect" class="col-sm-3 text-right mt-2">Faculty<span style="color: red;">*</span></label>
+            <div class="col-md-6">
+              <ng-select 
+                 [searchable]="true" [clearable]="false"
+                 [(ngModel)]="facId" (change)="getNaacTemplates(facId)"   name="facultyDeptSelect" placeholder="----------------------Select Faculty--------------------">
+                <!-- <ng-option value="" >----------------------Select Faculty--------------------</ng-option> -->
+                <ng-option [value]="faculty.id" *ngFor="let faculty of facultys ">{{faculty.name}}
+                </ng-option>
+          </ng-select>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="text-center" >
+              <div class="alert alert-warning">
+                 Consolidate NAAC Report will be Merged daily between (8.00 PM - 12.00 PM)
+              </div>
+            </div> 
+          </div>
+
+          <div class="row" *ngIf="showMergeButton">
+            <div class="col-md-7 text-right"></div>
+                      <div class="col-md-5 text-right">
+              <button class="btn btn-primary" (click)="exportConsolidateData(facId,templateType)" >Consolidate Excell</button>
+         &nbsp;
+            <button class="btn btn-primary" [disabled]="clicked" (click)="mergeTrigger(facId)"> Merge </button>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="facId != undefined && naacReportAccess == 'AUTHORIZED'">
+            <table class="table table-striped" cellpadding="0" cellspacing="0" width="100%"  >
+                <thead>
+                    <tr>
+                        <th scope="col" style="text-align: center;"width="5%">S.No</th>
+                        <th scope="col" style="text-align: center;" width="75%">Title</th>
+                       <th scope="col" style="text-align: center;" width="10%">Excell</th> 
+                        <th scope="col" style="text-align: center;" width="10%">Download Consolidated Attachment</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let eachNaacData of naacDatas let i= index">
+                        <th scope="row" style="text-align: center;" width="5%">{{ i +1 }}</th>
+                        <td style="text-align: center;" width="75%">{{eachNaacData.title}}
+                         <br>
+                         
+                          <small class="text-left" *ngFor="let eachFile of eachNaacData.attachment" >
+                    <label style="color:blue" *ngFor="let eachNaacFile of eachFile.files" > {{eachFile.fileName}} :
+                      <a style="color:	#00bfff;" href="{{eachNaacFile.url}}" target="_blank" >{{eachNaacFile.fileKey}}</a>&nbsp;&nbsp;
+                    </label>&nbsp;&nbsp;
+                    <br>
+                  </small>
+                &nbsp;
+                <small>
+                 <span *ngIf="eachNaacData.naacModified != undefined && eachNaacData.naacModified != '0'"><b>MODIFIED ON :</b>{{eachNaacData.naacModified | date:"MMM d, y, h:mm:ss a"}}</span>
+                <span *ngIf="eachNaacData.naacModified == '0' && eachNaacData.naacCreated != '0'"> <b>CREATED ON :</b>{{eachNaacData.naacCreated | date:"MMM d, y, h:mm:ss a"}}</span>
+               <span *ngIf="eachNaacData.naacModified == '0' && eachNaacData.naacCreated == '0'"> </span>
+              </small>
+              <small *ngIf="eachNaacData.attachment == undefined" >
+              <label *ngFor="let eachlabel of eachNaacData.fileLabels">{{eachlabel}} : <b>----</b>&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;
+              </small>&nbsp;&nbsp;
+                          <!-- <br><label  *ngFor="let eachFile of eachNaacData.files"><label *ngFor="let eachFileKey of eachFile.attachment">{{eachFileKey.fileName}}:<a style="color:	#00bfff;" href="{{eachNaacFile.url}}" target="_blank" *ngFor="let eachNaacFile of eachFileKey.files">{{eachNaacFile.fileKey}}</a></label>&nbsp;&nbsp;
+                        </label>&nbsp; -->
+                          <!-- <span *ngIf="eachFile.modifiedOn != undefined && eachFile.modifiedOn != 0">Modified On :{{eachFile.modifiedOn | date:"MMM d, y, h:mm:ss a"}}</span>
+                          <span *ngIf="(eachFile.modifiedOn == undefined) || (eachFile.modifiedOn == 0)"> Created On :{{eachFile.createdOn | date:"MMM d, y, h:mm:ss a"}}</span> -->
+                        <br>
+                       <span style="color:blue;background-color:whitesmoke;" *ngIf="eachNaacData.note != undefined">{{eachNaacData.note}}</span>
+                      </td>
+
+                        <td style="text-align: center;" width="10%"><a  *ngIf="eachNaacData.xlsFile != undefined" href="{{eachNaacData.xlsFile.url}}" target="_blank"> <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                        </a>
+                          <span *ngIf="eachNaacData.xlsFile == undefined">----</span>
+                        </td>
+
+                        <td style="text-align: center;" width="10%"><a [routerLink]="" (click)="openModal(eachNaacData.id)"> <i class="fa fa-download"></i></a></td> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-left" *ngIf="facId != undefined && naacReportAccess != 'AUTHORIZED'">
+          <div class="alert alert-warning">
+            <span class="badge badge-warning"> Sorry !</span> only  AUTHORIZED Users has view rights.
+          </div>
+        </div> 
+      </div>
+
+      <div *ngIf="criteriaWise == true ">
+
+        <div class="form-group row">
+          <label for="criteriaselect" class="col-sm-3 text-right mt-2">Criteria<span style="color: red;">*</span></label>
+          <div class="col-md-6">
+            <ng-select 
+               [searchable]="true" [clearable]="false"
+               [(ngModel)]="criteria" (change)="getCriteriaReports(criteria)"   name="criteriaSelect" placeholder="----------------------Select Criterias--------------------">
+              <!-- <ng-option value="" >----------------------Select Faculty--------------------</ng-option> -->
+              <ng-option [value]="eachCriteria" *ngFor="let eachCriteria of criterias">{{eachCriteria}}
+              </ng-option>
+        </ng-select>
+          </div>
+          </div>
+<div *ngIf="criteriaReports != undefined">
+  <div class="row" *ngIf="showExcelButton && excelData.length != 0" >
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <label *ngIf="excelData[0].modifiedOn != 0" ><b>Complete Excel Generated On :</b> {{excelData[0].modifiedOn | date:"MMM d, y, h:mm:ss a"}}</label>
+      <label *ngIf="excelData[0].modifiedOn == 0" ><b>Complete Excel Generated On :</b> {{excelData[0].createdOn | date:"MMM d, y, h:mm:ss a"}}</label>
+
+    </div>
+      <div class="col-md-3">
+<a *ngIf="excelData[0].xlsFile.url != undefined" class="btn btn-primary" href="{{excelData[0].xlsFile.url}}" target="_blank" > Complete Excel By Criteria</a>
+              </div>
+                </div>
+                <br>
+          <div class="card bg-light" *ngFor="let criteriaReport of criteriaReports">
+            <h5 class="card-title text-center" ><b>{{criteriaReport.title}}</b></h5>
+            &nbsp;<h6 class="card-subtitle " style="text-align: justify;">&nbsp;{{criteriaReport.description}}&nbsp;</h6>&nbsp;
+
+         
+
+<div *ngIf="criteriaExcelByTemplate.length != 0" >
+
+  <div class="row" *ngFor="let eachExcel of criteriaExcelByTemplate">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-5">
+                    <label *ngIf="criteriaReport.id == eachExcel.naacTemplateId"><b> Excel Generated On :</b> {{eachExcel.modifiedOn | date:"MMM d, y, h:mm:ss a"}}</label>
+                  </div>
+                     <div class="col-md-4" *ngIf="criteriaReport.id == eachExcel.naacTemplateId">
+                        Xls :   <a *ngIf="eachExcel.xlsFile.url != undefined" href="{{eachExcel.xlsFile.url}}" target="_blank" > {{eachExcel.xlsFile.fileKey}}</a> 
+                       </div>
+                       </div>
+</div> 
+ <div *ngIf="criteriaExcelByTemplate.length == 0" >
+  <div class="row"   >
+    <div class="col-md-8"></div>
+    <label>Xls : ----</label>
+  </div>
+</div>
+<span><br><br></span> 
+          </div>
+
+        </div>
+
+          <br>
+      </div>
+
+
+      <div *ngIf="attachmentWise == true && criteriaWise == false && facultyWise == false">
+        <div class="form-group row" *ngIf="attachmentCriterias">
+          <label for="criteriaselect" class="col-sm-3 text-right mt-2">Criteria<span style="color: red;">*</span></label>
+          <div class="col-md-6">
+            <ng-select 
+               [searchable]="true" [clearable]="false"
+               [(ngModel)]="criteria" (change)="getCriteriaReportsAttachments(criteria)"   name="criteriaSelect" placeholder="----------------------Select Criterias--------------------">
+              <!-- <ng-option value="" >----------------------Select Faculty--------------------</ng-option> -->
+              <ng-option [value]="eachCriteria" *ngFor="let eachCriteria of attachmentCriterias">{{eachCriteria}}
+              </ng-option>
+        </ng-select>
+          </div>
+          </div>
+
+
+                  <div *ngIf="reportAttachments != undefined">
+
+                    <div class="card bg-light" *ngFor="let criteriaReport of reportAttachments">
+                      <h5 class="card-title text-center" ><b>{{criteriaReport.title}}</b></h5>
+                      &nbsp;<h6 class="card-subtitle " style="text-align: justify;">&nbsp;{{criteriaReport.description}}&nbsp;</h6>&nbsp;
+
+
+                      <div class="col-md-12" *ngFor="let faculty of facultys ">
+                        <div class="row">
+                          <div class="col-md-1"></div>
+                        <h6 >{{faculty.name}}</h6>&nbsp;
+                        </div>
+                        <div class="row"  >
+                          <div class="col-md-1"></div>
+                          <div class="col-md-10"  >
+                        <span  style="text-align: center;" *ngFor="let eachCriteriaFile of criteriaReport.attachment;let i = index" >
+                          <label class="text-left" *ngIf="eachCriteriaFile.facId == faculty.id"  >
+                        <label style="color:blue" *ngFor="let eachCriteriaNaacFile of eachCriteriaFile.files" > {{eachCriteriaFile.fileName}} :
+                          <a style="color:	#00bfff;"  href="{{eachCriteriaNaacFile.url}}" target="_blank" >{{eachCriteriaNaacFile.fileKey}}
+                            </a>
+                            <span [routerLink]="" (click)="downloadMyFile(eachCriteriaNaacFile.url,eachCriteriaNaacFile.fileNames)"><i class="fa fa-download" aria-hidden="true"  ></i></span>
+                         &nbsp; <span style="color:black">{{eachCriteriaNaacFile.deptName}}</span>
+                        </label><br>
+                        </label>
+                         <!-- <br> -->
+                       <label *ngIf=" i == criteriaReport.attachment.length-1 && eachCriteriaFile.facId != faculty.id">-</label>
+                       <!-- <br> -->
+                      </span>
+                      <label *ngIf="criteriaReport.attachment != undefined  " >
+                        <span *ngIf="criteriaReport.attachment.length == 0 "> --- </span>
+                      </label>
+                     
+                    </div>
+                        </div>
+                      </div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+                  </div>
+
+
+
+      </div>
+
+          </section>
+
+          </div>

@@ -1,0 +1,38 @@
+<div class="col-md-12 card card-body bg-light text-dark">
+    <section class="container-fluid flex-grow">
+        <h3 style="text-align:center">Import Fees Due Students</h3>
+     <br><br>
+          <div class="form-group row">
+            <label  class="col-md-5 text-right mb-2">Import Fees Due Student's File<span style="color: red;">*</span>:</label>
+            <div class="col-md-1" *ngIf="getFile == undefined">
+                <input 
+                #fileInput type="file" id="file">
+                <span><br></span>
+                <button  class="btn btn-success" (click)="uploadFiles(fileInput.files)">Upload</button>
+            </div>
+            <div *ngIf="getFile != undefined">
+                    {{getFile.name}}
+              </div>
+              <div *ngIf="getFile != undefined">
+                <button  class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile()">Change</button>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-md-4"></div>
+            <div>.xls format only (MS Excel 97-2003).</div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4"></div>
+            <div>
+                <a href="assets/FeesDueExport/testImport.xls" target="_blank"><i
+                    class="fa fa-download"></i>&nbsp;Download as Xls file</a>
+            </div>
+        </div>
+        <div class="badge-danger" *ngIf="showError">
+            <h4 style="padding-left: 10%;">{{status}}</h4>
+        </div>
+
+
+          </section>
+          </div>

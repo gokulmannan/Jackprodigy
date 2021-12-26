@@ -1,0 +1,83 @@
+  <section class="container-fluid ">
+    <div class="col-sm-2 mt-5">
+      <a (click)="goBack()"><button type="submit" class="btn btn-dark">Back</button></a>
+      
+    </div> 
+    <h3 style="text-align:center">Student Details</h3>
+   
+    <!-- <div class="row"> -->
+      <div   *ngIf="getStudents.length == 0 || getStudents[0].students.length == 0">
+        <div class="alert alert-warning">
+          <span class="badge badge-warning"> Sorry !</span> No data found.
+        </div>
+      </div> 
+     
+      <div  *ngIf="getStudents[0].students.length>0">
+        <div class="d-flex justify-content-end"> 
+          <span class="glyphicon glyphicon-user"></span><b><i class="fa fa-user"></i>&nbsp;&nbsp;<label>Mentor
+              Name:</label>{{getStudents[0].mentorInfo.name}}</b>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+
+            <label class="ml-2"> Search:</label> 
+            <input type="text" placeholder="Name or Email or Faculty " class="ml-2" [(ngModel)]="searchText"></div> 
+          <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+         <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary" *ngIf="currentUser.userType == 'HOD'" (click)="updateFromDate(getStudents)">Update to
+            Date</button>&nbsp;&nbsp;&nbsp;&nbsp; <br />
+          <button class="btn btn-danger " *ngIf="currentUser.userType == 'HOD'" (click)="deleteLog(getStudents)">Delete</button><br/>&nbsp;&nbsp;&nbsp;&nbsp;
+          <br>
+          <button class="btn btn-primary " *ngIf="currentUser.userType == 'HOD'" data-toggle=" modal" (click)="updateToDate(getStudents)">Update From
+            Date</button>
+        </div></div>    </div>  
+        <div class="col-md-12">
+       
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">
+                <!-- <input type="checkbox" [checked]="selectAll.checked"(click)="checkAll()"> -->
+                <input type="checkbox" [checked]="selectAll.checked"(click)="selectAllCheckbox($event, getStudents[0].students)">
+              All
+              </th>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Mobile</th> 
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let list of getStudents[0].students|filter:searchText; let i=index;">
+              <!-- <th ><input type="checkbox" (change)="checkAllCheckBox(list.checked,list.studentInfo.id)"
+                  value="{{list.studentInfo.id}}" [(ngModel)]="list.checked" [ngModelOptions]="{standalone: true}" [checked]="checks"></th>
+                  -->
+                  <th ><input type="checkbox" (change)="selectSingleStudent($event, list.studentId)"
+                    value="{{list.studentInfo.id}}" [(ngModel)]="list.checked" [ngModelOptions]="{standalone: true}" [checked]="checks"></th>
+                  <td>{{i+1}}</td>
+              <td><a [routerLink]="" (click)="profileDetails(list)"
+                  class="la la-trash">{{list.studentInfo.name}}</a>({{list.studentInfo.registerNo}})</td>
+              <td> {{list.studentInfo.email}}</td>
+              <td *ngIf="list.studentInfo.phone != undefined ">
+                {{list.studentInfo.phone}} </td>
+              <td *ngIf="list.studentInfo.phone == undefined ">
+                --- </td>
+              <td>{{list.startDate |date:'MMM/dd/yyyy'}}</td>
+              <td *ngIf="list.endDate != ''">
+                {{list.endDate|date:'MMM/dd/yyyy'}}
+              </td>
+              <td *ngIf="list.endDate == ''">
+                ---
+              </td>
+            </tr>
+          </tbody>
+        </table>
+       
+          </div>
+       </div>
+      </div>
+    
+  </section>

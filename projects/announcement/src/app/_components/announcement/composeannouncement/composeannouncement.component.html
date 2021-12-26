@@ -1,0 +1,76 @@
+<section class="container-fluid flex-grow">
+    <div class="row">
+        <div class="col-md-10 order-md-1 pt-3">
+            <h3 style="text-align:center;margin-top: 15px">Compose Announcement</h3>
+            <div class="card-body">
+                <div class="container">
+                    <div class="alert alert-info" role="alert">
+                        1. Supported image format (should be less than 1MB) *.jpg, *.jpeg, *.png <br> 2. Supported documents (should be less than 10MB) *.pdf, *.doc, *.docx, *.xls, *.xlsx, *.ppt, *.pptx, *.odt, *.ods, *.odp, *.txt <br> 3. Supported compressed
+                        format (should be less than 10MB) *.zip, *.rar, *.7z
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="col-md-10">
+                            <div class="container">
+
+                                <form class="form" #createForm="ngForm">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 my-1 text-right">Title<span class="text-danger">*</span>:</label>
+                                        <div class="col-md-6">
+                                          <input type="text" class="form-control" style="width: 400px;" #titleCtrl="ngModel" name="title" placeholder="Enter Title"
+                                            [(ngModel)]="announcementForm.title" required>
+                                              <span *ngIf="(createForm.submitted && titleCtrl.invalid) || (titleCtrl.invalid && titleCtrl.touched)" style="color: red;">
+                                              required</span> 
+                                          </div>
+                                      </div>
+                                      <div class="form-group row">
+                                        <label class="col-md-4 my-1 text-right">Message<span class="text-danger">*</span>:</label>
+                                        <div class="col-md-6">
+                                          <textarea type="text" class="form-control"  style="width: 400px;" #messageCtrl="ngModel" name="title" placeholder="Enter Message"
+                                            [(ngModel)]="announcementForm.message" required></textarea>
+                                              <span *ngIf="(createForm.submitted && messageCtrl.invalid) || (messageCtrl.invalid && messageCtrl.touched)" style="color: red;">
+                                              required</span> 
+                                          </div>
+                                      </div>
+                                    
+                                      <div class="form-group row">
+                                        <div class="col-md-4 mb-2 text-right">
+                                          <label for="twelfthMarkSheet">Attach File :</label>
+                                      </div>
+                                          <div class="col-md-8">
+                                            <span *ngIf="announcementForm.file.fileKey == undefined">
+                                          <input #fileInput type="file" id="file" (change)="change(fileInput.files)">
+                                         </span>
+                                        
+                                         <div *ngIf="announcementForm.file.fileKey != undefined && showUploadButton && !showLabel">
+                                          {{announcementForm.file.fileKey}}
+                                    </div>
+                                         <label class="alert alert-warning" *ngIf="announcementForm.file.fileKey == undefined && showLabel">
+                                          File Name Not Valid
+                                         </label>
+                                         <div>
+                                          <button *ngIf="announcementForm.file.fileKey != undefined " class="btn btn-sm btn-outline-secondary ml-4" (click)="removeFile()">Change</button>
+                                      </div>
+                                      <span><br></span>
+                                            <button *ngIf="showUploadButton && announcementForm.file.fileKey == undefined && !showLabel" class="btn btn-success" (click)="uploadFiles()">Upload</button>
+                                  </div>
+                                    </div>
+
+
+                                    <button class="btn btn-success float-right" type="submit" style="width:80px" (click)="previewAnnoucement(createForm.form.valid)">Next</button>
+                                    <br><br>
+                                </form>
+                         
+                            </div>
+                            <!-- <ng-container *ngTemplateOutlet="selecthod"></ng-container> -->
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>

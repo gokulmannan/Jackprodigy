@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+  integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4> update To Date </h4>
+       <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+      </button> 
+  </div> 
+  <div class="alert"*ngIf="showDiv">
+    <div class="alert alert-danger">
+      <span class="badge badge-warning"> Please</span> Select any one student.
+    </div>
+  </div>
+  <div class="modal-body">
+  
+      <form>
+        <label>To Date:</label>
+        <input type="date" id=" endDate" class="form-control"
+        placeholder="from Date" name="endDate" [(ngModel)]="endDate.endDate">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+        <button class="btn btn-success" (click)="updateDate(dateStudents)">Update</button>
+      </div>
+      </form>
+
+  </div>
+
+ 

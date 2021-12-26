@@ -1,0 +1,32 @@
+<app-regulation-nav (regnav)="loadSemData($event)"></app-regulation-nav>
+
+
+ 
+<div class="form-group row">
+  <label for="subject" class="col-sm-3 my-2 text-right">Subject <span class="text-danger">* </span>:
+  </label>
+  <div class="col-sm-6 mb-3">
+      <!-- <select  class="custom-select" name="subject" required #subject="ngModel" [(ngModel)]="eachSubject" (change)="onSubjectSelect(eachSubject)" ngModel>
+          <option value="" selected>------------------- Select Subject -------------------- </option>
+          <option style="height: 30px;font-size: 18px" [ngValue]="eachSubject" *ngFor="let eachSubject of subjects ">{{eachSubject.subjectName }}</option>
+      </select>
+      <small *ngIf="!subject.valid && subject.touched" class="text-danger">Subject required.</small> -->
+
+      <ng-select 
+      
+        placeholder="--------------------------Select Subject------------------------------"
+        [searchable]="true"  
+        [clearable] = "false"
+        [(ngModel)]="eachSubject"
+       (change)="onSubjectSelect(eachSubject)">
+        <ng-option [value]="eachSubject" *ngFor="let eachSubject of subjects">
+           
+            {{eachSubject.subjectName}}
+        </ng-option>
+    </ng-select>
+    <!-- <small *ngIf="!subjects.valid && subjects.touched" class="text-danger">Subject required.</small> -->
+
+  </div> 
+ 
+</div>   
+

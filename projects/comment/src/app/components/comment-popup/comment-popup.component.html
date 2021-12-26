@@ -1,0 +1,37 @@
+<div class="modal-dialog modal-dialog-scrollable"   role="document">
+<div class="modal-content">
+  <div class="modal-header" style="background-color: rgb(194, 190, 190);">
+    <h4> Comments(<span *ngIf="comments.length>0 && comments[0].status =='CLOSED'" class="badge badge-danger">CLOSED</span>
+      <span *ngIf="comments.length>0 && comments[0].status =='OPEN'" class="badge badge-success">OPEN</span>) </h4>&nbsp;&nbsp;&nbsp;
+    
+    <span *ngIf="comments.length>0 && comments[0].status =='OPEN' && naacRole =='AUTHORIZER'"><button class="btn btn-danger" (click)="openConfirmationDialog()">Close Comments session</button></span>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" style="background-color: rgb(194, 190, 190);" >
+      <div class="card card-body  text-dark overflow-auto ">
+        <div *ngIf="comments.length >0">
+        <div *ngFor="let comment of comments[0].comments">    
+          <span *ngIf="currentUser.userId == comment.userId">
+          <div class="row" >
+            <div class="col-md-10 ml-auto"  style="background-color:rgb(226, 240, 217);" >{{comment.comment}} <div style="color: rgb(128, 126, 126);"><small>{{comment.userName}} - {{comment.date | date:'medium'}}</small></div></div>
+          </div>
+         <br></span>
+         <span *ngIf="currentUser.userId != comment.userId">
+          <div class="row" >
+            <div class="col-md-10" style="background-color:rgb(219, 228, 233);">{{comment.comment}}<div style="color: rgb(128, 126, 126);"><small>{{comment.userName}} - {{comment.date | date:'medium'}}</small></div></div>
+          </div><br></span>
+      </div>
+    </div>
+    <div *ngIf="comments.length==0" class="alert alert-warning">No Comments found !</div>
+   </div>
+  </div>
+
+   <div class="modal-footer" style="background-color: rgb(194, 190, 190);">
+       <input type="text" style="width: 370px;" [(ngModel)]="comment" placeholder="Type a message">
+    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+    <button  class="btn btn-success" (click)= "createComment(comment)" [disabled]="(comment == undefined) || (comment != undefined && comment.length ==0)" >Send</button>
+  </div>
+   </div>
+</div>

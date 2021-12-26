@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h4 class="modal-title">Are you sure you want to Delete ?</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<div class="modal-body" >
+<div class="row"  >
+    <div class="col-sm-8  text-right"></div>
+    <div class="col-md-1">
+     <button class="btn btn-danger" (click)="delete()">Delete</button>
+    </div>&nbsp;&nbsp;
+    <div class="col-md-1">
+        <button class="btn btn-primary" (click)="cancel()">Cancel</button>
+       </div>
+</div>
+</div>

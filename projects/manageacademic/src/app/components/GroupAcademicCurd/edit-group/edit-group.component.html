@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4>Edit Group</h4><button type="button" class="close" (click)="close()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form #f="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-group row mt-3">
+    <label class="col-sm-4 text-right ">Group Name:</label>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <input type="text" class="form-control" name="groupName" value="{{value.groupName}}" #groupName="ngModel"
+        [(ngModel)]="data.groupName" ngModel>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success float-right ml-5 mb-3">update</button>
+</form>
